@@ -1,6 +1,4 @@
-using CarDealerProject.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using CarDealerWebProject.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

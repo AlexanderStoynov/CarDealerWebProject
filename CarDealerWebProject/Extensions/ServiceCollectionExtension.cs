@@ -1,8 +1,8 @@
-﻿using CarDealerProject.Data;
+﻿using CarDealerWebProject.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace CarDealerWebProject.Extensions
 {
     public static class ServiceCollectionExtension
     {

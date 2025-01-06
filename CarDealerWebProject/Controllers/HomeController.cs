@@ -2,7 +2,7 @@ using CarDealerProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace CarDealerProject.Controllers
+namespace CarDealerWebProject.Controllers
 {
     public class HomeController : Controller
     {
