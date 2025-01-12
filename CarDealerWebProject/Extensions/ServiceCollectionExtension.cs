@@ -1,4 +1,4 @@
-﻿using CarDealerWebProject.Data;
+﻿using CarDealerWebProject.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
