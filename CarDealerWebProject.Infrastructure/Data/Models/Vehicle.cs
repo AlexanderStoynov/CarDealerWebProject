@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CarDealerWebProject.Infrastructure.Data.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Drawing;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
@@ -24,17 +27,14 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         [Comment("Vehicle manufacturing date")]
         public DateTime ManufacturingDate { get; set; }
 
-        [Required]
-        [Comment("Vehicle body type")]
-        public required string BodyType { get; set; }
-
+        [Column(TypeName = "decimal(18,2)")]
         [Range(typeof(decimal), VehiclePriceMin, VehiclePriceMax, ConvertValueInInvariantCulture = true)]
         [Comment("Vehicle price")]
         public decimal Price { get; set; }
 
         [Required]
         [Comment("Vehicle fuel type")]
-        public required string Fuel { get; set; }
+        public FuelType Fuel { get; set; }
 
         [Range(VehicleMilageMin, VehicleMilageMax)]
         [Comment("Vehicle milage")]
@@ -48,15 +48,19 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         [Comment("Engine capacity")]
         public int EngineCapacity { get; set; }
 
+        [Comment("Vehicle transmission")]
+        public Transmission Transmission { get; set; }
+
         [MaxLength(VehicleDescriptionMaxLength)]
         [Comment("Vehicle description")]
         public string Description { get; set; } = string.Empty;
 
+        [Required]
+        [Comment("Vehicle color")]
+        public string Color { get; set; } = string.Empty;
+
         [Comment("Vehicle images")]
         public  List<string> VehicleImages { get; set; } = new List<string>();
-
-        [Comment("Date vehicle is listed")]
-        public DateTime DateListed { get; set; }
 
         [Comment("If vehicle is sold")]
         public bool IsSold = false;
@@ -64,12 +68,14 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
     }
 
 
+    //[Comment("Date vehicle is listed")]
+    //public DateTime DateListed { get; set; }
+
+
+
+
     
-    //    BodyType = "Sedan",
-   
-    //    Transmission = "Automatic",
- 
-    //    Color = "White",
+
     //    IsNew = false,
     //    SellerName = "John Doe",
     //    SellerPhone = "+359 123 456 789",

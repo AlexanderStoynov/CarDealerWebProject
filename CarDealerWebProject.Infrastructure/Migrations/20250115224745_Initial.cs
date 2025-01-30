@@ -51,6 +51,30 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Vehicles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "Vehicle identifier")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Make = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "Vehicle maker name"),
+                    Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Vehicle model"),
+                    ManufacturingDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Vehicle manufacturing date"),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Vehicle price"),
+                    Fuel = table.Column<int>(type: "int", nullable: false, comment: "Vehicle fuel type"),
+                    Milage = table.Column<int>(type: "int", nullable: false, comment: "Vehicle milage"),
+                    MotorHorsePower = table.Column<int>(type: "int", nullable: false, comment: "Motor horse power"),
+                    EngineCapacity = table.Column<int>(type: "int", nullable: false, comment: "Engine capacity"),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false, comment: "Vehicle description"),
+                    VehicleImages = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Vehicle images"),
+                    DateListed = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date vehicle is listed")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicles", x => x.Id);
+                },
+                comment: "Vehicle parameters");
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -213,6 +237,9 @@ namespace CarDealerWebProject.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

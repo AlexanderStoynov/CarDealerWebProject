@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarDealerWebProject.Infrastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(CarDealerWebProjectDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -21,6 +21,74 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CarDealerWebProject.Infrastructure.Data.Models.Vehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("Vehicle identifier");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateListed")
+                        .HasColumnType("datetime2")
+                        .HasComment("Date vehicle is listed");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasComment("Vehicle description");
+
+                    b.Property<int>("EngineCapacity")
+                        .HasColumnType("int")
+                        .HasComment("Engine capacity");
+
+                    b.Property<int>("Fuel")
+                        .HasColumnType("int")
+                        .HasComment("Vehicle fuel type");
+
+                    b.Property<string>("Make")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasComment("Vehicle maker name");
+
+                    b.Property<DateTime>("ManufacturingDate")
+                        .HasColumnType("datetime2")
+                        .HasComment("Vehicle manufacturing date");
+
+                    b.Property<int>("Milage")
+                        .HasColumnType("int")
+                        .HasComment("Vehicle milage");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasComment("Vehicle model");
+
+                    b.Property<int>("MotorHorsePower")
+                        .HasColumnType("int")
+                        .HasComment("Motor horse power");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasComment("Vehicle price");
+
+                    b.Property<string>("VehicleImages")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Vehicle images");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vehicles", t =>
+                        {
+                            t.HasComment("Vehicle parameters");
+                        });
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {

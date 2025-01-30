@@ -14,7 +14,7 @@ namespace CarDealerWebProject.Extensions
         public static IServiceCollection AddAplicationDbContext(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = config.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<CarDealerWebProjectDbContext>(options =>
                 options.UseSqlServer(connectionString));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -23,8 +23,12 @@ namespace CarDealerWebProject.Extensions
 
         public static IServiceCollection AddAplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequiredLength = 10;
+            })
+            .AddEntityFrameworkStores<CarDealerWebProjectDbContext>();
 
             return services;
         }
