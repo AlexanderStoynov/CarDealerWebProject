@@ -37,7 +37,8 @@ namespace CarDealerWebProject.Extensions
                 options.Password.RequiredLength = 10;
                 options.User.RequireUniqueEmail = true;
             })
-            .AddEntityFrameworkStores<CarDealerWebProjectDbContext>();
+            .AddEntityFrameworkStores<CarDealerWebProjectDbContext>()
+            .AddDefaultTokenProviders();
 
             return services;
         }
