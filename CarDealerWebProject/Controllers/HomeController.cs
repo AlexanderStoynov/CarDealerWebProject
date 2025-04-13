@@ -1,3 +1,4 @@
+using CarDealerWebProject.Core.Contracts.Vehicle;
 using CarDealerWebProject.Core.Models.Home;
 using CarDealerWebProject.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,16 +8,19 @@ namespace CarDealerWebProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly IVehicleService vehicleService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+            IVehicleService vehicleService)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.vehicleService = vehicleService;
         }
 
-        public IActionResult Index()
+        public async  Task<IActionResult> Index()
         {
-            var model = new IndexViewModel();
+            var model = await vehicleService.LastSixVehicles();
 
             return View(model);
         }

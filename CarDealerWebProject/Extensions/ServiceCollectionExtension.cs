@@ -1,4 +1,7 @@
-﻿using CarDealerWebProject.Infrastructure.Data;
+﻿using CarDealerWebProject.Core.Contracts.Vehicle;
+using CarDealerWebProject.Core.Services.Vehicle;
+using CarDealerWebProject.Infrastructure.Data;
+using CarDealerWebProject.Infrastructure.Data.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +11,8 @@ namespace CarDealerWebProject.Extensions
     {
         public static IServiceCollection AddAplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IVehicleService, VehicleService>();
+
             return services;
         }
 
@@ -17,6 +22,8 @@ namespace CarDealerWebProject.Extensions
             services.AddDbContext<CarDealerWebProjectDbContext>(options =>
                 options.UseSqlServer(connectionString));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddScoped<IRepository, Repository>();
 
             return services;
         }
