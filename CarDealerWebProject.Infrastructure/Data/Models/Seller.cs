@@ -16,5 +16,7 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         [Required]
         [Comment("Seller e-mail")]
         public string Email { get; set; } = string.Empty;
+
+
     }
 }
