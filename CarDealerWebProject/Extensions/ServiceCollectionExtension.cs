@@ -1,5 +1,5 @@
-﻿using CarDealerWebProject.Core.Contracts.Vehicle;
-using CarDealerWebProject.Core.Services.Vehicle;
+﻿using CarDealerWebProject.Core.Contracts;
+using CarDealerWebProject.Core.Services;
 using CarDealerWebProject.Infrastructure.Data;
 using CarDealerWebProject.Infrastructure.Data.Common;
 using CarDealerWebProject.Infrastructure.Identity;
@@ -13,6 +13,7 @@ namespace CarDealerWebProject.Extensions
         public static IServiceCollection AddAplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

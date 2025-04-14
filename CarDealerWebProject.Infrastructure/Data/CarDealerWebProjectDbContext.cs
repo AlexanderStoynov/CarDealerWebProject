@@ -23,6 +23,6 @@ namespace CarDealerWebProject.Infrastructure.Data
 
         public DbSet<Motorcycle> Motorcycles { get; set; }
 
-        public DbSet<Seller> Sellers { get; set; }
+        public DbSet<User> Sellers { get; set; }
     }
 }

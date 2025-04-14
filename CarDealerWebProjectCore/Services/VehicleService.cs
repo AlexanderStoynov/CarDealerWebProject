@@ -1,6 +1,7 @@
-﻿using CarDealerWebProject.Core.Contracts.Vehicle;
+﻿using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Home;
 using CarDealerWebProject.Infrastructure.Data.Common;
+using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealerWebProject.Core.Services.Vehicle
+namespace CarDealerWebProject.Core.Services
 {
     public class VehicleService : IVehicleService
     {
@@ -19,10 +20,10 @@ namespace CarDealerWebProject.Core.Services.Vehicle
             this.repository = repository;
         }
 
-        public async Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehicles()
+        public async Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync()
         {
             return await repository
-                .AllReadOnly<Infrastructure.Data.Models.Vehicle>()
+                .AllReadOnly<Vehicle>()
                 .OrderByDescending(v => v.Id)
                 .Take(6)
                 .Select(v => new VehicleIndexServiceModel()
