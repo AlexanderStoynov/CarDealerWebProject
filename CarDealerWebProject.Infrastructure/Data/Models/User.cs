@@ -1,26 +1,33 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
 {
-    //[Index(nameof(Email), IsUnique = true)]
-    public class User
+    public class User : IdentityUser
     {
-        [Key]
-        [Comment("User id")]
-        public int Id { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address format")]
+        public override string? Email
+        {
+            get => base.Email!;
+            set
+            {
+                base.Email = value;
+                base.UserName = value;
+            }
+        }
+
+        public override string? UserName
+        {
+            get => base.UserName;
+            set => base.UserName = value ?? base.Email;
+        }
+
 
         [Required]
         [Comment("User name")]
-        public string Name { get; set; } = string.Empty;
-
-        [Required]
-        [Comment("User Identifier")]
-        public string UserId { get; set; } = string.Empty;
-
-        [Required]
-        [Comment("User e-mail")]
-        public string Email { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
 
     }
 }

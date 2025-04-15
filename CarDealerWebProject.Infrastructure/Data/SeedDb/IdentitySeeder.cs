@@ -1,4 +1,4 @@
-﻿using CarDealerWebProject.Infrastructure.Identity;
+﻿using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,12 +11,12 @@ namespace CarDealerWebProject.Infrastructure.Data.SeedDb
 {
     public static class IdentitySeeder
     {
-        public static async Task SeedRolesAndAdminAsync(IServiceProvider services)
+        public static async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
         {
-            var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            var roles = new[] { "Admin", "Seller" };
+            string[] roles = { "Admin", "Seller" };
 
             
             foreach (var role in roles)
@@ -29,22 +29,22 @@ namespace CarDealerWebProject.Infrastructure.Data.SeedDb
 
             var adminEmail = "igra999@abv.bg";
             var adminPassword = "S@bravan12";
-            var adminRole = "Admin";
 
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
             {
-                var newAdmin = new ApplicationUser
+                var newAdmin = new User
                 {
                     Email = adminEmail,
-                    UserName = "SuperAdmin"
-                    
+                    FullName = "System Admin",
+                    EmailConfirmed = true
+
                 };
 
                 var result = await userManager.CreateAsync(newAdmin, adminPassword);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(newAdmin, adminRole);
+                    await userManager.AddToRoleAsync(newAdmin, "Admin");
                 }
                 else
                 {

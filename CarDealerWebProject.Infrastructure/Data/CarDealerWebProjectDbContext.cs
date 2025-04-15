@@ -1,11 +1,10 @@
 ﻿using CarDealerWebProject.Infrastructure.Data.Models;
-using CarDealerWebProject.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarDealerWebProject.Infrastructure.Data
 {
-    public class CarDealerWebProjectDbContext : IdentityDbContext<ApplicationUser>
+    public class CarDealerWebProjectDbContext : IdentityDbContext<User>
     {
         public CarDealerWebProjectDbContext(DbContextOptions<CarDealerWebProjectDbContext> options)
             : base(options)
@@ -23,6 +22,6 @@ namespace CarDealerWebProject.Infrastructure.Data
 
         public DbSet<Motorcycle> Motorcycles { get; set; }
 
-        public DbSet<User> Sellers { get; set; }
+        public override DbSet<User> Users { get; set; }
     }
 }

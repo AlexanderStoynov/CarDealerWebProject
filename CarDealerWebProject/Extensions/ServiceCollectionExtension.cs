@@ -2,7 +2,7 @@
 using CarDealerWebProject.Core.Services;
 using CarDealerWebProject.Infrastructure.Data;
 using CarDealerWebProject.Infrastructure.Data.Common;
-using CarDealerWebProject.Infrastructure.Identity;
+using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,12 +32,13 @@ namespace CarDealerWebProject.Extensions
 
         public static IServiceCollection AddAplicationIdentity(this IServiceCollection services, IConfiguration config)
         {
-            services.AddDefaultIdentity<ApplicationUser>(options =>
+            services.AddDefaultIdentity<User>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequiredLength = 10;
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = false;
             })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<CarDealerWebProjectDbContext>()
             .AddDefaultTokenProviders();
 

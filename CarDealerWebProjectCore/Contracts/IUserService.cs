@@ -8,7 +8,7 @@ namespace CarDealerWebProject.Core.Contracts
 {
     public interface IUserService
     {
-        Task<bool> ExistsByIdAsync(string userId);
+        //Task<bool> ExistsByIdAsync(string userId);
 
         //Task<bool> UserWithPhoneNumberExists(string phoneNumber);
 

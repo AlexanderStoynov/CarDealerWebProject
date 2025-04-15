@@ -17,18 +17,11 @@ namespace CarDealerWebProject.Controllers
            this.adminService = adminService; 
         }
 
-        [HttpGet]
-        public async Task<IActionResult> CreateAgent()
-        {
-            if (await adminService.ExistsByIdAsync(User.Id()))
-            {
-                return BadRequest();
-            }
-
-            var model = new CreateAgentFormModel();
-
-            return View();
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> CreateAgent()
+        //{
+           
+        //}
 
         [HttpPost]
         public async Task<IActionResult> CreateAgent(CreateAgentFormModel model)

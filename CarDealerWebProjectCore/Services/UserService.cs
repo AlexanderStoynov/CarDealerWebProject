@@ -19,10 +19,10 @@ namespace CarDealerWebProject.Core.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> ExistsByIdAsync(string userId)
-        {
-            return repository.AllReadOnly<User>()
-                .AnyAsync(a => a.UserId == userId);
-        }
+        //public Task<bool> ExistsByIdAsync(string userId)
+        //{
+        //    return repository.AllReadOnly<User>()
+        //        .AnyAsync(a => a.UserId == userId);
+        //}
     }
 }
