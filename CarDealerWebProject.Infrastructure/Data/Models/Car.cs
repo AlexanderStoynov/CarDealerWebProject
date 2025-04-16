@@ -8,7 +8,7 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
     {
         [Required]
         [Comment("The cars body type")]
-        public CarBodyType BodyType { get; set; }
+        public CarBodyType CarBodyType { get; set; }
 
     }
 }

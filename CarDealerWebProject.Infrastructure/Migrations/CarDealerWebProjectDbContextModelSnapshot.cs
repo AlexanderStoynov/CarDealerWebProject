@@ -4,7 +4,6 @@ using CarDealerWebProject.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarDealerWebProject.Infrastructure.Migrations
 {
     [DbContext(typeof(CarDealerWebProjectDbContext))]
-    [Migration("20250414204744_CorrectedUserClass")]
-    partial class CorrectedUserClass
+    partial class CarDealerWebProjectDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,7 +44,8 @@ namespace CarDealerWebProject.Infrastructure.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
                         .HasComment("User name");
 
                     b.Property<bool>("LockoutEnabled")
@@ -80,6 +78,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -258,10 +257,12 @@ namespace CarDealerWebProject.Infrastructure.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -298,10 +299,12 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -315,16 +318,13 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 {
                     b.HasBaseType("CarDealerWebProject.Infrastructure.Data.Models.Vehicle");
 
-                    b.Property<int>("BodyType")
+                    b.Property<int>("CarBodyType")
                         .HasColumnType("int")
                         .HasComment("The cars body type");
 
-                    b.ToTable("Vehicles", t =>
+                    b.ToTable(t =>
                         {
                             t.HasComment("Vehicle parameters");
-
-                            t.Property("BodyType")
-                                .HasColumnName("Car_BodyType");
                         });
 
                     b.HasDiscriminator().HasValue("Car");
@@ -334,7 +334,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 {
                     b.HasBaseType("CarDealerWebProject.Infrastructure.Data.Models.Vehicle");
 
-                    b.Property<int>("BodyType")
+                    b.Property<int>("MotorcycleBodyType")
                         .HasColumnType("int")
                         .HasComment("Motorcycle body type");
 

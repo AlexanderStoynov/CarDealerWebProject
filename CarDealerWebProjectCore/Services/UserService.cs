@@ -14,15 +14,20 @@ namespace CarDealerWebProject.Core.Services
             this.repository = repository;
         }
 
-        public Task CreateAsync(string userId, string name, string email, string password)
+        public async Task CreateAsync(string userName)
         {
-            throw new NotImplementedException();
+            await repository.AddAsync(new User()
+            {
+                UserName = userName,
+            });
+
+            await repository.SaveChangesAsync();
         }
 
-        //public Task<bool> ExistsByIdAsync(string userId)
-        //{
-        //    return repository.AllReadOnly<User>()
-        //        .AnyAsync(a => a.UserId == userId);
-        //}
+        public async Task<bool> ExistsByEmailAsync(string userEmail = null!)
+        {
+            return await repository.AllReadOnly<User>()
+                .AnyAsync(u => u.Email == userEmail);
+        }
     }
 }

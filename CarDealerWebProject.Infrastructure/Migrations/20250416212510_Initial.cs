@@ -30,9 +30,10 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, comment: "User name"),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -64,9 +65,13 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     Milage = table.Column<int>(type: "int", nullable: false, comment: "Vehicle milage"),
                     MotorHorsePower = table.Column<int>(type: "int", nullable: false, comment: "Motor horse power"),
                     EngineCapacity = table.Column<int>(type: "int", nullable: false, comment: "Engine capacity"),
+                    Transmission = table.Column<int>(type: "int", nullable: false, comment: "Vehicle transmission"),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false, comment: "Vehicle description"),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Vehicle color"),
                     VehicleImages = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Vehicle images"),
-                    DateListed = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date vehicle is listed")
+                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    CarBodyType = table.Column<int>(type: "int", nullable: true, comment: "The cars body type"),
+                    MotorcycleBodyType = table.Column<int>(type: "int", nullable: true, comment: "Motorcycle body type")
                 },
                 constraints: table =>
                 {

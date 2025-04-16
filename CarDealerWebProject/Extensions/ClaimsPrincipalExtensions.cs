@@ -4,7 +4,7 @@ namespace CarDealerWebProject.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static string Id(this ClaimsPrincipal user)
+        public static string Email(this ClaimsPrincipal user)
         {
             return user.FindFirstValue(ClaimTypes.NameIdentifier);
         }

@@ -1,4 +1,5 @@
-﻿using CarDealerWebProject.Core.Contracts;
+﻿using CarDealerWebProject.Attributes;
+using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Admin;
 using CarDealerWebProject.Extensions;
 using Microsoft.AspNetCore.Authentication;
@@ -10,22 +11,33 @@ namespace CarDealerWebProject.Controllers
     
     public class AdminController : BaseController
     {
-        private readonly IUserService adminService;
+        private readonly IUserService userService;
 
-        public AdminController(IUserService adminService)
+        public AdminController(IUserService userService)
         {
-           this.adminService = adminService; 
+           this.userService = userService; 
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> CreateAgent()
-        //{
-           
-        //}
+        [HttpGet]
+        [IsUser]
+        public IActionResult CreateAgent()
+        {
+            var model = new CreateSellerFormModel();
+
+            return View(model);
+        }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAgent(CreateAgentFormModel model)
+        [IsUser]
+        public async Task<IActionResult> CreateSeller(CreateSellerFormModel model)
         {
+            if (ModelState.IsValid == false) 
+            { 
+                return View(model);
+            }
+
+            await userService.CreateAsync(model.UserFullName);
+
             return RedirectToAction(nameof(VehicleController.Index), "Vehicle");
         }
     }

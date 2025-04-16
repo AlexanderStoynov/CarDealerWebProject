@@ -13,5 +13,8 @@
         public const int VehicleEngineCapacityMin = 1;
         public const int VehicleEngineCapacityMax = 100000;
         public const int VehicleDescriptionMaxLength = 1000;
+
+        public const int UserNameMaxLength = 200;
+        public const int UserNameMinLength = 4;
     }
 }

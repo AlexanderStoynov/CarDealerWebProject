@@ -1,14 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
 {
     public class User : IdentityUser
     {
-        [Required(ErrorMessage = "Email is required")]
+        [Required]
+        [AllowNull]
         [EmailAddress(ErrorMessage = "Invalid email address format")]
-        public override string? Email
+        public override string Email
         {
             get => base.Email!;
             set
@@ -18,14 +21,17 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
             }
         }
 
-        public override string? UserName
+        [AllowNull]
+        public override string UserName
         {
-            get => base.UserName;
-            set => base.UserName = value ?? base.Email;
+            get => base.UserName!;
+            set => base.UserName = base.Email!;
         }
 
 
         [Required]
+        [MaxLength(UserNameMaxLength)]
+        [MinLength(UserNameMinLength)]
         [Comment("User name")]
         public string FullName { get; set; } = string.Empty;
 

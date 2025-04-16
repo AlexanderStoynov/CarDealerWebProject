@@ -37,8 +37,7 @@ namespace CarDealerWebProject.Infrastructure.Data.SeedDb
                 {
                     Email = adminEmail,
                     FullName = "System Admin",
-                    EmailConfirmed = true
-
+                    EmailConfirmed = true,
                 };
 
                 var result = await userManager.CreateAsync(newAdmin, adminPassword);
