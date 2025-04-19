@@ -10,6 +10,6 @@ namespace CarDealerWebProject.Core.Contracts
     {
         Task<bool> ExistsByEmailAsync(string userEmail);
 
-        Task CreateAsync(string userName);
+        //Task CreateAsync(string userName);
     }
 }

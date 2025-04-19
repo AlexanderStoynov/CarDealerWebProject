@@ -45,6 +45,7 @@ namespace CarDealerWebProject.Infrastructure.Data.SeedDb
                 {
                     await userManager.AddToRoleAsync(newAdmin, "Admin");
                 }
+
                 else
                 {
                     throw new Exception($"Failed to seed admin user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
