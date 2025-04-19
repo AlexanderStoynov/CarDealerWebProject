@@ -10,5 +10,10 @@ namespace CarDealerWebProject.Core.Models.Admin
         [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength, ErrorMessage = LengthMessage)]
         [Display(Name = "Full name")]
         public string UserFullName { get; set; } = null!;
+
+        public string UserEmail { get; set; } = null!;
+        public string UserPassword { get; set; } = null!;
+
+        
     }
 }

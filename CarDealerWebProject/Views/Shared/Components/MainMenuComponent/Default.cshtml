@@ -8,4 +8,11 @@
             <a class="nav-link text-dark" asp-area="" asp-controller="Vehicles" asp-action="Index">Add Vehicle</a>
         </li>
     }
+
+     @if (this.User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin"))
+     {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateSeller">Create Seller</a>
+        </li>
+     }
 </ul>

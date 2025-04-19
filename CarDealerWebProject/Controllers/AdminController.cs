@@ -20,7 +20,7 @@ namespace CarDealerWebProject.Controllers
 
         [HttpGet]
         [IsUser]
-        public IActionResult CreateAgent()
+        public IActionResult CreateSeller()
         {
             var model = new CreateSellerFormModel();
 
@@ -28,7 +28,7 @@ namespace CarDealerWebProject.Controllers
         }
 
         [HttpPost]
-        [IsUser]
+        [IsUser()]
         public async Task<IActionResult> CreateSeller(CreateSellerFormModel model)
         {
             if (ModelState.IsValid == false) 

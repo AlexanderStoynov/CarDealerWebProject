@@ -1,0 +1,44 @@
+﻿@model CreateSellerFormModel
+@{
+    ViewData["Title"] = "Create Seller";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewData.ModelState["Error"].Errors.First().ErrorMessage
+    </div>
+}
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="UserFullName"></label>
+                <input asp-for="UserFullName" class="form-control">
+                <span asp-validation-for="UserFullName" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserEmail"></label>
+                <input asp-for="UserEmail" class="form-control">
+                <span asp-validation-for="UserEmail" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserPassword"></label>
+                <input asp-for="UserPassword" class="form-control">
+                <span asp-validation-for="UserPassword" class="small text-danger"></span>
+            </div>
+            <div class="text-center">
+                <input class="btn btn-primary mt-3 " type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
