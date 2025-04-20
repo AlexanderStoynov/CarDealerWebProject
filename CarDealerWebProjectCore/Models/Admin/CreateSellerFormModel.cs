@@ -19,16 +19,16 @@ namespace CarDealerWebProject.Core.Models.Admin
 
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(SellerPasswordMaxLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = SellerPasswordMinLenght)]
-        //[RegularExpression("[a-z]", ErrorMessage = "The {0} must contain at least one uppercase and lowercase letter, a number and a symbol")]
-        //[DataType(DataType.Password)]
+        [RegularExpression("(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#$@!%&*?]).*", ErrorMessage = "The {0} must contain at least one uppercase and lowercase letter, a number and a symbol")]
+        [DataType(DataType.Password)]
         [Display(Name = "User password")]
         public string UserPassword { get; set; } = null!;
 
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(SellerPasswordMaxLength, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = SellerPasswordMinLenght)]
         [Display(Name = "User confirm password")]
-        //[RegularExpression(@"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d])", ErrorMessage = "The {0} must contain at least one uppercase and lowercase letter, a number and a symbol")]
-        //[DataType(DataType.Password)]
+        [RegularExpression("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[#$@!%&*?]).*", ErrorMessage = "The {0} must contain at least one uppercase and lowercase letter, a number and a symbol")]
+        [DataType(DataType.Password)]
         [Compare("UserPassword", ErrorMessage = "The password and confirmation password do not match.")]
         public string UserConfirmPassword { get; set; } = null!;
 
