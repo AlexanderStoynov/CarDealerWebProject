@@ -1,4 +1,5 @@
-﻿using CarDealerWebProject.Core.Models.Vehicle;
+﻿using CarDealerWebProject.Core.Contracts;
+using CarDealerWebProject.Core.Models.Vehicle;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,16 @@ namespace CarDealerWebProject.Controllers
 {
     public class VehicleController : Controller
     {
+        private readonly IVehicleService vehicleService;
+
+        private readonly IUserService userService;
+
+        public VehicleController(IVehicleService vehicleService, IUserService userService)
+        {
+            this.vehicleService = vehicleService;
+            this.userService = userService;
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Index()
@@ -23,16 +34,37 @@ namespace CarDealerWebProject.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Seller")]
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            var model = new VehicleFormModel()
+            {
+                Categories = await vehicleService.AllCategoriesAsync()
+            };
+
+            return View(model);
         }
 
+        [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
-        public async Task<IActionResult> Add(VehicleFormModel model)
+        public async Task<IActionResult> Add(VehicleFormModel vehicleModel)
         {
-            return RedirectToAction(nameof(Details), new { id = 1 });
+            if (await vehicleService.CategoryExistsAsync(vehicleModel.CategoryId) == false)
+            {
+                ModelState.AddModelError(nameof(vehicleModel.CategoryId), "");
+            }
+
+            if(ModelState.IsValid == false)
+            {
+                vehicleModel.Categories = await vehicleService.AllCategoriesAsync();
+
+                return View(vehicleModel);
+            }
+
+            int newVehicleId = await vehicleService.CreateAsync(vehicleModel);
+
+            return RedirectToAction(nameof(Details), new { id = newVehicleId });
         }
 
         [HttpGet]
@@ -40,7 +72,9 @@ namespace CarDealerWebProject.Controllers
         {
             var model = new VehicleFormModel();
 
-            return View(model);
+            //return View(model);
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]

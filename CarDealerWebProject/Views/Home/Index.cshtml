@@ -33,7 +33,7 @@
             var vehicle = vehicles[i];
             <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
                 <img class="d-block w-100" style="height:500px"
-                     src="@vehicle.VehicleImages[1]" alt="@vehicle.Make @vehicle.Model">
+                     src="@vehicle.VehicleImage" alt="@vehicle.Make @vehicle.Model">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>
                         <a class="btn btn-primary" asp-controller="Vehicle" asp-action="Details"

@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Drawing;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
@@ -15,55 +14,60 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(VehicleMakeMaxLength)]
+        [StringLength(VehicleMakeMaxLength, MinimumLength = VehicleMakeMinLength)]
         [Comment("Vehicle maker name")]
         public required string Make { get; set; }
 
         [Required]
-        [MaxLength(VehicleModelMaxLength)]
+        [StringLength(VehicleModelMaxLength, MinimumLength = VehicleModelMinLength)]
         [Comment("Vehicle model")]
         public required string Model { get; set; }
 
+        [Required]
+        [StringLength(VehicleColorMaxLength, MinimumLength = VehicleColorMinLength)]
+        [Comment("Vehicle color")]
+        public required string Color { get; set; }
+
+        [Comment("Vehicle transmission")]
+        public Transmission Transmission { get; set; }
+
         [Comment("Vehicle manufacturing date")]
         public DateTime ManufacturingDate { get; set; }
+
+        [Range(VehicleMotorHorsePowerMin, VehicleMotorHorsePowerMax)]
+        [Comment("Motor horse power")]
+        public int MotorHorsePower { get; set; }
+
+        [Required]
+        [Comment("Vehicle fuel type")]
+        public FuelType Fuel { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         [Range(typeof(decimal), VehiclePriceMin, VehiclePriceMax, ConvertValueInInvariantCulture = true)]
         [Comment("Vehicle price")]
         public decimal Price { get; set; }
 
-        [Required]
-        [Comment("Vehicle fuel type")]
-        public FuelType Fuel { get; set; }
-
         [Range(VehicleMilageMin, VehicleMilageMax)]
         [Comment("Vehicle milage")]
         public int Milage { get; set; }
 
-        [Range(VehicleMotorHorsePowerMin, VehicleMotorHorsePowerMax)]
-        [Comment("Motor horse power")]
-        public int MotorHorsePower { get; set; }
+        [Required]
+        [Comment("Vehicle images")]
+        public List<string> VehicleImages { get; set; } = new List<string>();
 
-        [Range(VehicleEngineCapacityMin, VehicleEngineCapacityMax)]
-        [Comment("Engine capacity")]
-        public int EngineCapacity { get; set; }
-
-        [Comment("Vehicle transmission")]
-        public Transmission Transmission { get; set; }
-
-        [MaxLength(VehicleDescriptionMaxLength)]
+        [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Comment("Vehicle description")]
-        public string Description { get; set; } = string.Empty;
+        public required string Description { get; set; }
 
         [Required]
-        [Comment("Vehicle color")]
-        public string Color { get; set; } = string.Empty;
+        [Comment("Category identifier")]
+        public int CategoryId { get; set; }
 
-        [Comment("Vehicle images")]
-        public  List<string> VehicleImages { get; set; } = new List<string>();
-
+        [Required]
         [Comment("If vehicle is sold")]
-        public bool IsSold = false;
+        public bool IsSold { get; set; } = false;
+
+        public Category Category { get; set; } = null!;
  
     }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarDealerWebProject.Core.Models.Home
+namespace CarDealerWebProject.Core.Models.Vehicle
 {
     public class VehicleIndexServiceModel
     {
@@ -14,7 +14,7 @@ namespace CarDealerWebProject.Core.Models.Home
         
         public string Model { get; set; } = string.Empty;
 
-        public List<string> VehicleImages { get; set; } = new List<string>();
+        public string VehicleImage { get; set; } = string.Empty;
 
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CarDealerWebProject.Attributes
 {
-    public class IsUserAttribute : ActionFilterAttribute
+    public class IsNotAUserAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {

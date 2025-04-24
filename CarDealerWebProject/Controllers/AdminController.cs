@@ -35,7 +35,8 @@ namespace CarDealerWebProject.Controllers
         }
 
         [HttpGet]
-        [IsUser]
+        [Authorize(Roles = "Admin, Seller")]
+        //[IsNotAUser]
         public IActionResult CreateSeller()
         {
             var model = new CreateSellerFormModel();
@@ -44,7 +45,8 @@ namespace CarDealerWebProject.Controllers
         }
 
         [HttpPost]
-        [IsUser()]
+        [Authorize(Roles = "Admin, Seller")]
+        //[IsNotAUser]
         public async Task<IActionResult> CreateSeller(CreateSellerFormModel model)
         {
             if (ModelState.IsValid == false) 
