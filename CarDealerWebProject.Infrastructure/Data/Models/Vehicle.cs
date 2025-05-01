@@ -60,14 +60,8 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         public required string Description { get; set; }
 
         [Required]
-        [Comment("Category identifier")]
-        public int CategoryId { get; set; }
-
-        [Required]
         [Comment("If vehicle is sold")]
         public bool IsSold { get; set; } = false;
-
-        public Category Category { get; set; } = null!;
  
     }
 

@@ -8,10 +8,10 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
     public class PetrolCar : Vehicle
     {
         [Required]
-        [Comment("The cars body type")]
+        [Comment("Car body type")]
         public CarBodyType CarBodyType { get; set; }
 
-        [Range(VehicleEngineCapacityMin, VehicleEngineCapacityMax)]
+        [Range(PetrolVehicleEngineCapacityMin, PetrolVehicleEngineCapacityMax)]
         [Comment("Engine capacity")]
         public int EngineCapacity { get; set; }
 

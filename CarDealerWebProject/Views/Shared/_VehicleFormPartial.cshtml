@@ -1,4 +1,5 @@
-﻿@model VehicleFormModel
+﻿@using CarDealerWebProject.Infrastructure.Data.Enums
+@model VehicleFormModel
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
@@ -19,8 +20,10 @@
                 <span asp-validation-for="Color" class="small text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Transmission"></label>
-                <input asp-for="Transmission" class="form-control">
+                <label for="Transmission" class="form-label">Transmission</label>
+                <select asp-for="Transmission" class="form-select" asp-items="Html.GetEnumSelectList<Transmission>()">
+                    <option value="">Select transmission</option>
+                </select>
                 <span asp-validation-for="Transmission" class="small text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,8 +37,10 @@
                 <span asp-validation-for="MotorHorsePower" class="small text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Fuel"></label>
-                <input asp-for="Fuel" class="form-control">
+                <label for="Fuel" class="form-label">Fuel</label>
+                <select asp-for="Fuel" class="form-select" asp-items="Html.GetEnumSelectList<FuelType>()">
+                    <option value="">Select fuel type</option>
+                </select>
                 <span asp-validation-for="Fuel" class="small text-danger"></span>
             </div>
             <div class="form-group">
@@ -57,16 +62,6 @@
                 <label asp-for="VehicleImages"></label>
                 <input asp-for="VehicleImages" class="form-control" placeholder="Your fine URL here">
                 <span asp-validation-for="VehicleImages" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId"></label>
-                <select asp-for="CategoryId" class="form-control">
-                    @foreach (var category in Model.Categories)
-                    {
-                        <option value="@category.Id">@category.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="CategoryId" class="small text-danger"></span>
             </div>
 
             <div class="text-center">

@@ -1,5 +1,6 @@
 ﻿using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Vehicle;
+using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +20,11 @@ namespace CarDealerWebProject.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> All([FromQuery]AllVehiclesQueryModel query)
         {
             var model = new AllVehiclesQueryModel();
 
-            return View(model);
+            return View(query);
         }
 
         [HttpGet]
@@ -38,10 +39,8 @@ namespace CarDealerWebProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var model = new VehicleFormModel()
-            {
-                Categories = await vehicleService.AllCategoriesAsync()
-            };
+            var model = new VehicleFormModel();
+            
 
             return View(model);
         }
@@ -50,15 +49,9 @@ namespace CarDealerWebProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(VehicleFormModel vehicleModel)
         {
-            if (await vehicleService.CategoryExistsAsync(vehicleModel.CategoryId) == false)
-            {
-                ModelState.AddModelError(nameof(vehicleModel.CategoryId), "");
-            }
 
             if(ModelState.IsValid == false)
             {
-                vehicleModel.Categories = await vehicleService.AllCategoriesAsync();
-
                 return View(vehicleModel);
             }
 

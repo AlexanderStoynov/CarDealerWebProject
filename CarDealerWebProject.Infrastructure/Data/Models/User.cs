@@ -6,7 +6,7 @@ using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<Guid>
     {
         [Required]
         [AllowNull]

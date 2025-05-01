@@ -1,8 +1,8 @@
 ﻿using CarDealerWebProject.Infrastructure.Data.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
+using System.ComponentModel.DataAnnotations.Schema;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
+using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Core.Models.Vehicle
 {
@@ -60,9 +60,15 @@ namespace CarDealerWebProject.Core.Models.Vehicle
         [Display(Name = "Images")]
         public List<string> VehicleImages { get; set; } = new List<string>();
 
-        [Display(Name = "Category")]
-        public int CategoryId   { get; set; } 
+        [Required(ErrorMessage = RequiredMessage)]
+        [Display(Name = "Select vehicle type")]
+        public VehicleTypes SelectedType { get; set; }
 
-        public IEnumerable<VehicleCategoryServiceModel> Categories { get; set; } = new List<VehicleCategoryServiceModel>();
+
+        public ElectricCarFormModel? ElectricCarProperties { get; set; }
+        public PetrolCarFormModel? PetrolCarProperties { get; set; }
+        public MotorcycleFormModel? MotorcycleProperties { get; set; }
+        public HybridCarFormModel? HybridCarProperties { get; set; }
+
     }
 }

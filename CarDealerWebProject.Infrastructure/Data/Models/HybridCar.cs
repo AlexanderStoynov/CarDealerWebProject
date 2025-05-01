@@ -5,11 +5,16 @@ using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
 {
-    public class Motorcycle : Vehicle
+    public class HybridCar : Vehicle
     {
         [Required]
-        [Comment("Motorcycle body type")]
-        public MotorcycleBodyType MotorcycleBodyType { get; set; }
+        [Comment("Car body type")]
+        public CarBodyType CarBodyType { get; set; }
+
+        [Required]
+        [Range(ElectricCarBatteryCapacityMin, ElectricCarBatteryCapacityMax)]
+        [Comment("Battery capacity")]
+        public int BatteryCapacity { get; set; }
 
         [Range(PetrolVehicleEngineCapacityMin, PetrolVehicleEngineCapacityMax)]
         [Comment("Engine capacity")]

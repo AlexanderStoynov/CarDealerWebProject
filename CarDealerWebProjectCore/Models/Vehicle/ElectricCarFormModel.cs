@@ -1,11 +1,16 @@
 ﻿using CarDealerWebProject.Infrastructure.Data.Enums;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
-namespace CarDealerWebProject.Infrastructure.Data.Models
+namespace CarDealerWebProject.Core.Models.Vehicle
 {
-    public class ElectricCar : Vehicle
+    public class ElectricCarFormModel : VehicleFormModel
     {
         [Required]
         [Comment("Car body type")]

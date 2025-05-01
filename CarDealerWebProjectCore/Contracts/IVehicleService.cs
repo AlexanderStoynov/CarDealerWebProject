@@ -1,4 +1,5 @@
 ﻿using CarDealerWebProject.Core.Models.Vehicle;
+using CarDealerWebProject.Infrastructure.Data.Enums;
 
 namespace CarDealerWebProject.Core.Contracts
 {
@@ -6,10 +7,12 @@ namespace CarDealerWebProject.Core.Contracts
     {
         Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync();
 
-        Task<IEnumerable<VehicleCategoryServiceModel>> AllCategoriesAsync();
-
-        Task<bool> CategoryExistsAsync(int categoryId);
-
         Task<int> CreateAsync(VehicleFormModel model);
+
+        Task<VehicleQueryServiceModel> AllAsync(
+            string? searchTerm = null,
+            VehicleSorting sorting = VehicleSorting.NewlyAdded,
+            int currentPage = 1,
+            int vehiclePerPage = 1);
     }
 }
