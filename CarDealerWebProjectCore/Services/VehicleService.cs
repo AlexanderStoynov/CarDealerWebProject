@@ -21,23 +21,15 @@ namespace CarDealerWebProject.Core.Services
             this.repository = repository;
         }
 
-        public async Task<VehicleQueryServiceModel> AllAsync(string? searchTerm = null, VehicleSorting sorting = VehicleSorting.NewlyAdded, int currentPage = 1, int vehiclePerPage = 1)
+        public async Task<VehicleQueryServiceModel> AllAsync(VehicleSorting sorting = VehicleSorting.NewlyAdded, int currentPage = 1, int vehiclePerPage = 1)
         {
             var vehiclesToShow = repository.AllReadOnly<Vehicle>();
-
-            if (searchTerm != null)
-            {
-                string normilizedSearchTerm = searchTerm.ToLower();
-                vehiclesToShow = vehiclesToShow
-                    .Where(v => (v.Make.ToLower().Contains(normilizedSearchTerm) ||
-                                 v.Model.ToLower().Contains(normilizedSearchTerm)));
-            }
 
             vehiclesToShow = sorting switch
             {
                 VehicleSorting.PriceDescending => vehiclesToShow.OrderByDescending(v => v.Price),
                 VehicleSorting.PriceAscending => vehiclesToShow.OrderBy(v => v.Price),
-                VehicleSorting.Name => vehiclesToShow.OrderBy(v => v.Make).ThenBy(v => v.Model),
+                VehicleSorting.Alphabetical => vehiclesToShow.OrderBy(v => v.Make).ThenBy(v => v.Model),
                 _ => vehiclesToShow.OrderByDescending(v => v.Id)
             };
 

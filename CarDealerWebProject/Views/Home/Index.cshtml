@@ -14,7 +14,7 @@
         </p>
         <hr class="my-4">
         <p class="lead">
-            @if (User.Identity.IsAuthenticated &&
+            @if (User.Identity!.IsAuthenticated &&
            (User.IsInRole("Admin") || User.IsInRole("Seller")))
             {
                 <a asp-controller="Vehicle" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Vehicle</a>

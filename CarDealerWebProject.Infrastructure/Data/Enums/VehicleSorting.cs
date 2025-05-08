@@ -11,6 +11,6 @@ namespace CarDealerWebProject.Infrastructure.Data.Enums
         NewlyAdded = 0,
         PriceAscending = 1,
         PriceDescending = 2,
-        Name = 3
+        Alphabetical = 3
     }
 }

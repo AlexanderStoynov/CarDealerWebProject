@@ -15,7 +15,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -29,7 +29,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false, comment: "User name"),
@@ -57,21 +57,28 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Vehicle identifier")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Make = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "Vehicle maker name"),
+                    Make = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "Vehicle maker name"),
                     Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Vehicle model"),
-                    ManufacturingDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Vehicle manufacturing date"),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Vehicle price"),
-                    Fuel = table.Column<int>(type: "int", nullable: false, comment: "Vehicle fuel type"),
-                    Milage = table.Column<int>(type: "int", nullable: false, comment: "Vehicle milage"),
-                    MotorHorsePower = table.Column<int>(type: "int", nullable: false, comment: "Motor horse power"),
-                    EngineCapacity = table.Column<int>(type: "int", nullable: false, comment: "Engine capacity"),
+                    Color = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false, comment: "Vehicle color"),
                     Transmission = table.Column<int>(type: "int", nullable: false, comment: "Vehicle transmission"),
-                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false, comment: "Vehicle description"),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Vehicle color"),
+                    ManufacturingDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Vehicle manufacturing date"),
+                    MotorHorsePower = table.Column<int>(type: "int", nullable: false, comment: "Motor horse power"),
+                    Fuel = table.Column<int>(type: "int", nullable: false, comment: "Vehicle fuel type"),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Vehicle price"),
+                    Milage = table.Column<int>(type: "int", nullable: false, comment: "Vehicle milage"),
                     VehicleImages = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Vehicle images"),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false, comment: "Vehicle description"),
+                    IsSold = table.Column<bool>(type: "bit", nullable: false, comment: "If vehicle is sold"),
                     Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    CarBodyType = table.Column<int>(type: "int", nullable: true, comment: "The cars body type"),
-                    MotorcycleBodyType = table.Column<int>(type: "int", nullable: true, comment: "Motorcycle body type")
+                    ElectricCar_CarBodyType = table.Column<int>(type: "int", nullable: true, comment: "Car body type"),
+                    ElectricCar_BatteryCapacity = table.Column<int>(type: "int", nullable: true, comment: "Battery capacity"),
+                    HybridCar_CarBodyType = table.Column<int>(type: "int", nullable: true, comment: "Car body type"),
+                    BatteryCapacity = table.Column<int>(type: "int", nullable: true, comment: "Battery capacity"),
+                    HybridCar_EngineCapacity = table.Column<int>(type: "int", nullable: true, comment: "Engine capacity"),
+                    MotorcycleBodyType = table.Column<int>(type: "int", nullable: true, comment: "Motorcycle body type"),
+                    Motorcycle_EngineCapacity = table.Column<int>(type: "int", nullable: true, comment: "Engine capacity"),
+                    CarBodyType = table.Column<int>(type: "int", nullable: true, comment: "Car body type"),
+                    EngineCapacity = table.Column<int>(type: "int", nullable: true, comment: "Engine capacity")
                 },
                 constraints: table =>
                 {
@@ -85,7 +92,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -106,7 +113,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -128,7 +135,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -145,8 +152,8 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -169,7 +176,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)

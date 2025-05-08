@@ -22,7 +22,13 @@ namespace CarDealerWebProject.Controllers
         [HttpGet]
         public async Task<IActionResult> All([FromQuery]AllVehiclesQueryModel query)
         {
-            var model = new AllVehiclesQueryModel();
+            var model = await vehicleService.AllAsync(
+                query.Sorting,
+                query.CurrentPage,
+                query.VehiclesPerPage);
+                
+            query.TotalVehiclesCount = model.TotalVehicleCount;
+            query.Vehicles = model.Vehicles;
 
             return View(query);
         }

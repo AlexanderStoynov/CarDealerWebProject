@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarDealerWebProject.Infrastructure.Data
 {
-    public class CarDealerWebProjectDbContext : IdentityDbContext<User>
+    public class CarDealerWebProjectDbContext : IdentityDbContext<User, ApplicationRole, Guid>
     {
         public CarDealerWebProjectDbContext(DbContextOptions<CarDealerWebProjectDbContext> options)
             : base(options)

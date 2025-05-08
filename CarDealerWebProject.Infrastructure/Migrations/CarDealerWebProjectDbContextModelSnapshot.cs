@@ -22,32 +22,39 @@ namespace CarDealerWebProject.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CarDealerWebProject.Infrastructure.Data.Models.Category", b =>
+            modelBuilder.Entity("CarDealerWebProject.Infrastructure.Data.Models.ApplicationRole", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Category Identifier");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(35)
-                        .HasColumnType("nvarchar(35)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", t =>
-                        {
-                            t.HasComment("Vehicle category");
-                        });
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("CarDealerWebProject.Infrastructure.Data.Models.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -126,10 +133,6 @@ namespace CarDealerWebProject.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int")
-                        .HasComment("Category identifier");
-
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasMaxLength(35)
@@ -194,8 +197,6 @@ namespace CarDealerWebProject.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Vehicles", t =>
                         {
                             t.HasComment("Vehicle parameters");
@@ -206,34 +207,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -247,9 +221,8 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -258,7 +231,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -272,9 +245,8 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -283,7 +255,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
@@ -296,9 +268,8 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -307,13 +278,13 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -322,10 +293,10 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
                         .HasMaxLength(128)
@@ -341,6 +312,62 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("CarDealerWebProject.Infrastructure.Data.Models.ElectricCar", b =>
+                {
+                    b.HasBaseType("CarDealerWebProject.Infrastructure.Data.Models.Vehicle");
+
+                    b.Property<int>("BatteryCapacity")
+                        .HasColumnType("int")
+                        .HasComment("Battery capacity");
+
+                    b.Property<int>("CarBodyType")
+                        .HasColumnType("int")
+                        .HasComment("Car body type");
+
+                    b.ToTable("Vehicles", t =>
+                        {
+                            t.HasComment("Vehicle parameters");
+
+                            t.Property("BatteryCapacity")
+                                .HasColumnName("ElectricCar_BatteryCapacity");
+
+                            t.Property("CarBodyType")
+                                .HasColumnName("ElectricCar_CarBodyType");
+                        });
+
+                    b.HasDiscriminator().HasValue("ElectricCar");
+                });
+
+            modelBuilder.Entity("CarDealerWebProject.Infrastructure.Data.Models.HybridCar", b =>
+                {
+                    b.HasBaseType("CarDealerWebProject.Infrastructure.Data.Models.Vehicle");
+
+                    b.Property<int>("BatteryCapacity")
+                        .HasColumnType("int")
+                        .HasComment("Battery capacity");
+
+                    b.Property<int>("CarBodyType")
+                        .HasColumnType("int")
+                        .HasComment("Car body type");
+
+                    b.Property<int>("EngineCapacity")
+                        .HasColumnType("int")
+                        .HasComment("Engine capacity");
+
+                    b.ToTable("Vehicles", t =>
+                        {
+                            t.HasComment("Vehicle parameters");
+
+                            t.Property("CarBodyType")
+                                .HasColumnName("HybridCar_CarBodyType");
+
+                            t.Property("EngineCapacity")
+                                .HasColumnName("HybridCar_EngineCapacity");
+                        });
+
+                    b.HasDiscriminator().HasValue("HybridCar");
                 });
 
             modelBuilder.Entity("CarDealerWebProject.Infrastructure.Data.Models.Motorcycle", b =>
@@ -372,7 +399,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
 
                     b.Property<int>("CarBodyType")
                         .HasColumnType("int")
-                        .HasComment("The cars body type");
+                        .HasComment("Car body type");
 
                     b.Property<int>("EngineCapacity")
                         .HasColumnType("int")
@@ -386,27 +413,16 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("PetrolCar");
                 });
 
-            modelBuilder.Entity("CarDealerWebProject.Infrastructure.Data.Models.Vehicle", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("CarDealerWebProject.Infrastructure.Data.Models.Category", "Category")
-                        .WithMany("Vehicles")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("CarDealerWebProject.Infrastructure.Data.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("CarDealerWebProject.Infrastructure.Data.Models.User", null)
                         .WithMany()
@@ -415,7 +431,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("CarDealerWebProject.Infrastructure.Data.Models.User", null)
                         .WithMany()
@@ -424,9 +440,9 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("CarDealerWebProject.Infrastructure.Data.Models.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -439,18 +455,13 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("CarDealerWebProject.Infrastructure.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CarDealerWebProject.Infrastructure.Data.Models.Category", b =>
-                {
-                    b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618
         }

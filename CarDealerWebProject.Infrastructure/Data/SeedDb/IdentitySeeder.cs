@@ -14,7 +14,7 @@ namespace CarDealerWebProject.Infrastructure.Data.SeedDb
         public static async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
             string[] roles = { "Admin", "Seller" };
 
@@ -23,7 +23,8 @@ namespace CarDealerWebProject.Infrastructure.Data.SeedDb
             {
                 if (!await roleManager.RoleExistsAsync(role))
                 {
-                    await roleManager.CreateAsync(new IdentityRole(role));
+                    var roleName = new ApplicationRole(role);
+                    await roleManager.CreateAsync(roleName);
                 }
             }
 

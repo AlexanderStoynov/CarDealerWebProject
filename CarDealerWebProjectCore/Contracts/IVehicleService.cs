@@ -10,7 +10,6 @@ namespace CarDealerWebProject.Core.Contracts
         Task<int> CreateAsync(VehicleFormModel model);
 
         Task<VehicleQueryServiceModel> AllAsync(
-            string? searchTerm = null,
             VehicleSorting sorting = VehicleSorting.NewlyAdded,
             int currentPage = 1,
             int vehiclePerPage = 1);
