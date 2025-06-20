@@ -43,7 +43,7 @@ namespace CarDealerWebProject.Core.Services
                     Model = v.Model,
                     Price = v.Price,
                     MotorHorsePower = v.MotorHorsePower,
-                    VehicleImage = v.VehicleImages[0]
+                    VehicleImages = v.VehicleImages
                 })
                 .ToListAsync();
 
@@ -58,22 +58,9 @@ namespace CarDealerWebProject.Core.Services
 
         public async Task<int> CreateAsync(VehicleFormModel model)
         {
-            Vehicle vehicle = new Vehicle
-            {
-                Make = model.Make,
-                Model = model.Model,
-                ManufacturingDate = model.ManufacturingDate,
-                Price = model.Price,
-                Fuel = model.Fuel,
-                Milage = model.Milage,
-                MotorHorsePower = model.MotorHorsePower,
-                Transmission = model.Transmission,
-                Color = model.Color,
-                Description = model.Description,
-                VehicleImages = model.VehicleImages,
-            };
+            Vehicle vehicle;
 
-           if (model.SelectedType == VehicleTypes.PetrolCar)
+            if (model.SelectedType == VehicleTypes.PetrolCar)
             {
                 vehicle = new PetrolCar
                 {
@@ -90,11 +77,10 @@ namespace CarDealerWebProject.Core.Services
                     VehicleImages = model.VehicleImages,
                     CarBodyType = model.PetrolCarProperties!.CarBodyType,
                     EngineCapacity = model.PetrolCarProperties.EngineCapacity
-
                 };
             }
 
-            if (model.SelectedType == VehicleTypes.HybridCar)
+            else if (model.SelectedType == VehicleTypes.HybridCar)
             {
                 vehicle = new HybridCar
                 {
@@ -115,7 +101,7 @@ namespace CarDealerWebProject.Core.Services
                 };
             }
 
-            if(model.SelectedType == VehicleTypes.ElectricCar)
+            else if (model.SelectedType == VehicleTypes.ElectricCar)
             {
                 vehicle = new ElectricCar
                 {
@@ -135,7 +121,7 @@ namespace CarDealerWebProject.Core.Services
                 };
             }
 
-            if(model.SelectedType == VehicleTypes.Motorcycle)
+            else if (model.SelectedType == VehicleTypes.Motorcycle)
             {
                 vehicle = new Motorcycle
                 {
@@ -155,9 +141,91 @@ namespace CarDealerWebProject.Core.Services
                 };
             }
 
+            else
+            {
+                throw new Exception("Vehicle not supported");
+            }
+
             await repository.AddAsync(vehicle);
             await repository.SaveChangesAsync();
             return vehicle.Id;
+        }
+
+        public async Task EditAsync(int vehicleId, VehicleFormModel model)
+        {
+            var vehicle = await repository.GetByIdAsync<Vehicle>(vehicleId);
+
+            if(vehicle != null)
+            {
+                vehicle.Make = model.Make;
+                vehicle.Model = model.Model;
+                vehicle.Color = model.Color;
+                vehicle.Price = model.Price;
+                vehicle.ManufacturingDate = model.ManufacturingDate;
+                vehicle.Fuel = model.Fuel;
+                vehicle.MotorHorsePower = model.MotorHorsePower;
+                vehicle.Transmission = model.Transmission;
+                vehicle.Milage = model.Milage;
+                vehicle.Description = model.Description;
+                vehicle.VehicleImages = model.VehicleImages;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await repository.AllReadOnly<Vehicle>()
+                .AnyAsync(v => v.Id == id);
+        }
+
+        public async Task DeleteAsync(int vehicleId)
+        {
+            await repository.DeleteAsync<Vehicle>(vehicleId);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task<VehicleFormModel?> GetVehicleFormModelByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Vehicle>()
+                .Where(v => v.Id == id)
+                .Select(v => new VehicleFormModel()
+                {
+                    Make = v.Make,
+                    Model = v.Model,
+                    Color = v.Color,
+                    Price = v.Price,
+                    ManufacturingDate = v.ManufacturingDate,
+                    Fuel = v.Fuel,
+                    MotorHorsePower = v.MotorHorsePower,
+                    Transmission = v.Transmission,
+                    Milage = v.Milage,
+                    Description = v.Description,
+                    VehicleImages = v.VehicleImages,
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Vehicle>()
+                .Where(v => v.Id == id)
+                .Select(v => new VehicleDetailsServiceModel()
+                {
+                    Id = v.Id,
+                    Make = v.Make,
+                    Model = v.Model,
+                    Color = v.Color,
+                    Price = v.Price,
+                    ManufacturingDate = v.ManufacturingDate,
+                    Fuel = v.Fuel,
+                    MotorHorsePower = v.MotorHorsePower,
+                    Transmission = v.Transmission,
+                    Milage = v.Milage,
+                    Description = v.Description,
+                    VehicleImages = v.VehicleImages,
+                })
+                .FirstAsync();
         }
 
         public async Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync()

@@ -13,5 +13,15 @@ namespace CarDealerWebProject.Core.Contracts
             VehicleSorting sorting = VehicleSorting.NewlyAdded,
             int currentPage = 1,
             int vehiclePerPage = 1);
+
+        Task<bool> ExistsAsync(int id);
+
+        Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id);
+
+        Task EditAsync(int vehicleId, VehicleFormModel model);
+
+        Task<VehicleFormModel?> GetVehicleFormModelByIdAsync(int id);
+
+        Task DeleteAsync(int vehicleId);
     }
 }

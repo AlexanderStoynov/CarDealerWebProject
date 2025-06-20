@@ -7,7 +7,7 @@ using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 namespace CarDealerWebProject.Infrastructure.Data.Models
 {
     [Comment("Vehicle parameters")]
-    public class Vehicle
+    public abstract class Vehicle
     {
         [Key]
         [Comment("Vehicle identifier")]
@@ -62,7 +62,6 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         [Required]
         [Comment("If vehicle is sold")]
         public bool IsSold { get; set; } = false;
- 
     }
 
 

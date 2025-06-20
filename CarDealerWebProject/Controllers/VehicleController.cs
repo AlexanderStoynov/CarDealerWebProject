@@ -20,23 +20,28 @@ namespace CarDealerWebProject.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> All([FromQuery]AllVehiclesQueryModel query)
+        public async Task<IActionResult> All([FromQuery]AllVehiclesQueryModel model)
         {
-            var model = await vehicleService.AllAsync(
-                query.Sorting,
-                query.CurrentPage,
-                query.VehiclesPerPage);
-                
-            query.TotalVehiclesCount = model.TotalVehicleCount;
-            query.Vehicles = model.Vehicles;
+            var vehicles = await vehicleService.AllAsync(
+                model.Sorting,
+                model.CurrentPage,
+                model.VehiclesPerPage);
 
-            return View(query);
+            model.TotalVehiclesCount = vehicles.TotalVehicleCount;
+            model.Vehicles = vehicles.Vehicles;
+
+            return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var model = new VehicleDetailsViewModel();
+            if(await vehicleService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var model = await vehicleService.VehicleDetailsByIdAsync(id);
 
             return View(model);
         }
@@ -66,34 +71,74 @@ namespace CarDealerWebProject.Controllers
             return RedirectToAction(nameof(Details), new { id = newVehicleId });
         }
 
+        [Authorize(Roles = "Admin, Seller")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = new VehicleFormModel();
+            if(await vehicleService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
 
-            //return View(model);
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(int id, VehicleFormModel model)
-        {
-            return RedirectToAction(nameof(Details), new { id = id, });
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var model = new VehicleDetailsViewModel();
+            var model = await vehicleService.GetVehicleFormModelByIdAsync(id);
 
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
-        public async Task<IActionResult> Delete(int id, VehicleDetailsViewModel model)
+        public async Task<IActionResult> EditAsync(int id, VehicleFormModel model)
         {
-            return RedirectToAction(nameof(Index));
+            if (await vehicleService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                return View(model);
+            }
+
+            await vehicleService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
+        [Authorize(Roles = "Admin, Seller")]
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+
+            if(await vehicleService.ExistsAsync(id) == false)
+            {
+                return BadRequest();
+            }
+
+            var vehicle = await vehicleService.VehicleDetailsByIdAsync(id);
+
+            var model = new VehicleDetailsViewModel()
+            {
+                Id = id,
+                Make = vehicle.Make,
+                Model = vehicle.Model,
+                VehicleImage = vehicle.VehicleImages[0],
+            }; 
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin, Seller")]
+        [HttpPost]
+        public async Task<IActionResult> Delete(VehicleDetailsViewModel model)
+        {
+            if (await vehicleService.ExistsAsync(model.Id) == false)
+            {
+                return BadRequest();
+            }
+
+            await vehicleService.DeleteAsync(model.Id);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }
