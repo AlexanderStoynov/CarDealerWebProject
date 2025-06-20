@@ -1,9 +1,7 @@
 ﻿using CarDealerWebProject.Infrastructure.Data.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
+using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Core.Models.Vehicle
 {

@@ -1,17 +1,9 @@
-﻿using CarDealerWebProject.Attributes;
-using CarDealerWebProject.Core.Contracts;
+﻿using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Admin;
-using CarDealerWebProject.Extensions;
-using Microsoft.AspNetCore.Authentication;
+using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Text.Encodings.Web;
-using System.Text;
-using CarDealerWebProject.Infrastructure.Data.Models;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CarDealerWebProject.Controllers
 {

@@ -1,6 +1,5 @@
 ﻿using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Vehicle;
-using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +9,9 @@ namespace CarDealerWebProject.Controllers
     {
         private readonly IVehicleService vehicleService;
 
-        private readonly IUserService userService;
-
-        public VehicleController(IVehicleService vehicleService, IUserService userService)
+        public VehicleController(IVehicleService vehicleService)
         {
-            this.vehicleService = vehicleService;
-            this.userService = userService;
+            this.vehicleService = vehicleService;   
         }
 
         [AllowAnonymous]
