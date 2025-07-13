@@ -25,7 +25,8 @@
             <p>Mileage: <b>@Model.Milage km</b></p>
             <p>@Model.Description</p>
             <div class="form-inline">
-                @if (this.User.Identity!.IsAuthenticated)
+                @if (this.User.Identity!.IsAuthenticated &&
+                (User.IsInRole("Admin") || User.IsInRole("Seller")))
                 {
                     <a class="btn btn-warning" asp-controller="Vehicle" asp-action="Edit"
                        asp-route-id="@Model.Id">Edit</a>

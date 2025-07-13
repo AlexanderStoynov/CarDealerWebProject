@@ -1,4 +1,5 @@
-﻿using CarDealerWebProject.Infrastructure.Data.Enums;
+﻿using CarDealerWebProject.Core.Contracts;
+using CarDealerWebProject.Infrastructure.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
@@ -6,7 +7,7 @@ using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Core.Models.Vehicle
 {
-    public class VehicleFormModel
+    public class VehicleFormModel : IVehicleModel
     {
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(VehicleMakeMaxLength, MinimumLength = VehicleMakeMinLength, ErrorMessage = LengthMessage)]

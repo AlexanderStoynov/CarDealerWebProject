@@ -1,4 +1,5 @@
 ﻿using CarDealerWebProject.Core.Contracts;
+using CarDealerWebProject.Core.Extensions;
 using CarDealerWebProject.Core.Models.Vehicle;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace CarDealerWebProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string information)
         {
             if(await vehicleService.ExistsAsync(id) == false)
             {
@@ -38,6 +39,11 @@ namespace CarDealerWebProject.Controllers
             }
 
             var model = await vehicleService.VehicleDetailsByIdAsync(id);
+            
+            if (information != model.GetInformation())
+            {
+                return BadRequest(information);
+            }
 
             return View(model);
         }
@@ -64,7 +70,7 @@ namespace CarDealerWebProject.Controllers
 
             int newVehicleId = await vehicleService.CreateAsync(vehicleModel);
 
-            return RedirectToAction(nameof(Details), new { id = newVehicleId });
+            return RedirectToAction(nameof(Details), new { id = newVehicleId, information = vehicleModel.GetInformation()});
         }
 
         [Authorize(Roles = "Admin, Seller")]
@@ -97,7 +103,7 @@ namespace CarDealerWebProject.Controllers
 
             await vehicleService.EditAsync(id, model);
 
-            return RedirectToAction(nameof(Details), new { id });
+            return RedirectToAction(nameof(Details), new { id, information = model.GetInformation() });
         }
 
         [Authorize(Roles = "Admin, Seller")]

@@ -2,10 +2,11 @@
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
 using System.ComponentModel.DataAnnotations.Schema;
+using CarDealerWebProject.Core.Contracts;
 
 namespace CarDealerWebProject.Core.Models.Vehicle
 {
-    public class VehicleServiceModel
+    public class VehicleServiceModel : IVehicleModel
     {
         public int Id { get; set; }
 

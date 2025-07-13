@@ -234,7 +234,8 @@ namespace CarDealerWebProject.Core.Services
                     Id = v.Id,
                     VehicleImage = v.VehicleImages[0],
                     Make = v.Make,
-                    Model = v.Model
+                    Model = v.Model,
+                    MotorHorsePower = v.MotorHorsePower
                 }).ToListAsync();
         }
     }

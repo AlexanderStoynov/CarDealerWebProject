@@ -1,8 +1,13 @@
 using CarDealerWebProject.Extensions;
 using CarDealerWebProject.Infrastructure.Data.SeedDb;
 using CarDealerWebProject.ModelBinders;
+using Microsoft.AspNetCore.Mvc;
+using CarDealerWebProject.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("CarDealerWebProjectDbContextConnection") ?? throw new InvalidOperationException("Connection string 'CarDealerWebProjectDbContextConnection' not found.");
 
 builder.Services.AddAplicationDbContext(builder.Configuration);
 builder.Services.AddAplicationIdentity(builder.Configuration);
@@ -10,6 +15,7 @@ builder.Services.AddAplicationIdentity(builder.Configuration);
 builder.Services.AddControllersWithViews(options =>
 {
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 });
 
 builder.Services.AddRazorPages();
@@ -26,7 +32,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+    app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
     app.UseHsts();
 }
 
@@ -38,8 +44,18 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapDefaultControllerRoute();
-app.MapRazorPages();
+#pragma warning disable ASP0014
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "Vehicle Details",
+        pattern: "/Vehicle/Details/{id}/{information}",
+        defaults: new {Controller = "Vehicle", Action = "Details"}
+    );
+    endpoints.MapDefaultControllerRoute();
+    endpoints.MapRazorPages();
+});
+#pragma warning restore ASP0014
 
 using (var scope = app.Services.CreateScope())
 {

@@ -8,7 +8,7 @@
             <h6>Price: <b>@String.Format("{0:f2}", Model.Price) BGN</b></h6>
             <br />
             <a asp-controller="Vehicle" asp-action="Details" asp-route-id="@Model.Id"
-               class="btn btn-success">Details</a>
+               asp-route-information="@Model.GetInformation()" class="btn btn-success">Details</a>
             @if (this.User.Identity!.IsAuthenticated &&
             (User.IsInRole("Admin") || User.IsInRole("Seller")))
             {
