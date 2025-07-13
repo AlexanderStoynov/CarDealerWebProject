@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("CarDealerWebProjectDbContextConnection") ?? throw new InvalidOperationException("Connection string 'CarDealerWebProjectDbContextConnection' not found.");
 
 builder.Services.AddAplicationDbContext(builder.Configuration);
 builder.Services.AddAplicationIdentity(builder.Configuration);
