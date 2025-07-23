@@ -5,18 +5,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarDealerWebProject.Controllers
+namespace CarDealerWebProject.Areas.Admin.Controllers
 {
-    
-    public class AdminController : BaseController
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+    public class SellerManagementController : AdminBaseController
     {
         private readonly IUserService userService;
         private readonly UserManager<User> userManager;
         private readonly IUserStore<User> userStore;
         private readonly IUserEmailStore<User> emailStore;
 
-        public AdminController(IUserService userService, 
-            UserManager<User> userManager, 
+        public SellerManagementController(IUserService userService,
+            UserManager<User> userManager,
             IUserStore<User> userStore)
         {
             this.userService = userService;
@@ -27,8 +28,6 @@ namespace CarDealerWebProject.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin, Seller")]
-        //[IsNotAUser]
         public IActionResult CreateSeller()
         {
             var model = new CreateSellerFormModel();
@@ -37,11 +36,9 @@ namespace CarDealerWebProject.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin, Seller")]
-        //[IsNotAUser]
         public async Task<IActionResult> CreateSeller(CreateSellerFormModel model)
         {
-            if (ModelState.IsValid == false) 
+            if (ModelState.IsValid == false)
             {
                 return View(model);
             }
@@ -51,7 +48,7 @@ namespace CarDealerWebProject.Controllers
             await userStore.SetUserNameAsync(seller, model.UserEmail, CancellationToken.None);
             await emailStore.SetEmailAsync(seller, model.UserEmail, CancellationToken.None);
             seller.FullName = model.UserFullName;
-            string sellerPassword = model.UserPassword; 
+            string sellerPassword = model.UserPassword;
 
             var result = await userManager.CreateAsync(seller, sellerPassword);
 
@@ -65,7 +62,7 @@ namespace CarDealerWebProject.Controllers
                 throw new Exception($"Failed to create seller: {string.Join(", ", result.Errors.Select(e => e.Description))}");
             }
 
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.DashBoard), "Dashboard");
         }
 
         private IUserEmailStore<User> GetEmailStore()

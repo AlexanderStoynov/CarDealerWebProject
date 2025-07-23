@@ -34,6 +34,7 @@ namespace CarDealerWebProject.Extensions
         {
             services.AddDefaultIdentity<User>(options =>
             {
+                options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequiredLength = 10;
                 options.User.RequireUniqueEmail = false;

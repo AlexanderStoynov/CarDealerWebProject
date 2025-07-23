@@ -2,20 +2,8 @@
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="Review">Review</a>
     </li>
-    @* <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="All">All Vehicles</a>
+    <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Admin" asp-controller="SellerManagement" asp-action="CreateSeller">Create Seller</a>
     </li>
-    @if(this.User?.Identity?.IsAuthenticated ?? false)
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="Add">Add Vehicle</a>
-        </li>
-    }
-
-    @if (this.User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin"))
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateSeller">Create Seller</a>
-        </li>
-    } *@
+    
 </ul>

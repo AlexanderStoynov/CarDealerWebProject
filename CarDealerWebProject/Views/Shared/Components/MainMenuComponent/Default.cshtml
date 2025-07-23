@@ -11,11 +11,14 @@
             <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="Add">Add Vehicle</a>
         </li>
     }
+   
+</ul>
 
-    @if (this.User?.Identity?.IsAuthenticated ?? false && User.IsInRole("Admin"))
+<ul class="navbar-nav me-auto">
+    @if (this.User?.Identity?.IsAuthenticated ?? false && this.User.IsInRole("Admin"))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="CreateSeller">Create Seller</a>
+            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Home" asp-action="DashBoard">Admin Page</a>
         </li>
     }
 </ul>

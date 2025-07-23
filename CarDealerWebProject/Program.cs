@@ -2,9 +2,6 @@ using CarDealerWebProject.Extensions;
 using CarDealerWebProject.Infrastructure.Data.SeedDb;
 using CarDealerWebProject.ModelBinders;
 using Microsoft.AspNetCore.Mvc;
-using CarDealerWebProject.Infrastructure.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
