@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarDealerWebProject.Core.Models.Admin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ namespace CarDealerWebProject.Core.Contracts
     public interface IUserService
     {
         Task<bool> ExistsByEmailAsync(string userEmail);
+
+        Task<IEnumerable<SellerServiceModel>> AllAsync();
 
         //Task CreateAsync(string userName);
     }

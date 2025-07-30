@@ -1,8 +1,6 @@
 using CarDealerWebProject.Core.Contracts;
-using CarDealerWebProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace CarDealerWebProject.Controllers
 {

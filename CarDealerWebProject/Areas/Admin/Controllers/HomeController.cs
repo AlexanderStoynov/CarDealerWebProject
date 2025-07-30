@@ -8,10 +8,5 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
         {
             return View();
         }
-
-        public async Task<IActionResult> Review()
-        {
-            return View();
-        }
     }
 }

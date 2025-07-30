@@ -4,11 +4,12 @@ using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using static CarDealerWebProject.Core.Constants.AdminConstants;
 
 namespace CarDealerWebProject.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Area(AdminAreaName)]
+    [Authorize(Roles = AdminRole)]
     public class SellerManagementController : AdminBaseController
     {
         private readonly IUserService userService;

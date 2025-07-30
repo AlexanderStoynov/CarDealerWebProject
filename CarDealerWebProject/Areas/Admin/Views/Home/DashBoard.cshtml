@@ -2,12 +2,17 @@
 	ViewData["Title"] = "Dashboard";
 }
 
-<div class="row">
-	<div class="col-md-3">
-		<div class="card-body">
-			<h5 class="card-title">For review</h5>
-			<p class="card-text">Please check vehicle for review.</p>
-			<a asp-action="Review" class="btn btn-primary">Review</a>
-		</div>
-	</div>
+<div class="mt-4 p-5 bg-light text-center">
+    <h2 class="display-4">Hello, Admin!</h2>
+    <p class="lead mb-1 mt-3">
+        This is the admin area where you <b>create</b> and <b>delete</b> users.
+        <br />You can also check already sold vehicles.
+    </p>
+
+    <hr class="my-4">
+    <a asp-area="" asp-controller="Vehicle" asp-action="All"
+       class="btn btn-primary btn-lg">All Vehicles</a>
+    <a asp-area="Admin" asp-controller="User" asp-action="All"
+       class="btn btn-primary btn-lg">All Users</a>
 </div>
+
