@@ -11,7 +11,7 @@ namespace CarDealerWebProject.Attributes
         {
             base.OnActionExecuting(context);
 
-            IUserService? userService = context.HttpContext.RequestServices.GetService<IUserService>();
+            ISellerService? userService = context.HttpContext.RequestServices.GetService<ISellerService>();
 
             if (userService == null)
             {

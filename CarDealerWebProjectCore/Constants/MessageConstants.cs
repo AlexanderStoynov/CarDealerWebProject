@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarDealerWebProject.Core.Constants
+﻿namespace CarDealerWebProject.Core.Constants
 {
     public static class MessageConstants
     {
@@ -13,5 +6,8 @@ namespace CarDealerWebProject.Core.Constants
 
         public const string LengthMessage = "The {0} field must be betwwen {2} and {1} characters long";
 
+        public const string UserMessageSuccess = "UserMessageSuccess";
+
+        public const string UserMessageError = "UserMessageError";
     }
 }

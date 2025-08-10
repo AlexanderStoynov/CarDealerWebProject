@@ -1,8 +1,10 @@
-﻿using CarDealerWebProject.Core.Contracts;
+﻿using CarDealerWebProject.Core.Constants;
+using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Extensions;
 using CarDealerWebProject.Core.Models.Vehicle;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace CarDealerWebProject.Controllers
 {
@@ -54,7 +56,6 @@ namespace CarDealerWebProject.Controllers
         {
             var model = new VehicleFormModel();
             
-
             return View(model);
         }
 
@@ -69,6 +70,8 @@ namespace CarDealerWebProject.Controllers
             }
 
             int newVehicleId = await vehicleService.CreateAsync(vehicleModel);
+
+            TempData[MessageConstants.UserMessageSuccess] = "Vehicle added successfully!";
 
             return RedirectToAction(nameof(Details), new { id = newVehicleId, information = vehicleModel.GetInformation()});
         }
@@ -89,7 +92,7 @@ namespace CarDealerWebProject.Controllers
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
-        public async Task<IActionResult> EditAsync(int id, VehicleFormModel model)
+        public async Task<IActionResult> Edit(int id, VehicleFormModel vehicleModel)
         {
             if (await vehicleService.ExistsAsync(id) == false)
             {
@@ -98,12 +101,14 @@ namespace CarDealerWebProject.Controllers
 
             if (ModelState.IsValid == false)
             {
-                return View(model);
+                return View(vehicleModel);
             }
 
-            await vehicleService.EditAsync(id, model);
+            await vehicleService.EditAsync(id, vehicleModel);
 
-            return RedirectToAction(nameof(Details), new { id, information = model.GetInformation() });
+            TempData[MessageConstants.UserMessageSuccess] = "Vehicle edited successfully!";
+
+            return RedirectToAction(nameof(Details), new { id, information = vehicleModel.GetInformation() });
         }
 
         [Authorize(Roles = "Admin, Seller")]
@@ -131,14 +136,16 @@ namespace CarDealerWebProject.Controllers
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
-        public async Task<IActionResult> Delete(VehicleDetailsViewModel model)
+        public async Task<IActionResult> Delete(VehicleDetailsViewModel vehicleModel)
         {
-            if (await vehicleService.ExistsAsync(model.Id) == false)
+            if (await vehicleService.ExistsAsync(vehicleModel.Id) == false)
             {
                 return BadRequest();
             }
 
-            await vehicleService.DeleteAsync(model.Id);
+            await vehicleService.DeleteAsync(vehicleModel.Id);
+
+            TempData[MessageConstants.UserMessageSuccess] = "Vehicle deleted successfully!";
 
             return RedirectToAction(nameof(All));
         }

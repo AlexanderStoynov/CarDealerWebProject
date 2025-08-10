@@ -9,6 +9,7 @@ namespace CarDealerWebProject.Core.Models.Admin
 {
     public class SellerServiceModel
     {
+        public Guid Id { get; set; }
         public string Email { get; set; } = string.Empty;
 
         [Display(Name = "Full Name")]

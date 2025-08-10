@@ -13,7 +13,7 @@ namespace CarDealerWebProject.Extensions
         public static IServiceCollection AddAplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IVehicleService, VehicleService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISellerService, SellerService>();
 
             return services;
         }

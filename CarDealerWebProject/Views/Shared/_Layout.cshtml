@@ -1,10 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using CarDealerWebProject.Infrastructure.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Best cars in town</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/toastr/toastr.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CarDealerWebProject.styles.css" asp-append-version="true" />
 </head>
@@ -30,14 +35,21 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted fixed-bottom">
-        <div class="container">
+    <footer class="border-top footer text-muted fixed-bottom p-0">
+        <div class="container-fluid d-flex justify-content-between align-items-center py-0 px-4">
             &copy; @DateTime.Today.Year - CarDealerWebProject
+
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a class="text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>   
+            }
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <partial name="_ToastrScriptsPartial" />
 </body>
 </html>

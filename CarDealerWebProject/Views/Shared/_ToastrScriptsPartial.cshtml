@@ -1,0 +1,14 @@
+﻿@using CarDealerWebProject.Core.Constants
+
+@if (TempData[MessageConstants.UserMessageSuccess] != null)
+{
+    <script defer>
+        message.showSuccess('@TempData[MessageConstants.UserMessageSuccess]');
+    </script>
+}
+@if (TempData[MessageConstants.UserMessageError] != null)
+{
+    <script defer>
+        message.showSuccess('@TempData[MessageConstants.UserMessageError]');
+    </script>
+}

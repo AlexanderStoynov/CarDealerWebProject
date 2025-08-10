@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SellerServiceModel>
+
+@{
+    ViewBag.Title = "All Sellers";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>Email</label></th>
+            <th><label>Full Name</label></th>
+            <th><label>Manage</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td><label>@user.Email</label></td>
+                <td><label>@user.FullName</label></td>
+                <td>
+                    <label>
+                        <a asp-area="Admin" asp-controller="SellerManagement" asp-action="EditCredentials"
+                           class="btn btn-primary btn-lg">Edit</a>
+                        <a asp-area="Admin" asp-controller="SellerManagement" asp-action="DeleteSeller" asp-route-id="@user.Id"
+                           class="btn btn-danger btn-lg">Delete</a>
+                    </label>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
