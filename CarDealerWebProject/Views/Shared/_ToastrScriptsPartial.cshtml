@@ -9,6 +9,6 @@
 @if (TempData[MessageConstants.UserMessageError] != null)
 {
     <script defer>
-        message.showSuccess('@TempData[MessageConstants.UserMessageError]');
+        message.showError('@TempData[MessageConstants.UserMessageError]');
     </script>
 }

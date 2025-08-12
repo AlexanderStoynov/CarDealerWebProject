@@ -38,7 +38,7 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSeller(CreateSellerFormModel model)
         {
-            if (await sellerService.ExistsByEmailAsync(model.UserEmail))
+            if (await sellerService.SellerExistsByEmailAsync(model.UserEmail))
             {
                 ModelState.AddModelError(nameof(model.UserEmail), SellerEmailExistsError);
             }
@@ -72,22 +72,45 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task EditSeller()
+        [HttpGet]
+        public async Task<IActionResult> EditSeller(Guid id)
         {
-            throw new NotImplementedException();
+            if (await sellerService.ExistsByIdAsync(id) == false)
+            {
+                TempData[MessageConstants.UserMessageError] = "Seller not found.";
+                return RedirectToAction(nameof(AllSellers));
+            }
+
+            var model = await sellerService.GetSellerServiceModelByIdAsync(id);
+
+            return View (model);
         }
 
-        [HttpGet]
-        public async Task EditSeller(SellerServiceModel model)
+        [HttpPost]
+        public async Task<IActionResult> EditSeller(Guid id, SellerServiceModel model)
         {
-            throw new NotImplementedException();
+            if (await sellerService.ExistsByIdAsync(id) == false)
+            {
+                TempData[MessageConstants.UserMessageError] = "Seller not found.";
+                return RedirectToAction(nameof(AllSellers));
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                return View(model);
+            }
+
+            await sellerService.EditSellerAsync(id, model);
+
+            TempData[MessageConstants.UserMessageSuccess] = "Seller edited successfully!";
+
+            return RedirectToAction(nameof(AllSellers));
         }
 
         [HttpGet]
         public async Task<IActionResult> DeleteSeller(Guid id)
         {
-            if (!await sellerService.ExistsByIdAsync(id))
+            if (await sellerService.ExistsByIdAsync(id) == false)
             {
                 TempData[MessageConstants.UserMessageError] = "Seller not found.";
                 return RedirectToAction(nameof(AllSellers));
@@ -101,10 +124,15 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteSeller(SellerServiceModel model)
         {
-            if (!await sellerService.ExistsByIdAsync(model.Id))
+            if (await sellerService.ExistsByIdAsync(model.Id) == false)
             {
                 TempData[MessageConstants.UserMessageError] = "Seller not found.";
                 return RedirectToAction(nameof(AllSellers));
+            }
+
+            if (ModelState.IsValid == false)
+            {
+                return View(model);
             }
 
             await sellerService.DeleteSellerAsync(model.Id);

@@ -23,7 +23,7 @@
                 <td><label>@user.FullName</label></td>
                 <td>
                     <label>
-                        <a asp-area="Admin" asp-controller="SellerManagement" asp-action="EditCredentials"
+                        <a asp-area="Admin" asp-controller="SellerManagement" asp-action="EditSeller" asp-route-id="@user.Id"
                            class="btn btn-primary btn-lg">Edit</a>
                         <a asp-area="Admin" asp-controller="SellerManagement" asp-action="DeleteSeller" asp-route-id="@user.Id"
                            class="btn btn-danger btn-lg">Delete</a>

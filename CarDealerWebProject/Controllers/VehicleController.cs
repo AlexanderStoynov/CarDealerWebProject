@@ -21,6 +21,11 @@ namespace CarDealerWebProject.Controllers
         [HttpGet]
         public async Task<IActionResult> All([FromQuery]AllVehiclesQueryModel model)
         {
+            if (ModelState.IsValid == false)
+            {
+                return View(model);
+            }
+
             var vehicles = await vehicleService.AllAsync(
                 model.Sorting,
                 model.CurrentPage,
@@ -37,7 +42,8 @@ namespace CarDealerWebProject.Controllers
         {
             if(await vehicleService.ExistsAsync(id) == false)
             {
-                return BadRequest();
+                TempData[MessageConstants.UserMessageError] = "Seller not found.";
+                return RedirectToAction(nameof(All));
             }
 
             var model = await vehicleService.VehicleDetailsByIdAsync(id);

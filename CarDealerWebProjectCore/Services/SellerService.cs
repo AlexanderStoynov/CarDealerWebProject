@@ -77,7 +77,7 @@ namespace CarDealerWebProject.Core.Services
                 .AnyAsync(u => u.Email == userEmail);
         }
 
-        public async Task<bool> ExistsByIdAsync(Guid userId)
+        public async Task<bool> SellerExistsByIdAsync(Guid userId)
         {
             return await repository.AllReadOnly<User>()
                  .AnyAsync(u => u.Id == userId);

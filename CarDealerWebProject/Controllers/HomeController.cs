@@ -6,13 +6,10 @@ namespace CarDealerWebProject.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> logger;
         private readonly IVehicleService vehicleService;
 
-        public HomeController(ILogger<HomeController> logger,
-            IVehicleService vehicleService)
+        public HomeController(IVehicleService vehicleService)
         {
-            this.logger = logger;
             this.vehicleService = vehicleService;
         }
 

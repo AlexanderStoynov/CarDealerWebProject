@@ -6,7 +6,7 @@ namespace CarDealerWebProject.Core.Contracts
     {
         Task CreateSellerAsync(CreateSellerFormModel model);
 
-        Task<bool> ExistsByEmailAsync(string userEmail);
+        Task<bool> SellerExistsByEmailAsync(string userEmail);
 
         Task<bool> ExistsByIdAsync(Guid userId);
 
