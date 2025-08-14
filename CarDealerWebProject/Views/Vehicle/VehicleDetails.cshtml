@@ -28,9 +28,9 @@
                 @if (this.User.Identity!.IsAuthenticated &&
                 (User.IsInRole("Admin") || User.IsInRole("Seller")))
                 {
-                    <a class="btn btn-warning" asp-controller="Vehicle" asp-action="Edit"
+                    <a class="btn btn-warning" asp-controller="Vehicle" asp-action="EditVehicle"
                        asp-route-id="@Model.Id">Edit</a>
-                    <a class="ml-2 btn btn-danger" asp-controller="Vehicle" asp-action="Delete"
+                    <a class="ml-2 btn btn-danger" asp-controller="Vehicle" asp-action="DeleteVehicle"
                        asp-route-id="@Model.Id">Delete</a>
                 }
             </div>

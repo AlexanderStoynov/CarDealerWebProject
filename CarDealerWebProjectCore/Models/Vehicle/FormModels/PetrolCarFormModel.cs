@@ -3,17 +3,20 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
-namespace CarDealerWebProject.Core.Models.Vehicle
+namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 {
-    public class MotorcycleFormModel : VehicleFormModel 
+    public class PetrolCarFormModel : VehicleFormModel
     {
+
         [Required]
-        [Comment("Motorcycle body type")]
-        public MotorcycleBodyType MotorcycleBodyType { get; set; }
+        [Comment("Car body type")]
+        public CarBodyType CarBodyType { get; set; }
 
         [Required]
         [Range(PetrolVehicleEngineCapacityMin, PetrolVehicleEngineCapacityMax)]
         [Comment("Engine capacity")]
         public int EngineCapacity { get; set; }
+
+        public override VehicleTypes VehicleType => VehicleTypes.PetrolCar;
     }
 }

@@ -18,7 +18,7 @@ namespace CarDealerWebProject.Attributes
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
-            if (userService != null && userService.ExistsByEmailAsync(context.HttpContext.User.Email()).Result)
+            if (userService != null && userService.SellerExistsByEmailAsync(context.HttpContext.User.Email()).Result)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status400BadRequest);
             }

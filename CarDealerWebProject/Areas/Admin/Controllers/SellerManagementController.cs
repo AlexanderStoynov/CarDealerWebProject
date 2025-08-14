@@ -50,7 +50,7 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
 
             await sellerService.CreateSellerAsync(model);
 
-            TempData[MessageConstants.UserMessageSuccess] = "Seller created successfully!";
+            TempData[MessageConstants.UserMessageSuccess] = SellerCreatedSuccessfullyMessage;
 
             return View(model);
         }
@@ -58,26 +58,26 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> AllSellers()
         {
-            var model = memoryCache.Get<IEnumerable<SellerServiceModel>>(SellersCacheKey);
+            var cacheModel = memoryCache.Get<IEnumerable<SellerServiceModel>>(SellersCacheKey);
 
-            if (model == null || model.Any() == false)
+            if (cacheModel == null || cacheModel.Any() == false)
             {
-                model = await sellerService.AllSellersAsync();
+                cacheModel = await sellerService.AllSellersAsync();
                 var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(3));
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
 
-                memoryCache.Set(SellersCacheKey, model, cacheOptions);
+                memoryCache.Set(SellersCacheKey, cacheModel, cacheOptions);
             }
 
-            return View(model);
+            return View(cacheModel);
         }
 
         [HttpGet]
         public async Task<IActionResult> EditSeller(Guid id)
         {
-            if (await sellerService.ExistsByIdAsync(id) == false)
+            if (await sellerService.SellerExistsByIdAsync(id) == false)
             {
-                TempData[MessageConstants.UserMessageError] = "Seller not found.";
+                TempData[MessageConstants.UserMessageError] = SellerNotFoundMessage;
                 return RedirectToAction(nameof(AllSellers));
             }
 
@@ -89,9 +89,9 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditSeller(Guid id, SellerServiceModel model)
         {
-            if (await sellerService.ExistsByIdAsync(id) == false)
+            if (await sellerService.SellerExistsByIdAsync(id) == false)
             {
-                TempData[MessageConstants.UserMessageError] = "Seller not found.";
+                TempData[MessageConstants.UserMessageError] = SellerNotFoundMessage;
                 return RedirectToAction(nameof(AllSellers));
             }
 
@@ -102,7 +102,7 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
 
             await sellerService.EditSellerAsync(id, model);
 
-            TempData[MessageConstants.UserMessageSuccess] = "Seller edited successfully!";
+            TempData[MessageConstants.UserMessageSuccess] = SellerEditedSuccessfullyMessage;
 
             return RedirectToAction(nameof(AllSellers));
         }
@@ -110,9 +110,9 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteSeller(Guid id)
         {
-            if (await sellerService.ExistsByIdAsync(id) == false)
+            if (await sellerService.SellerExistsByIdAsync(id) == false)
             {
-                TempData[MessageConstants.UserMessageError] = "Seller not found.";
+                TempData[MessageConstants.UserMessageError] = SellerNotFoundMessage;
                 return RedirectToAction(nameof(AllSellers));
             }
 
@@ -124,9 +124,9 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteSeller(SellerServiceModel model)
         {
-            if (await sellerService.ExistsByIdAsync(model.Id) == false)
+            if (await sellerService.SellerExistsByIdAsync(model.Id) == false)
             {
-                TempData[MessageConstants.UserMessageError] = "Seller not found.";
+                TempData[MessageConstants.UserMessageError] = SellerNotFoundMessage;
                 return RedirectToAction(nameof(AllSellers));
             }
 
@@ -137,7 +137,7 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
 
             await sellerService.DeleteSellerAsync(model.Id);
 
-            TempData[MessageConstants.UserMessageSuccess] = "Seller deleted successfully!";
+            TempData[MessageConstants.UserMessageSuccess] = SellerDeleteSuccessfullyMessage;
 
             return RedirectToAction(nameof(AllSellers));
         }

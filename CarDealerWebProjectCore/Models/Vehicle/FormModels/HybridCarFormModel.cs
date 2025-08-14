@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
-namespace CarDealerWebProject.Core.Models.Vehicle
+namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 {
     public class HybridCarFormModel : VehicleFormModel
     {
@@ -20,5 +20,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle
         [Range(ElectricCarBatteryCapacityMin, ElectricCarBatteryCapacityMax)]
         [Comment("Battery capacity")]
         public int BatteryCapacity { get; set; }
+
+        public override VehicleTypes VehicleType => VehicleTypes.HybridCar;
     }
 }

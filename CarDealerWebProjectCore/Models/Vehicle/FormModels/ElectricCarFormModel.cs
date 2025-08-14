@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
-namespace CarDealerWebProject.Core.Models.Vehicle
+namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 {
     public class ElectricCarFormModel : VehicleFormModel
     {
@@ -20,5 +20,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle
         [Range(ElectricCarBatteryCapacityMin, ElectricCarBatteryCapacityMax)]
         [Comment("Battery capacity")]
         public int BatteryCapacity { get; set; }
+
+        public override VehicleTypes VehicleType => VehicleTypes.ElectricCar;
     }
 }

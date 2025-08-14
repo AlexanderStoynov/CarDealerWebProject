@@ -7,6 +7,13 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
 {
     public class PetrolCar : Vehicle
     {
+        public PetrolCar(RequiredVehicleProperties req, CarBodyType carBodyType, int engineCapacity)
+        : base(req.Make, req.Model, req.Color, req.Description)
+        {
+            CarBodyType = carBodyType;
+            EngineCapacity = engineCapacity;
+        }
+
         [Required]
         [Comment("Car body type")]
         public CarBodyType CarBodyType { get; set; }

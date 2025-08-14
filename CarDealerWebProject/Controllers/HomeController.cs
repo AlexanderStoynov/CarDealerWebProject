@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarDealerWebProject.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : BaseController
     {
         private readonly IVehicleService vehicleService;
@@ -13,7 +14,8 @@ namespace CarDealerWebProject.Controllers
             this.vehicleService = vehicleService;
         }
 
-        [AllowAnonymous]
+        
+        [HttpGet]
         public async  Task<IActionResult> Index()
         {
             var model = await vehicleService.LastSixVehiclesAsync();
@@ -21,7 +23,7 @@ namespace CarDealerWebProject.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
+        [HttpGet]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int statusCode)
         {

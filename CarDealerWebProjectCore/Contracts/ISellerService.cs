@@ -8,7 +8,7 @@ namespace CarDealerWebProject.Core.Contracts
 
         Task<bool> SellerExistsByEmailAsync(string userEmail);
 
-        Task<bool> ExistsByIdAsync(Guid userId);
+        Task<bool> SellerExistsByIdAsync(Guid userId);
 
         Task<Guid> GetSellerIdAsync(Guid userId);
 

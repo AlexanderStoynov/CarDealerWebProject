@@ -1,10 +1,10 @@
-﻿using CarDealerWebProject.Core.Constants;
-using CarDealerWebProject.Core.Contracts;
+﻿using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Admin;
 using CarDealerWebProject.Infrastructure.Data.Common;
 using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static CarDealerWebProject.Core.Constants.AdminConstants;
 
 
 namespace CarDealerWebProject.Core.Services
@@ -24,20 +24,17 @@ namespace CarDealerWebProject.Core.Services
 
         public async Task<IEnumerable<SellerServiceModel>> AllSellersAsync()
         {
-            var users = await repository.AllReadOnly<User>().ToListAsync();
+            var sellers = await repository.AllReadOnly<User>().ToListAsync();
             var result = new List<SellerServiceModel>();
 
-            foreach (var user in users)
+            foreach (var user in sellers)
             {
-                if(!await userManager.IsInRoleAsync(user, "Admin"))
+                result.Add(new SellerServiceModel
                 {
-                    result.Add(new SellerServiceModel
-                    {
-                        Id = user.Id,
-                        Email = user.Email,
-                        FullName = user.FullName
-                    });
-                }
+                    Id = user.Id,
+                    Email = user.Email,
+                    FullName = user.FullName
+                });
             }
 
             return result;
@@ -57,7 +54,7 @@ namespace CarDealerWebProject.Core.Services
 
             if (sellerPassword != confirmedPassword)
             {
-                throw new Exception("Passwords do not match");
+                throw new Exception(PasswordsDoNotMatchError);
             }
 
             if (result.Succeeded)
@@ -67,34 +64,34 @@ namespace CarDealerWebProject.Core.Services
 
             else
             {
-                throw new Exception($"Failed to create seller: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                throw new Exception($"{FailedToCreateSellerError}{string.Join(", ", result.Errors.Select(e => e.Description))}");
             }
         }
 
-        public async Task<bool> ExistsByEmailAsync(string userEmail = null!)
+        public async Task<bool> SellerExistsByEmailAsync(string userEmail = null!)
         {
             return await repository.AllReadOnly<User>()
                 .AnyAsync(u => u.Email == userEmail);
         }
 
-        public async Task<bool> SellerExistsByIdAsync(Guid userId)
+        public async Task<bool> SellerExistsByIdAsync(Guid id)
         {
             return await repository.AllReadOnly<User>()
-                 .AnyAsync(u => u.Id == userId);
+                 .AnyAsync(u => u.Id == id);
         }
 
-        public async Task<Guid> GetSellerIdAsync(Guid userId)
+        public async Task<Guid> GetSellerIdAsync(Guid id)
         {
             return await repository.AllReadOnly<User>()
-                .Where(u => u.Id == userId)
+                .Where(u => u.Id == id)
                 .Select(u => u.Id)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<SellerServiceModel?> GetSellerServiceModelByIdAsync(Guid userId)
+        public async Task<SellerServiceModel?> GetSellerServiceModelByIdAsync(Guid id)
         {
             var seller = await repository.AllReadOnly<User>()
-                .Where(u => u.Id == userId)
+                .Where(u => u.Id == id)
                 .Select(u => new SellerServiceModel()
                 {
                     FullName = u.FullName,
@@ -103,9 +100,8 @@ namespace CarDealerWebProject.Core.Services
                 })
                 .FirstOrDefaultAsync();
 
-                return seller;
+            return seller;
         }
-
 
         public async Task EditSellerAsync(Guid id, SellerServiceModel model)
         {
@@ -121,26 +117,26 @@ namespace CarDealerWebProject.Core.Services
 
             else
             {
-                throw new Exception("User not found");
+                throw new Exception(UserNotFoundError);
             }
         }
 
-        public async Task DeleteSellerAsync(Guid sellerId)
+        public async Task DeleteSellerAsync(Guid id)
         {
-           
-            var user = await userManager.FindByIdAsync(sellerId.ToString());
 
-            if (user == null)
+            var seller = await userManager.FindByIdAsync(id.ToString());
+
+            if (seller == null)
             {
-                throw new Exception("User not found");
+                throw new Exception(UserNotFoundError);
             }
 
-            if (await userManager.IsInRoleAsync(user, "Admin") == true)
+            if (await userManager.IsInRoleAsync(seller, "Admin") == true)
             {
-                throw new UnauthorizedAccessException("Admin cant be removed");
+                throw new UnauthorizedAccessException(AdminCantBeRemovedError);
             }
 
-            await repository.DeleteAsync<User>(sellerId);
+            await repository.DeleteAsync<User>(id);
 
             await repository.SaveChangesAsync();
         }

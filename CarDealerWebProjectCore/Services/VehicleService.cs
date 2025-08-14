@@ -1,9 +1,11 @@
 ﻿using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Vehicle;
+using CarDealerWebProject.Core.Models.Vehicle.FormModels;
 using CarDealerWebProject.Infrastructure.Data.Common;
 using CarDealerWebProject.Infrastructure.Data.Enums;
 using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using static CarDealerWebProject.Core.Constants.VehicleConstants;
 
 namespace CarDealerWebProject.Core.Services
 {
@@ -16,7 +18,7 @@ namespace CarDealerWebProject.Core.Services
             this.repository = repository;
         }
 
-        public async Task<VehicleQueryServiceModel> AllAsync(VehicleSorting sorting = VehicleSorting.NewlyAdded, int currentPage = 1, int vehiclePerPage = 1)
+        public async Task<VehicleQueryServiceModel> AllVehiclesAsync(VehicleSorting sorting = VehicleSorting.NewlyAdded, int currentPage = 1, int vehiclePerPage = 1)
         {
             var vehiclesToShow = repository.AllReadOnly<Vehicle>();
 
@@ -51,7 +53,23 @@ namespace CarDealerWebProject.Core.Services
             };
         }
 
-        public async Task<int> CreateAsync(VehicleFormModel model)
+        public async Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync()
+        {
+            return await repository
+                .AllReadOnly<Vehicle>()
+                .OrderByDescending(v => v.Id)
+                .Take(6)
+                .Select(v => new VehicleIndexServiceModel()
+                {
+                    Id = v.Id,
+                    VehicleImage = v.VehicleImages[0],
+                    Make = v.Make,
+                    Model = v.Model,
+                    MotorHorsePower = v.MotorHorsePower
+                }).ToListAsync();
+        }
+
+        public async Task<int> CreateVehicleAsync(VehicleFormModel model)
         {
             Vehicle vehicle;
 
@@ -146,38 +164,10 @@ namespace CarDealerWebProject.Core.Services
             return vehicle.Id;
         }
 
-        public async Task EditAsync(int vehicleId, VehicleFormModel model)
-        {
-            var vehicle = await repository.GetByIdAsync<Vehicle>(vehicleId);
-
-            if(vehicle != null)
-            {
-                vehicle.Make = model.Make;
-                vehicle.Model = model.Model;
-                vehicle.Color = model.Color;
-                vehicle.Price = model.Price;
-                vehicle.ManufacturingDate = model.ManufacturingDate;
-                vehicle.Fuel = model.Fuel;
-                vehicle.MotorHorsePower = model.MotorHorsePower;
-                vehicle.Transmission = model.Transmission;
-                vehicle.Milage = model.Milage;
-                vehicle.Description = model.Description;
-                vehicle.VehicleImages = model.VehicleImages;
-
-                await repository.SaveChangesAsync();
-            }
-        }
-
-        public async Task<bool> ExistsAsync(int id)
+        public async Task<bool> VehicleExistsByIdAsync(int id)
         {
             return await repository.AllReadOnly<Vehicle>()
                 .AnyAsync(v => v.Id == id);
-        }
-
-        public async Task DeleteAsync(int vehicleId)
-        {
-            await repository.DeleteAsync<Vehicle>(vehicleId);
-            await repository.SaveChangesAsync();
         }
 
         public async Task<VehicleFormModel?> GetVehicleFormModelByIdAsync(int id)
@@ -223,20 +213,44 @@ namespace CarDealerWebProject.Core.Services
                 .FirstAsync();
         }
 
-        public async Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync()
+        public async Task EditVehicleAsync(int vehicleId, VehicleFormModel model)
         {
-            return await repository
-                .AllReadOnly<Vehicle>()
-                .OrderByDescending(v => v.Id)
-                .Take(6)
-                .Select(v => new VehicleIndexServiceModel()
-                {
-                    Id = v.Id,
-                    VehicleImage = v.VehicleImages[0],
-                    Make = v.Make,
-                    Model = v.Model,
-                    MotorHorsePower = v.MotorHorsePower
-                }).ToListAsync();
+            var vehicle = await repository.GetByIdAsync<Vehicle>(vehicleId);
+
+            if (vehicle != null)
+            {
+                vehicle.Make = model.Make;
+                vehicle.Model = model.Model;
+                vehicle.Color = model.Color;
+                vehicle.Price = model.Price;
+                vehicle.ManufacturingDate = model.ManufacturingDate;
+                vehicle.Fuel = model.Fuel;
+                vehicle.MotorHorsePower = model.MotorHorsePower;
+                vehicle.Transmission = model.Transmission;
+                vehicle.Milage = model.Milage;
+                vehicle.Description = model.Description;
+                vehicle.VehicleImages = model.VehicleImages;
+
+                await repository.SaveChangesAsync();
+            }
+
+            else
+            {
+                throw new Exception(VehicleNotFoundMessage);
+            }
+        }
+
+        public async Task DeleteVehicleAsync(int id)
+        {
+            var vehicle = repository.GetByIdAsync<Vehicle>(id);
+
+            if (vehicle == null)
+            {
+                throw new Exception(VehicleNotFoundMessage);
+            }
+
+            await repository.DeleteAsync<Vehicle>(id);
+            await repository.SaveChangesAsync();
         }
     }
 }

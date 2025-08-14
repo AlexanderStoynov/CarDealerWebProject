@@ -9,6 +9,14 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
     [Comment("Vehicle parameters")]
     public abstract class Vehicle
     {
+        protected Vehicle(string make, string model, string color, string description)
+        {
+            Make = make;
+            Model = model;
+            Color = color;
+            Description = description;
+        }
+
         [Key]
         [Comment("Vehicle identifier")]
         public int Id { get; set; }
@@ -16,17 +24,17 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         [Required]
         [StringLength(VehicleMakeMaxLength, MinimumLength = VehicleMakeMinLength)]
         [Comment("Vehicle maker name")]
-        public required string Make { get; set; }
+        public required string Make { get; set; } = string.Empty;
 
         [Required]
         [StringLength(VehicleModelMaxLength, MinimumLength = VehicleModelMinLength)]
         [Comment("Vehicle model")]
-        public required string Model { get; set; }
+        public required string Model { get; set; } = string.Empty;
 
         [Required]
         [StringLength(VehicleColorMaxLength, MinimumLength = VehicleColorMinLength)]
         [Comment("Vehicle color")]
-        public required string Color { get; set; }
+        public required string Color { get; set; } = string.Empty;
 
         [Comment("Vehicle transmission")]
         public Transmission Transmission { get; set; }
@@ -57,7 +65,7 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
 
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Comment("Vehicle description")]
-        public required string Description { get; set; }
+        public required string Description { get; set; } = string.Empty;
 
         [Required]
         [Comment("If vehicle is sold")]

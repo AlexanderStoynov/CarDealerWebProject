@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
-namespace CarDealerWebProject.Core.Models.Vehicle
+namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 {
-    public class VehicleFormModel : IVehicleModel
+    public abstract class VehicleFormModel : IVehicleModel
     {
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(VehicleMakeMaxLength, MinimumLength = VehicleMakeMinLength, ErrorMessage = LengthMessage)]
@@ -65,11 +65,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle
         [Display(Name = "Select vehicle type")]
         public VehicleTypes SelectedType { get; set; }
 
-
-        public ElectricCarFormModel? ElectricCarProperties { get; set; }
-        public PetrolCarFormModel? PetrolCarProperties { get; set; }
-        public MotorcycleFormModel? MotorcycleProperties { get; set; }
-        public HybridCarFormModel? HybridCarProperties { get; set; }
+        public abstract VehicleTypes VehicleType { get; }
 
     }
 }

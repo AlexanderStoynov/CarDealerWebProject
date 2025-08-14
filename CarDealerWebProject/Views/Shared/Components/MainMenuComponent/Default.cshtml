@@ -3,12 +3,12 @@
         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="All">All Vehicles</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="AllVehicles">All Vehicles</a>
     </li>
     @if(this.User?.Identity?.IsAuthenticated ?? false)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="Add">Add Vehicle</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="AddVehicle">Add Vehicle</a>
         </li>
     }
    

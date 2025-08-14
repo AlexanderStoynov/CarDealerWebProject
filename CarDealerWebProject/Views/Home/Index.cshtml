@@ -17,7 +17,7 @@
             @if (User.Identity!.IsAuthenticated &&
             (User.IsInRole("Admin") || User.IsInRole("Seller")))
             {
-                <a asp-controller="Vehicle" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Vehicle</a>
+                <a asp-controller="Vehicle" asp-action="AddVehicle" class="btn btn-primary btn-lg" role="button">Add Vehicle</a>
             }
 
         </p>
@@ -35,7 +35,7 @@
                      src="@vehicle.VehicleImage" alt="@vehicle.Make @vehicle.Model">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>
-                        <a class="btn btn-primary" asp-controller="Vehicle" asp-action="Details"
+                        <a class="btn btn-primary" asp-controller="Vehicle" asp-action="VehicleDetails"
                            asp-route-id="@vehicle.Id" asp-route-information="@vehicle.GetInformation()"> @vehicle.Make @vehicle.Model</a>
                     </h5>
                 </div>
