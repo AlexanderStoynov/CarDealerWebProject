@@ -1,14 +1,38 @@
 ﻿@using CarDealerWebProject.Core.Models.Vehicle.FormModels
-@model VehicleFormModel
-@{
-    ViewData["Title"] = "Add Vehicle";
-}
+@model CarDealerWebProject.Core.Models.Vehicle.FormModels.VehicleFormModel
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-<h2 class="text-center">@ViewData["Title"]</h2>
-<hr />
+<div class="row">
+	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+		<form method="post">
 
-<partial name="_VehicleFormPartial" model="@Model"/>
+			<partial name="VehicleFormPartialViews/_VehicleFormPartial" model="@Model" />
+
+			@if (Model is PetrolCarFormModel petrolCar)
+			{
+				<partial name="VehicleFormPartialViews/_PetrolCarFormPartial" model="petrolCar" />
+			}
+			else if (Model is HybridCarFormModel hybridCar)
+			{
+				<partial name="VehicleFormPartialViews/_HybridCarFormPartial" model="hybridCar" />
+			}
+			else if (Model is ElectricCarFormModel electricCar)
+			{
+				<partial name="VehicleFormPartialViews/_ElectricCarFormPartial" model="electricCar" />
+			}
+			else if (Model is MotorcycleFormModel motorcycle)
+			{
+				<partial name="VehicleFormPartialViews/_MotorcycleFormPartial" model="motorcycle" />
+			}
+
+			<div class="text-center">
+				<input class="btn btn-primary mt-3" type="submit" value="Save" />
+			</div>
+
+		</form>
+	</div>
+</div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+			<partial name="_ValidationScriptsPartial" />
 }

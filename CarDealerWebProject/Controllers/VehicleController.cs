@@ -3,6 +3,7 @@ using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Extensions;
 using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
+using CarDealerWebProject.Infrastructure.Data.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -22,31 +23,65 @@ namespace CarDealerWebProject.Controllers
             this.memoryCache = memoryCache;
         }
 
+        [Authorize(Roles = "Admin, Seller")]
+        [HttpGet]
+        public IActionResult SelectVehicleCreationType()
+        {
+            return View();
+        }
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpGet]
-        public async Task<IActionResult> AddVehicle()
+        public async Task<IActionResult> AddVehicle(VehicleTypes type)
         {
-            var model = new VehicleFormModel();
+            VehicleFormModel model = type switch
+            {
+                VehicleTypes.PetrolCar => new PetrolCarFormModel(),
+                VehicleTypes.HybridCar => new HybridCarFormModel(),
+                VehicleTypes.ElectricCar => new ElectricCarFormModel(),
+                VehicleTypes.Motorcycle => new MotorcycleFormModel(),
+                _ => throw new ArgumentException("Unsupported vehicle type")
+            };
 
             return await Task.FromResult(View(model));
         }
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
-        public async Task<IActionResult> AddVehicle(VehicleFormModel vehicleModel)
+        public async Task<IActionResult> AddVehicle()
         {
-            if (ModelState.IsValid == false)
+            var typeString = Request.Form["VehicleType"];
+            if (!Enum.TryParse<VehicleTypes>(typeString, ignoreCase: true, out var vehicleType))
             {
-                return View(vehicleModel);
+                ModelState.AddModelError("", "Invalid vehicle type.");
+                return View();
             }
 
-            int newVehicleId = await vehicleService.CreateVehicleAsync(vehicleModel);
+            // Depending on type, bind the correct concrete model
+            VehicleFormModel model = vehicleType switch
+            {
+                VehicleTypes.PetrolCar => new PetrolCarFormModel(),
+                VehicleTypes.HybridCar => new HybridCarFormModel(),
+                VehicleTypes.ElectricCar => new ElectricCarFormModel(),
+                VehicleTypes.Motorcycle => new MotorcycleFormModel(),
+                _ => throw new ArgumentException("Unsupported vehicle type")
+            };
 
-            TempData[MessageConstants.UserMessageSuccess] = VehicleAddedSuccessfullyMessage;
+            // Try to update model from form values
+            if (!await TryUpdateModelAsync(model))
+            {
+                return View(model);
+            }
 
-            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = vehicleModel.GetInformation() });
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            int newVehicleId = await vehicleService.CreateVehicleAsync(model);
+            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = model.GetInformation() });
         }
+        
 
         [AllowAnonymous]
         [HttpGet]

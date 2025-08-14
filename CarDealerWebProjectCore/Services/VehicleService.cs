@@ -1,4 +1,5 @@
 ﻿ using CarDealerWebProject.Core.Contracts;
+using CarDealerWebProject.Core.Factories;
 using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
 using CarDealerWebProject.Infrastructure.Data.Common;
@@ -69,95 +70,14 @@ namespace CarDealerWebProject.Core.Services
                 }).ToListAsync();
         }
 
-        public async Task<int> CreateVehicleAsync(VehicleFormModel model)
+        public async Task<int> CreateVehicleAsync(VehicleFormModel vehicleModel)
         {
-            Vehicle vehicle;
-
-            if (model.SelectedType == VehicleTypes.PetrolCar)
+            if (vehicleModel == null)
             {
-                vehicle = new PetrolCar
-                {
-                    Make = model.Make,
-                    Model = model.Model,
-                    ManufacturingDate = model.ManufacturingDate,
-                    Price = model.Price,
-                    Fuel = model.Fuel,
-                    Milage = model.Milage,
-                    MotorHorsePower = model.MotorHorsePower,
-                    Transmission = model.Transmission,
-                    Color = model.Color,
-                    Description = model.Description,
-                    VehicleImages = model.VehicleImages,
-                    CarBodyType = model.PetrolCarProperties!.CarBodyType,
-                    EngineCapacity = model.PetrolCarProperties.EngineCapacity
-                };
+                throw new ArgumentNullException(nameof(vehicleModel));
             }
 
-            else if (model.SelectedType == VehicleTypes.HybridCar)
-            {
-                vehicle = new HybridCar
-                {
-                    Make = model.Make,
-                    Model = model.Model,
-                    ManufacturingDate = model.ManufacturingDate,
-                    Price = model.Price,
-                    Fuel = model.Fuel,
-                    Milage = model.Milage,
-                    MotorHorsePower = model.MotorHorsePower,
-                    Transmission = model.Transmission,
-                    Color = model.Color,
-                    Description = model.Description,
-                    VehicleImages = model.VehicleImages,
-                    CarBodyType = model.HybridCarProperties!.CarBodyType,
-                    EngineCapacity = model.HybridCarProperties.EngineCapacity,
-                    BatteryCapacity = model.HybridCarProperties.BatteryCapacity
-                };
-            }
-
-            else if (model.SelectedType == VehicleTypes.ElectricCar)
-            {
-                vehicle = new ElectricCar
-                {
-                    Make = model.Make,
-                    Model = model.Model,
-                    ManufacturingDate = model.ManufacturingDate,
-                    Price = model.Price,
-                    Fuel = model.Fuel,
-                    Milage = model.Milage,
-                    MotorHorsePower = model.MotorHorsePower,
-                    Transmission = model.Transmission,
-                    Color = model.Color,
-                    Description = model.Description,
-                    VehicleImages = model.VehicleImages,
-                    CarBodyType = model.ElectricCarProperties!.CarBodyType,
-                    BatteryCapacity = model.ElectricCarProperties.BatteryCapacity
-                };
-            }
-
-            else if (model.SelectedType == VehicleTypes.Motorcycle)
-            {
-                vehicle = new Motorcycle
-                {
-                    Make = model.Make,
-                    Model = model.Model,
-                    ManufacturingDate = model.ManufacturingDate,
-                    Price = model.Price,
-                    Fuel = model.Fuel,
-                    Milage = model.Milage,
-                    MotorHorsePower = model.MotorHorsePower,
-                    Transmission = model.Transmission,
-                    Color = model.Color,
-                    Description = model.Description,
-                    VehicleImages = model.VehicleImages,
-                    MotorcycleBodyType = model.MotorcycleProperties!.MotorcycleBodyType,
-                    EngineCapacity = model.MotorcycleProperties.EngineCapacity
-                };
-            }
-
-            else
-            {
-                throw new Exception("Vehicle not supported");
-            }
+            Vehicle vehicle = VehicleFactory.Create(vehicleModel);
 
             await repository.AddAsync(vehicle);
             await repository.SaveChangesAsync();
@@ -172,23 +92,25 @@ namespace CarDealerWebProject.Core.Services
 
         public async Task<VehicleFormModel?> GetVehicleFormModelByIdAsync(int id)
         {
-            return await repository.AllReadOnly<Vehicle>()
-                .Where(v => v.Id == id)
-                .Select(v => new VehicleFormModel()
-                {
-                    Make = v.Make,
-                    Model = v.Model,
-                    Color = v.Color,
-                    Price = v.Price,
-                    ManufacturingDate = v.ManufacturingDate,
-                    Fuel = v.Fuel,
-                    MotorHorsePower = v.MotorHorsePower,
-                    Transmission = v.Transmission,
-                    Milage = v.Milage,
-                    Description = v.Description,
-                    VehicleImages = v.VehicleImages,
-                })
-                .FirstOrDefaultAsync();
+            throw new NotImplementedException();
+
+            //return await repository.AllReadOnly<Vehicle>()
+            //    .Where(v => v.Id == id)
+            //    .Select(v => new VehicleFormModel()
+            //    {
+            //        Make = v.Make,
+            //        Model = v.Model,
+            //        Color = v.Color,
+            //        Price = v.Price,
+            //        ManufacturingDate = v.ManufacturingDate,
+            //        Fuel = v.Fuel,
+            //        MotorHorsePower = v.MotorHorsePower,
+            //        Transmission = v.Transmission,
+            //        Milage = v.Milage,
+            //        Description = v.Description,
+            //        VehicleImages = v.VehicleImages,
+            //    })
+            //    .FirstOrDefaultAsync();
         }
 
         public async Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id)

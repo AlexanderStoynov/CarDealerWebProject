@@ -1,5 +1,4 @@
 ﻿using CarDealerWebProject.Infrastructure.Data.Enums;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
@@ -8,17 +7,17 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
     public class HybridCarFormModel : VehicleFormModel
     {
         [Required]
-        [Comment("Car body type")]
+        [Display(Name = "Body type")]
         public CarBodyType CarBodyType { get; set; }
 
         [Required]
         [Range(PetrolVehicleEngineCapacityMin, PetrolVehicleEngineCapacityMax)]
-        [Comment("Engine capacity")]
+        [Display(Name = "Engine capacity")]
         public int EngineCapacity { get; set; }
 
         [Required]
         [Range(ElectricCarBatteryCapacityMin, ElectricCarBatteryCapacityMax)]
-        [Comment("Battery capacity")]
+        [Display(Name = "Battery capacity")]
         public int BatteryCapacity { get; set; }
 
         public override VehicleTypes VehicleType => VehicleTypes.HybridCar;

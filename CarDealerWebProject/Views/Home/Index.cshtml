@@ -17,7 +17,7 @@
             @if (User.Identity!.IsAuthenticated &&
             (User.IsInRole("Admin") || User.IsInRole("Seller")))
             {
-                <a asp-controller="Vehicle" asp-action="AddVehicle" class="btn btn-primary btn-lg" role="button">Add Vehicle</a>
+                <a asp-controller="Vehicle" asp-action="SelectVehicleCreationType" class="btn btn-primary btn-lg" role="button">Add Vehicle</a>
             }
 
         </p>

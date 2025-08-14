@@ -1,0 +1,58 @@
+﻿@using CarDealerWebProject.Core.Models.Vehicle.FormModels
+@using CarDealerWebProject.Infrastructure.Data.Enums
+@model VehicleFormModel
+@{
+    ViewData["Title"] = "Add Vehicle";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <a class="card vehicle-card text-decoration-none"
+           asp-controller="Vehicle"
+           asp-action="AddVehicle"
+           asp-route-type="model">
+            <img class="card-img-top" src="~/images/placeholders/petrol-car.png" alt="Petrol Car" />
+            <div class="card-body text-center">
+                <h5 class="card-title">Petrol Car</h5>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <a class="card vehicle-card text-decoration-none"
+           asp-controller="Vehicle"
+           asp-action="AddVehicle"
+           asp-route-type="HybridCar">
+            <img class="card-img-top" src="~/images/placeholders/hybrid-car.png" alt="Hybrid Car" />
+            <div class="card-body text-center">
+                <h5 class="card-title">Hybrid Car</h5>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <a class="card vehicle-card text-decoration-none"
+           asp-controller="Vehicle"
+           asp-action="AddVehicle"
+           asp-route-type="ElectricCar">
+            <img class="card-img-top" src="~/images/placeholders/electric-car.png" alt="Electric Car" />
+            <div class="card-body text-center">
+                <h5 class="card-title">Electric Car</h5>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <a class="card vehicle-card text-decoration-none"
+           asp-controller="Vehicle"
+           asp-action="AddVehicle"
+           asp-route-type="Motorcycle">
+            <img class="card-img-top" src="~/images/placeholders/motorcycle.png" alt="Motorcycle" />
+            <div class="card-body text-center">
+                <h5 class="card-title">Motorcycle</h5>
+            </div>
+        </a>
+    </div>
+</div>

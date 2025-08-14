@@ -34,7 +34,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 
         [Required(ErrorMessage = RequiredMessage)]
         [Range(VehicleMotorHorsePowerMin, VehicleMotorHorsePowerMax)]
-        [Display(Name = "Horse Power")]
+        [Display(Name = "Horse power")]
         public int MotorHorsePower { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
@@ -61,11 +61,9 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         [Display(Name = "Images")]
         public List<string> VehicleImages { get; set; } = new List<string>();
 
-        [Required(ErrorMessage = RequiredMessage)]
-        [Display(Name = "Select vehicle type")]
+        [Required(ErrorMessage = "Select vehicle type")]
         public VehicleTypes SelectedType { get; set; }
 
         public abstract VehicleTypes VehicleType { get; }
-
     }
 }
