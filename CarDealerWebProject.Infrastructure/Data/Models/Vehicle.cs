@@ -9,14 +9,6 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
     [Comment("Vehicle parameters")]
     public abstract class Vehicle
     {
-        protected Vehicle(string make, string model, string color, string description)
-        {
-            Make = make;
-            Model = model;
-            Color = color;
-            Description = description;
-        }
-
         [Key]
         [Comment("Vehicle identifier")]
         public int Id { get; set; }

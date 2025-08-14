@@ -1,4 +1,4 @@
-﻿using CarDealerWebProject.Core.Contracts;
+﻿ using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
 using CarDealerWebProject.Infrastructure.Data.Common;
