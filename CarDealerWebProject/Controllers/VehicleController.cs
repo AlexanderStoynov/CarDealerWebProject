@@ -22,6 +22,8 @@ namespace CarDealerWebProject.Controllers
             this.memoryCache = memoryCache;
         }
 
+        //Tova e metoda dime Vuv Project Core imam factories tam trqbva da go napravq da
+        //sloja metoda v CreateVehicleAsync i da trugne.
         [Authorize(Roles = "Admin, Seller")]
         [HttpGet]
         public async Task<IActionResult> AddVehicle()
