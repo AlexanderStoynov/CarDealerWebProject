@@ -5,94 +5,30 @@ namespace CarDealerWebProject.Core.Factories
 {
     public static class VehicleFactory
     {
-        public static Vehicle Create(VehicleFormModel model)
-        {
-            if (model is PetrolCarFormModel petrolCar)
+        public static Vehicle Create(VehicleFormModel model) =>
+            model switch
             {
-                return new PetrolCar
-                {
-                    Make = petrolCar.Make,
-                    Model = petrolCar.Model,
-                    Color = petrolCar.Color,
-                    Description = petrolCar.Description,
-                    Transmission = petrolCar.Transmission,
-                    ManufacturingDate = petrolCar.ManufacturingDate,
-                    MotorHorsePower = petrolCar.MotorHorsePower,
-                    Fuel = petrolCar.Fuel,
-                    Price = petrolCar.Price,
-                    Milage = petrolCar.Milage,
-                    VehicleImages = petrolCar.VehicleImages,
+                PetrolCarFormModel p => new PetrolCar(ToCommon(p), p.CarBodyType, p.EngineCapacity),
+                HybridCarFormModel h => new HybridCar(ToCommon(h), h.CarBodyType, h.EngineCapacity, h.BatteryCapacity),
+                ElectricCarFormModel e => new ElectricCar(ToCommon(e), e.CarBodyType, e.BatteryCapacity),
+                MotorcycleFormModel m => new Motorcycle(ToCommon(m), m.MotorcycleBodyType, m.EngineCapacity),
+                _ => throw new ArgumentException("Unsupported vehicle type", nameof(model))
+            };
 
-                    CarBodyType = petrolCar.CarBodyType,
-                    EngineCapacity = petrolCar.EngineCapacity
-                };
-            }
-
-            if (model is HybridCarFormModel hybridCar)
-            {
-                return new HybridCar
-                {
-                    Make = hybridCar.Make,
-                    Model = hybridCar.Model,
-                    Color = hybridCar.Color,
-                    Description = hybridCar.Description,
-                    Transmission = hybridCar.Transmission,
-                    ManufacturingDate = hybridCar.ManufacturingDate,
-                    MotorHorsePower = hybridCar.MotorHorsePower,
-                    Fuel = hybridCar.Fuel,
-                    Price = hybridCar.Price,
-                    Milage = hybridCar.Milage,
-                    VehicleImages = hybridCar.VehicleImages,
-
-                    CarBodyType = hybridCar.CarBodyType,
-                    BatteryCapacity = hybridCar.BatteryCapacity,
-                    EngineCapacity = hybridCar.EngineCapacity
-                };
-            }
-
-            if (model is ElectricCarFormModel electricCar)
-            {
-                return new ElectricCar
-                {
-                    Make = electricCar.Make,
-                    Model = electricCar.Model,
-                    Color = electricCar.Color,
-                    Description = electricCar.Description,
-                    Transmission = electricCar.Transmission,
-                    ManufacturingDate = electricCar.ManufacturingDate,
-                    MotorHorsePower = electricCar.MotorHorsePower,
-                    Fuel = electricCar.Fuel,
-                    Price = electricCar.Price,
-                    Milage = electricCar.Milage,
-                    VehicleImages = electricCar.VehicleImages,
-
-                    CarBodyType = electricCar.CarBodyType,
-                    BatteryCapacity = electricCar.BatteryCapacity
-                };
-            }
-
-            if (model is MotorcycleFormModel motorcycle)
-            {
-                return new Motorcycle
-                {
-                    Make = motorcycle.Make,
-                    Model = motorcycle.Model,
-                    Color = motorcycle.Color,
-                    Description = motorcycle.Description,
-                    Transmission = motorcycle.Transmission,
-                    ManufacturingDate = motorcycle.ManufacturingDate,
-                    MotorHorsePower = motorcycle.MotorHorsePower,
-                    Fuel = motorcycle.Fuel,
-                    Price = motorcycle.Price,
-                    Milage = motorcycle.Milage,
-                    VehicleImages = motorcycle.VehicleImages,
-
-                    MotorcycleBodyType = motorcycle.MotorcycleBodyType,
-                    EngineCapacity = motorcycle.EngineCapacity
-                };
-            }
-
-            throw new ArgumentException("Unsupported vehicle type", nameof(model));
-        }
+        private static VehicleCommon ToCommon(VehicleFormModel s) =>
+            new(
+                s.Make,
+                s.Model,
+                s.Color,
+                s.Description,
+                s.Transmission,
+                s.ManufacturingDate,
+                s.MotorHorsePower,
+                s.Fuel,
+                s.Price,
+                s.Milage,
+                s.VehicleImages
+            );
     }
+
 }

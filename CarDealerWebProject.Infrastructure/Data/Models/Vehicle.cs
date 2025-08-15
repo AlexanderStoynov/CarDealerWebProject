@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
@@ -9,6 +10,23 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
     [Comment("Vehicle parameters")]
     public abstract class Vehicle
     {
+        protected Vehicle() { } 
+
+        [SetsRequiredMembers]
+        protected Vehicle(VehicleCommon c)
+        {
+            Make = c.Make;
+            Model = c.Model;
+            Color = c.Color;
+            Description = c.Description;
+            Transmission = c.Transmission;
+            ManufacturingDate = c.ManufacturingDate;
+            MotorHorsePower = c.MotorHorsePower;
+            Fuel = c.Fuel;
+            Price = c.Price;
+            Milage = c.Milage;
+            VehicleImages = c.VehicleImages;
+        }
         [Key]
         [Comment("Vehicle identifier")]
         public int Id { get; set; }
