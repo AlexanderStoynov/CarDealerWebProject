@@ -19,7 +19,5 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         [Range(ElectricCarBatteryCapacityMin, ElectricCarBatteryCapacityMax)]
         [Display(Name = "Battery capacity")]
         public int BatteryCapacity { get; set; }
-
-        public override VehicleTypes VehicleType => VehicleTypes.HybridCar;
     }
 }

@@ -14,7 +14,5 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         [Range(PetrolVehicleEngineCapacityMin, PetrolVehicleEngineCapacityMax)]
         [Display(Name = "Engine capacity")]
         public int EngineCapacity { get; set; }
-
-        public override VehicleTypes VehicleType => VehicleTypes.Motorcycle;
     }
 }

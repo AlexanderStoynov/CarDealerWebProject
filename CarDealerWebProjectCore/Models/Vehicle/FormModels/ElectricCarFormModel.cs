@@ -15,6 +15,5 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         [Display(Name = "Battery capacity")]
         public int BatteryCapacity { get; set; }
 
-        public override VehicleTypes VehicleType => VehicleTypes.ElectricCar;
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
@@ -9,6 +10,24 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
     [Comment("Vehicle parameters")]
     public abstract class Vehicle
     {
+        protected Vehicle() { }
+
+        [SetsRequiredMembers]
+        protected Vehicle(VehicleCommon common)
+        {
+            Make = common.Make;
+            Model = common.Model;
+            Color = common.Color;
+            Description = common.Description;
+            Transmission = common.Transmission;
+            ManufacturingDate = common.ManufacturingDate;
+            MotorHorsePower = common.MotorHorsePower;
+            Fuel = common.Fuel;
+            Price = common.Price;
+            Milage = common.Milage;
+            VehicleImages = common.VehicleImages;
+        }
+
         [Key]
         [Comment("Vehicle identifier")]
         public int Id { get; set; }
@@ -68,21 +87,6 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
     //[Comment("Date vehicle is listed")]
     //public DateTime DateListed { get; set; }
 
-
-
-
-    
-
-    //    IsNew = false,
     //    SellerName = "John Doe",
-    //    SellerPhone = "+359 123 456 789",
-    //    Location = "Sofia",
-    //    AirConditioning = true,
-    //    Sunroof = false,
-    //    NavigationSystem = true,
-    //    LeatherSeats = true,
-    //    ParkingSensors = true,
-    //    BackupCamera = true,
-    //    HeatedSeats = false,
-    //    CruiseControl = true,
+    //    SellerPhone = "+359 123 456 789
 }

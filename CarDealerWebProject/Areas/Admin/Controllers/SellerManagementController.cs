@@ -38,6 +38,11 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSeller(CreateSellerFormModel model)
         {
+            if(model == null)
+            {
+                throw new ArgumentNullException(FailedToCreateSellerError);
+            }
+
             if (await sellerService.SellerExistsByEmailAsync(model.UserEmail))
             {
                 ModelState.AddModelError(nameof(model.UserEmail), SellerEmailExistsError);
@@ -47,6 +52,8 @@ namespace CarDealerWebProject.Areas.Admin.Controllers
             {
                 return View(model);
             }
+
+           
 
             await sellerService.CreateSellerAsync(model);
 

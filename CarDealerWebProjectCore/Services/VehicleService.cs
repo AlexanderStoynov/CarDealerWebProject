@@ -1,5 +1,4 @@
-﻿ using CarDealerWebProject.Core.Contracts;
-using CarDealerWebProject.Core.Factories;
+﻿using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
 using CarDealerWebProject.Infrastructure.Data.Common;
@@ -70,14 +69,12 @@ namespace CarDealerWebProject.Core.Services
                 }).ToListAsync();
         }
 
-        public async Task<int> CreateVehicleAsync(VehicleFormModel vehicleModel)
+        public async Task<int> CreateVehicleAsync(Vehicle vehicle)
         {
-            if (vehicleModel == null)
+            if (vehicle == null)
             {
-                throw new ArgumentNullException(nameof(vehicleModel));
+                throw new ArgumentNullException(FailedToCreateVehicleError);
             }
-
-            Vehicle vehicle = VehicleFactory.Create(vehicleModel);
 
             await repository.AddAsync(vehicle);
             await repository.SaveChangesAsync();

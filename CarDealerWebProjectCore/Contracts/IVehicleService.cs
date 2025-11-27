@@ -1,12 +1,13 @@
 ﻿using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
 using CarDealerWebProject.Infrastructure.Data.Enums;
+using CarDealerWebProject.Infrastructure.Data.Models;
 
 namespace CarDealerWebProject.Core.Contracts
 {
     public interface IVehicleService
     {
-        Task<int> CreateVehicleAsync(VehicleFormModel model);
+        Task<int> CreateVehicleAsync(Vehicle vehicle);
 
         Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync();
 

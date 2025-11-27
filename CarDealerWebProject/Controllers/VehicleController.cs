@@ -1,9 +1,11 @@
 ﻿using CarDealerWebProject.Core.Constants;
 using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Extensions;
+using CarDealerWebProject.Core.Factories;
 using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
 using CarDealerWebProject.Infrastructure.Data.Enums;
+using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -43,45 +45,118 @@ namespace CarDealerWebProject.Controllers
                 _ => throw new ArgumentException("Unsupported vehicle type")
             };
 
+            model.SelectedType = type;
+
             return await Task.FromResult(View(model));
         }
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
-        public async Task<IActionResult> AddVehicle()
+        public async Task<IActionResult> AddPetrolCar(PetrolCarFormModel vehicleModel)
         {
-            var typeString = Request.Form["VehicleType"];
-            if (!Enum.TryParse<VehicleTypes>(typeString, ignoreCase: true, out var vehicleType))
-            {
-                ModelState.AddModelError("", "Invalid vehicle type.");
-                return View();
-            }
-
-            // Depending on type, bind the correct concrete model
-            VehicleFormModel model = vehicleType switch
-            {
-                VehicleTypes.PetrolCar => new PetrolCarFormModel(),
-                VehicleTypes.HybridCar => new HybridCarFormModel(),
-                VehicleTypes.ElectricCar => new ElectricCarFormModel(),
-                VehicleTypes.Motorcycle => new MotorcycleFormModel(),
-                _ => throw new ArgumentException("Unsupported vehicle type")
-            };
-
-            // Try to update model from form values
-            if (!await TryUpdateModelAsync(model))
-            {
-                return View(model);
-            }
+            if ((ValidateVehicleType(vehicleModel.SelectedType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
 
             if (!ModelState.IsValid)
+                return View(vehicleModel);
+
+            Vehicle newVehicle;
+            try
             {
+                newVehicle = VehicleFactory.Create(vehicleModel);
+            }
+            catch (ArgumentException exception)
+            {
+                ModelState.AddModelError("", exception.Message);
+                return View(vehicleModel);
+            }
+            int newVehicleId = await vehicleService.CreateVehicleAsync(newVehicle);
+
+            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = vehicleModel.GetInformation() });
+        }
+
+        [Authorize(Roles = "Admin, Seller")]
+        [HttpPost]
+        public async Task<IActionResult> AddHybridCar(HybridCarFormModel vehicleModel)
+        {
+            if ((ValidateVehicleType(vehicleModel.SelectedType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
+
+            if (!ModelState.IsValid)
+                return View(vehicleModel);
+
+            Vehicle newVehicle;
+            try
+            {
+                newVehicle = VehicleFactory.Create(vehicleModel);
+            }
+            catch (ArgumentException exception)
+            {
+                ModelState.AddModelError("", exception.Message);
+                return View(vehicleModel);
+            }
+            int newVehicleId = await vehicleService.CreateVehicleAsync(newVehicle);
+
+            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = vehicleModel.GetInformation() });
+        }
+
+        [Authorize(Roles = "Admin, Seller")]
+        [HttpPost]
+        public async Task<IActionResult> AddElectricCar(ElectricCarFormModel vehicleModel)
+        {
+            if ((ValidateVehicleType(vehicleModel.SelectedType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
+
+            if (!ModelState.IsValid)
+                return View(vehicleModel);
+
+            Vehicle newVehicle;
+            try
+            {
+                newVehicle = VehicleFactory.Create(vehicleModel);
+            }
+            catch (ArgumentException exception)
+            {
+                ModelState.AddModelError("", exception.Message);
+                return View(vehicleModel);
+            }
+            int newVehicleId = await vehicleService.CreateVehicleAsync(newVehicle);
+
+            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = vehicleModel.GetInformation() });
+        }
+
+        [Authorize(Roles = "Admin, Seller")]
+        [HttpPost]
+        public async Task<IActionResult> AddMotorcycle(MotorcycleFormModel vehicleModel)
+        {
+            if ((ValidateVehicleType(vehicleModel.SelectedType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
+
+            if (!ModelState.IsValid)
+                return View(vehicleModel);
+
+            Vehicle newVehicle;
+            try
+            {
+                newVehicle = VehicleFactory.Create(vehicleModel);
+            }
+            catch (ArgumentException exception)
+            {
+                ModelState.AddModelError("", exception.Message);
+                return View(vehicleModel);
+            }
+
+            int newVehicleId = await vehicleService.CreateVehicleAsync(newVehicle);
+
+            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = vehicleModel.GetInformation() });
+        }
+
+        private IActionResult ValidateVehicleType(VehicleTypes type, VehicleFormModel model)
+        {
+            if (!Enum.IsDefined(typeof(VehicleTypes), type))
+            {
+                ModelState.AddModelError("", "Unsupported vehicle type.");
                 return View(model);
             }
 
-            int newVehicleId = await vehicleService.CreateVehicleAsync(model);
-            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = model.GetInformation() });
+            return new EmptyResult();
         }
-        
 
         [AllowAnonymous]
         [HttpGet]

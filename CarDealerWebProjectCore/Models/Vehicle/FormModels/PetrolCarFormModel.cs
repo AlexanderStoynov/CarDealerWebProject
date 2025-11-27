@@ -16,6 +16,5 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         [Display(Name = "Engine capacity")]
         public int EngineCapacity { get; set; }
 
-        public override VehicleTypes VehicleType => VehicleTypes.PetrolCar;
     }
 }

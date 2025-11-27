@@ -8,5 +8,8 @@
         public const string VehicleAddedSuccessfullyMessage = "Vehicle added successfully!";
         public const string VehicleEditedSuccessfullyMessage = "Vehicle edited successfully!";
         public const string VehicleDeletedSuccessfullyMessage = "Vehicle deleted successfully!";
+
+        public const string UnsupportedVehicleError = "Unsupported vehicle type";
+        public const string FailedToCreateVehicleError = "Failed to create vehicle";
     }
 }

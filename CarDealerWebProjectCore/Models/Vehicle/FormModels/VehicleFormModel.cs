@@ -2,12 +2,13 @@
 using CarDealerWebProject.Infrastructure.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 {
-    public abstract class VehicleFormModel : IVehicleModel
+    public  class VehicleFormModel : IVehicleModel
     {
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(VehicleMakeMaxLength, MinimumLength = VehicleMakeMinLength, ErrorMessage = LengthMessage)]
@@ -63,7 +64,5 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 
         [Required(ErrorMessage = "Select vehicle type")]
         public VehicleTypes SelectedType { get; set; }
-
-        public abstract VehicleTypes VehicleType { get; }
     }
 }
