@@ -89,25 +89,23 @@ namespace CarDealerWebProject.Core.Services
 
         public async Task<VehicleFormModel?> GetVehicleFormModelByIdAsync(int id)
         {
-            throw new NotImplementedException();
-
-            //return await repository.AllReadOnly<Vehicle>()
-            //    .Where(v => v.Id == id)
-            //    .Select(v => new VehicleFormModel()
-            //    {
-            //        Make = v.Make,
-            //        Model = v.Model,
-            //        Color = v.Color,
-            //        Price = v.Price,
-            //        ManufacturingDate = v.ManufacturingDate,
-            //        Fuel = v.Fuel,
-            //        MotorHorsePower = v.MotorHorsePower,
-            //        Transmission = v.Transmission,
-            //        Milage = v.Milage,
-            //        Description = v.Description,
-            //        VehicleImages = v.VehicleImages,
-            //    })
-            //    .FirstOrDefaultAsync();
+            return await repository.AllReadOnly<Vehicle>()
+                .Where(v => v.Id == id)
+                .Select(v => new VehicleFormModel()
+                {
+                    Make = v.Make,
+                    Model = v.Model,
+                    Color = v.Color,
+                    Price = v.Price,
+                    ManufacturingDate = v.ManufacturingDate,
+                    Fuel = v.Fuel,
+                    MotorHorsePower = v.MotorHorsePower,
+                    Transmission = v.Transmission,
+                    Milage = v.Milage,
+                    Description = v.Description,
+                    VehicleImages = v.VehicleImages,
+                })
+                .FirstOrDefaultAsync();
         }
 
         public async Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id)

@@ -187,6 +187,11 @@ namespace CarDealerWebProject.Controllers
                 memoryCache.Set(cacheKey, model, cacheOptions);
             }
 
+            else
+            {
+                model = cacheModel;
+            }
+
             return View(model);
         }
 

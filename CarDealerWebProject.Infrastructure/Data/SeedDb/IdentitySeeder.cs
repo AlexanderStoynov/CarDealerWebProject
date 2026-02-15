@@ -23,8 +23,8 @@ namespace CarDealerWebProject.Infrastructure.Data.SeedDb
                 }
             }
 
-            var adminEmail = "igra999@abv.bg";
-            var adminPassword = "S@bravan12";
+            var adminEmail = "project@gmail.com";
+            var adminPassword = "B@bachko12";
 
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
