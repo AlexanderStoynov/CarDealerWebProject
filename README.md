@@ -30,7 +30,7 @@ This project is not complete, and is supposed to act as a part of my final exam.
 4 - Environmental variables
 - A singleton is created to make sure an admin user always exists when building the project. Credentials are:
 Username: "project@abv.bg"
-Password: "AlexanderStoynov"
+Password: "B@bachko12"
 - The Login for Users is at the bottom right of the main page.
 - The connection string is located in User Secrets.
 
