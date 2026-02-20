@@ -9,7 +9,7 @@ This project is not complete, and is supposed to act as a part of my final exam.
 
 - The functionality of the project is a sellers website for managing the sales of cars.
 - There is an admin/admins and they create new sellers which have the ability to publish cars on the website.
-- Admins have the ability to do everything and sellers have the ability to only make changes to vehicle.
+- Admins have the ability to do everything and sellers have the ability to only make changes to vehicles.
 - Each car is availalbe to the public to see but not to change/delete.
 - The project will be designed to work with a second database eventually.
 - The log in page was scafolded and customized to fit the project.
