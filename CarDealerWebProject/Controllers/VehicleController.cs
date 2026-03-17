@@ -264,14 +264,14 @@ namespace CarDealerWebProject.Controllers
                 return RedirectToAction(nameof(AllVehicles));
             }
 
-            var vehicle = await vehicleService.VehicleDetailsByIdAsync(id);
+            var vehicle = await vehicleService.VehiclePreviewByIdAsync(id);
 
-            var model = new VehicleDetailsViewModel()
+            var model = new VehicleServiceModel()
             {
                 Id = id,
                 Make = vehicle.Make,
                 Model = vehicle.Model,
-                VehicleImage = vehicle.VehicleImages[0],
+                VehicleImages = vehicle.VehicleImages
             };
 
             return View(model);
@@ -279,7 +279,7 @@ namespace CarDealerWebProject.Controllers
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
-        public async Task<IActionResult> DeleteVehicle(VehicleDetailsViewModel vehicleModel)
+        public async Task<IActionResult> DeleteVehicle(VehicleServiceModel vehicleModel)
         {
             if (await vehicleService.VehicleExistsByIdAsync(vehicleModel.Id) == false)
             {

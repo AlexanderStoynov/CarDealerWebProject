@@ -20,6 +20,8 @@ namespace CarDealerWebProject.Core.Contracts
 
         Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id);
 
+        Task<VehicleServiceModel> VehiclePreviewByIdAsync(int id);
+
         Task EditVehicleAsync(int id, VehicleFormModel model);
 
         Task<VehicleFormModel?> GetVehicleFormModelByIdAsync(int id);

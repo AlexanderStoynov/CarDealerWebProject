@@ -41,6 +41,8 @@ namespace CarDealerWebProject.Core.Services
                     Price = v.Price,
                     MotorHorsePower = v.MotorHorsePower,
                     VehicleImages = v.VehicleImages
+                                       .Take(1)
+                                       .ToList()
                 })
                 .ToListAsync();
 
@@ -130,6 +132,24 @@ namespace CarDealerWebProject.Core.Services
                 .FirstAsync();
         }
 
+        public async Task<VehicleServiceModel> VehiclePreviewByIdAsync(int id)
+        {
+            return await repository.AllReadOnly<Vehicle>()
+                .Where(v => v.Id == id)
+                .Select(v => new VehicleServiceModel()
+                {
+                    Id = v.Id,
+                    Make = v.Make,
+                    Model = v.Model,
+                    Price = v.Price,
+                    MotorHorsePower = v.MotorHorsePower,
+                    VehicleImages = v.VehicleImages
+                                       .Take(1)
+                                       .ToList()
+                })
+                .FirstAsync();
+        }
+
         public async Task EditVehicleAsync(int vehicleId, VehicleFormModel model)
         {
             var vehicle = await repository.GetByIdAsync<Vehicle>(vehicleId);
@@ -159,7 +179,7 @@ namespace CarDealerWebProject.Core.Services
 
         public async Task DeleteVehicleAsync(int id)
         {
-            var vehicle = repository.GetByIdAsync<Vehicle>(id);
+            var vehicle = await repository.GetByIdAsync<Vehicle>(id);
 
             if (vehicle == null)
             {
