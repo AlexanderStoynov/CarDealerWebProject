@@ -4,9 +4,9 @@ using static CarDealerWebProject.Core.Constants.MessageConstants;
 using System.ComponentModel.DataAnnotations.Schema;
 using CarDealerWebProject.Core.Contracts;
 
-namespace CarDealerWebProject.Core.Models.Vehicle
+namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
 {
-    public class VehicleServiceModel : IVehicleModel
+    public class VehiclePreviewServiceModel : IVehicleModel
     {
         public int Id { get; set; }
 
@@ -28,14 +28,12 @@ namespace CarDealerWebProject.Core.Models.Vehicle
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(VehicleMotorHorsePowerMin, VehicleMotorHorsePowerMax)]
+        [Range(MotorHorsePowerMax, MotorHorsePowerMin)]
         [Display(Name = "Horse Power")]
-        public int MotorHorsePower { get; set; }
+        public int HorsePower { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Image URL")]
         public List<string> VehicleImages { get; set; } = new List<string>();
-
-        
     }
 }

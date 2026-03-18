@@ -1,5 +1,6 @@
 ﻿using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
+using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
 using CarDealerWebProject.Infrastructure.Data.Enums;
 using CarDealerWebProject.Infrastructure.Data.Models;
 
@@ -20,7 +21,7 @@ namespace CarDealerWebProject.Core.Contracts
 
         Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id);
 
-        Task<VehicleServiceModel> VehiclePreviewByIdAsync(int id);
+        Task<VehiclePreviewServiceModel> VehiclePreviewByIdAsync(int id);
 
         Task EditVehicleAsync(int id, VehicleFormModel model);
 

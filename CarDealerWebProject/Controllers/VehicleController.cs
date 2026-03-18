@@ -4,6 +4,7 @@ using CarDealerWebProject.Core.Extensions;
 using CarDealerWebProject.Core.Factories;
 using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
+using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
 using CarDealerWebProject.Infrastructure.Data.Enums;
 using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -266,7 +267,7 @@ namespace CarDealerWebProject.Controllers
 
             var vehicle = await vehicleService.VehiclePreviewByIdAsync(id);
 
-            var model = new VehicleServiceModel()
+            var model = new VehiclePreviewServiceModel()
             {
                 Id = id,
                 Make = vehicle.Make,
@@ -279,7 +280,7 @@ namespace CarDealerWebProject.Controllers
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
-        public async Task<IActionResult> DeleteVehicle(VehicleServiceModel vehicleModel)
+        public async Task<IActionResult> DeleteVehicle(VehiclePreviewServiceModel vehicleModel)
         {
             if (await vehicleService.VehicleExistsByIdAsync(vehicleModel.Id) == false)
             {

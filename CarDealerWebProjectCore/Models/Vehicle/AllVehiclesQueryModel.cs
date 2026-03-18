@@ -1,5 +1,5 @@
-﻿using CarDealerWebProject.Infrastructure.Data.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
+using CarDealerWebProject.Infrastructure.Data.Enums;
 
 namespace CarDealerWebProject.Core.Models.Vehicle
 {
@@ -13,7 +13,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle
 
         public int TotalVehiclesCount { get; set; }
 
-        public IEnumerable<VehicleServiceModel> Vehicles { get; set; } = new List<VehicleServiceModel>();
+        public IEnumerable<VehiclePreviewServiceModel> Vehicles { get; set; } = new List<VehiclePreviewServiceModel>();
 
     }
 }

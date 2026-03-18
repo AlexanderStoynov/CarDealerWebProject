@@ -18,15 +18,9 @@ namespace CarDealerWebProject.Infrastructure.Data
 
         public DbSet<Vehicle> Vehicles { get; set; }
 
-        public DbSet<PetrolCar> Cars { get; set; }
-
-        public DbSet<Motorcycle> Motorcycles { get; set; }
-
-        public DbSet<ElectricCar> ElectricCars { get; set; }
-
-        public DbSet<HybridCar> HybridCars { get; set; }
-
         public override DbSet<User> Users { get; set; }
+
+        public DbSet<Motor> Motors { get; set; }
 
     }
 }

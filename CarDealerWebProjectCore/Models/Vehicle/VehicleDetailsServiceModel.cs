@@ -1,11 +1,12 @@
-﻿using CarDealerWebProject.Infrastructure.Data.Enums;
+﻿using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
+using CarDealerWebProject.Infrastructure.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Core.Models.Vehicle
 {
-    public class VehicleDetailsServiceModel : VehicleServiceModel
+    public class VehicleDetailsServiceModel : VehiclePreviewServiceModel
     {
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(VehicleColorMaxLength, MinimumLength = VehicleColorMinLength)]

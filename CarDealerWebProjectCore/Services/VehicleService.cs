@@ -1,6 +1,7 @@
 ﻿using CarDealerWebProject.Core.Contracts;
 using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
+using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
 using CarDealerWebProject.Infrastructure.Data.Common;
 using CarDealerWebProject.Infrastructure.Data.Enums;
 using CarDealerWebProject.Infrastructure.Data.Models;
@@ -33,13 +34,13 @@ namespace CarDealerWebProject.Core.Services
             var vehicles = await vehiclesToShow
                 .Skip((currentPage - 1) * vehiclePerPage)
                 .Take(vehiclePerPage)
-                .Select(v => new VehicleServiceModel()
+                .Select(v => new VehiclePreviewServiceModel()
                 {
                     Id = v.Id,
                     Make = v.Make,
                     Model = v.Model,
                     Price = v.Price,
-                    MotorHorsePower = v.MotorHorsePower,
+                    HorsePower = v.Motors.Sum(m => m.MotorHorsePower),
                     VehicleImages = v.VehicleImages
                                        .Take(1)
                                        .ToList()
@@ -132,11 +133,11 @@ namespace CarDealerWebProject.Core.Services
                 .FirstAsync();
         }
 
-        public async Task<VehicleServiceModel> VehiclePreviewByIdAsync(int id)
+        public async Task<VehiclePreviewServiceModel> VehiclePreviewByIdAsync(int id)
         {
             return await repository.AllReadOnly<Vehicle>()
                 .Where(v => v.Id == id)
-                .Select(v => new VehicleServiceModel()
+                .Select(v => new VehiclePreviewServiceModel()
                 {
                     Id = v.Id,
                     Make = v.Make,

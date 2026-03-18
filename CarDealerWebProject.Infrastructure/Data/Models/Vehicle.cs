@@ -2,30 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
 {
     [Comment("Vehicle parameters")]
-    public abstract class Vehicle
+    public class Vehicle
     {
-        protected Vehicle() { }
-
-        [SetsRequiredMembers]
-        protected Vehicle(VehicleCommon common)
+        public Vehicle() 
         {
-            Make = common.Make;
-            Model = common.Model;
-            Color = common.Color;
-            Description = common.Description;
-            Transmission = common.Transmission;
-            ManufacturingDate = common.ManufacturingDate;
-            MotorHorsePower = common.MotorHorsePower;
-            Fuel = common.Fuel;
-            Price = common.Price;
-            Milage = common.Milage;
-            VehicleImages = common.VehicleImages;
+            Motors = new List<Motor>();
         }
 
         [Key]
@@ -53,26 +39,21 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         [Comment("Vehicle manufacturing date")]
         public DateTime ManufacturingDate { get; set; }
 
-        [Range(VehicleMotorHorsePowerMin, VehicleMotorHorsePowerMax)]
-        [Comment("Motor horse power")]
-        public int MotorHorsePower { get; set; }
-
-        [Required]
-        [Comment("Vehicle fuel type")]
-        public FuelType Fuel { get; set; }
-
         [Column(TypeName = "decimal(18,2)")]
         [Range(typeof(decimal), VehiclePriceMin, VehiclePriceMax, ConvertValueInInvariantCulture = true)]
         [Comment("Vehicle price")]
         public decimal Price { get; set; }
 
-        [Range(VehicleMilageMin, VehicleMilageMax)]
+        [Range(VehicleMileageMin, VehicleMileageMax)]
         [Comment("Vehicle milage")]
-        public int Milage { get; set; }
+        public int Mileage { get; set; }
+
+        [Comment("Vehicle motor")]
+        public ICollection<Motor> Motors { get; set; } = new List<Motor>();
 
         [Required]
         [Comment("Vehicle images")]
-        public List<string> VehicleImages { get; set; } = new List<string>();
+        public required List<string> VehicleImages { get; set; } = new List<string>();
 
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Comment("Vehicle description")]
@@ -80,12 +61,20 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
 
         [Required]
         [Comment("If vehicle is sold")]
-        public bool IsSold { get; set; } = false;
+        public required bool IsSold { get; set; } = false;
+
+        [Required]
+        [Comment("Type of vehicle")]
+        public VehicleTypes VehicleType { get; set; }
+
+        //Non common properties
+
+        [Comment("Car body type")]
+        public CarBodyType? CarBodyType { get; set; } = null;
+
+        [Comment("Motorcycle body type")]
+        public MotorcycleBodyType? MotorcycleBodyType { get; set; }
     }
-
-
-    //[Comment("Date vehicle is listed")]
-    //public DateTime DateListed { get; set; }
 
     //    SellerName = "John Doe",
     //    SellerPhone = "+359 123 456 789
