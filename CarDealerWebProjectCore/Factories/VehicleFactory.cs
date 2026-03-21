@@ -26,7 +26,7 @@ namespace CarDealerWebProject.Core.Factories
                 s.MotorHorsePower,
                 s.Fuel,
                 s.Price,
-                s.Milage,
+                s.Mileage,
                 s.VehicleImages
             );   
     }

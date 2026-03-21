@@ -1,4 +1,4 @@
-﻿using CarDealerWebProject.Core.Contracts;
+﻿using CarDealerWebProject.Core.Contracts.Services;
 using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
 using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
@@ -68,7 +68,7 @@ namespace CarDealerWebProject.Core.Services
                     VehicleImage = v.VehicleImages[0],
                     Make = v.Make,
                     Model = v.Model,
-                    MotorHorsePower = v.MotorHorsePower
+                    HorsePower = v.Motors.Sum(m => m.MotorHorsePower)
                 }).ToListAsync();
         }
 
@@ -101,10 +101,7 @@ namespace CarDealerWebProject.Core.Services
                     Color = v.Color,
                     Price = v.Price,
                     ManufacturingDate = v.ManufacturingDate,
-                    Fuel = v.Fuel,
-                    MotorHorsePower = v.MotorHorsePower,
                     Transmission = v.Transmission,
-                    Milage = v.Milage,
                     Description = v.Description,
                     VehicleImages = v.VehicleImages,
                 })
@@ -123,10 +120,7 @@ namespace CarDealerWebProject.Core.Services
                     Color = v.Color,
                     Price = v.Price,
                     ManufacturingDate = v.ManufacturingDate,
-                    Fuel = v.Fuel,
-                    MotorHorsePower = v.MotorHorsePower,
                     Transmission = v.Transmission,
-                    Milage = v.Milage,
                     Description = v.Description,
                     VehicleImages = v.VehicleImages,
                 })
@@ -143,7 +137,7 @@ namespace CarDealerWebProject.Core.Services
                     Make = v.Make,
                     Model = v.Model,
                     Price = v.Price,
-                    MotorHorsePower = v.MotorHorsePower,
+                    HorsePower = v.Motors.Sum(m => m.MotorHorsePower),
                     VehicleImages = v.VehicleImages
                                        .Take(1)
                                        .ToList()
@@ -162,10 +156,7 @@ namespace CarDealerWebProject.Core.Services
                 vehicle.Color = model.Color;
                 vehicle.Price = model.Price;
                 vehicle.ManufacturingDate = model.ManufacturingDate;
-                vehicle.Fuel = model.Fuel;
-                vehicle.MotorHorsePower = model.MotorHorsePower;
                 vehicle.Transmission = model.Transmission;
-                vehicle.Milage = model.Milage;
                 vehicle.Description = model.Description;
                 vehicle.VehicleImages = model.VehicleImages;
 

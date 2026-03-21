@@ -1,5 +1,6 @@
-﻿using CarDealerWebProject.Core.Contracts;
+﻿using CarDealerWebProject.Core.Contracts.Models;
 using CarDealerWebProject.Infrastructure.Data.Enums;
+using CarDealerWebProject.Infrastructure.Data.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
@@ -33,15 +34,6 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         public DateTime ManufacturingDate { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(VehicleMotorHorsePowerMin, VehicleMotorHorsePowerMax)]
-        [Display(Name = "Horse power")]
-        public int MotorHorsePower { get; set; }
-
-        [Required(ErrorMessage = RequiredMessage)]
-        [Display(Name = "Fule type")]
-        public FuelType Fuel { get; set; }
-
-        [Required(ErrorMessage = RequiredMessage)]
         [Column(TypeName = "decimal(18,2)")]
         [Range(typeof(decimal), VehiclePriceMin, VehiclePriceMax, ConvertValueInInvariantCulture = true, 
             ErrorMessage = "The vehicle price must be a positive number and between {1} and {2} euro")]
@@ -49,9 +41,13 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(VehicleMilageMin, VehicleMilageMax)]
-        [Display(Name = "Milage")]
-        public int Milage { get; set; }
+        [Range(VehicleMileageMin, VehicleMileageMax)]
+        [Display(Name = "Mileage")]
+        public int Mileage { get; set; }
+
+        [Required(ErrorMessage = RequiredMessage)]
+        [Display(Name = "Motors")]
+        public List<Motor> Motors { get; set; } = new List<Motor>();
 
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Display(Name = "Description")]

@@ -4,7 +4,7 @@ using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
 using CarDealerWebProject.Infrastructure.Data.Enums;
 using CarDealerWebProject.Infrastructure.Data.Models;
 
-namespace CarDealerWebProject.Core.Contracts
+namespace CarDealerWebProject.Core.Contracts.Services
 {
     public interface IVehicleService
     {

@@ -14,4 +14,8 @@
     <ProjectReference Include="..\CarDealerWebProject.Infrastructure\CarDealerWebProject.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Vehicle\ViewModels\" />
+  </ItemGroup>
+
 </Project>

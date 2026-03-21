@@ -1,4 +1,4 @@
-﻿namespace CarDealerWebProject.Core.Contracts
+﻿namespace CarDealerWebProject.Core.Contracts.Models
 {
     public interface IVehicleModel
     {
@@ -8,6 +8,5 @@
 
         public decimal Price { get; set; }
 
-        public int HorsePower { get; set; }
     }
 }

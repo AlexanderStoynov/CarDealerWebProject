@@ -11,10 +11,10 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         [Display(Name = "Body type")]
         public CarBodyType CarBodyType { get; set; }
 
-        [Required]
-        [Range(PetrolVehicleEngineCapacityMin, PetrolVehicleEngineCapacityMax)]
-        [Display(Name = "Engine capacity")]
-        public int EngineCapacity { get; set; }
+        //[Required]
+        //[Range(PetrolVehicleEngineCapacityMin, PetrolVehicleEngineCapacityMax)]
+        //[Display(Name = "Engine capacity")]
+        //public int EngineCapacity { get; set; }
 
     }
 }

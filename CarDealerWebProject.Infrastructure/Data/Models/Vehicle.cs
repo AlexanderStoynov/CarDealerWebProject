@@ -9,11 +9,6 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
     [Comment("Vehicle parameters")]
     public class Vehicle
     {
-        public Vehicle() 
-        {
-            Motors = new List<Motor>();
-        }
-
         [Key]
         [Comment("Vehicle identifier")]
         public int Id { get; set; }
@@ -45,7 +40,7 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         public decimal Price { get; set; }
 
         [Range(VehicleMileageMin, VehicleMileageMax)]
-        [Comment("Vehicle milage")]
+        [Comment("Vehicle mileage")]
         public int Mileage { get; set; }
 
         [Comment("Vehicle motor")]

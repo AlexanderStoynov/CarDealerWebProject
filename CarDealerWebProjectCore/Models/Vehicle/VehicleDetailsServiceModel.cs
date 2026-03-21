@@ -26,9 +26,9 @@ namespace CarDealerWebProject.Core.Models.Vehicle
         public FuelType Fuel { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(VehicleMilageMin, VehicleMilageMax)]
-        [Display(Name = "Milage")]
-        public int Milage { get; set; }
+        [Range(VehicleMileageMin, VehicleMileageMax)]
+        [Display(Name = "Mileage")]
+        public int Mileage { get; set; }
 
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Display(Name = "Description")]

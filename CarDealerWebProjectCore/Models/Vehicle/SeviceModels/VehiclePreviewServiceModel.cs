@@ -2,7 +2,7 @@
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
 using System.ComponentModel.DataAnnotations.Schema;
-using CarDealerWebProject.Core.Contracts;
+using CarDealerWebProject.Core.Contracts.Models;
 
 namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
 {

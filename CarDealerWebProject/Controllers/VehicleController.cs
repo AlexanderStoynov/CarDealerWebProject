@@ -1,5 +1,5 @@
 ﻿using CarDealerWebProject.Core.Constants;
-using CarDealerWebProject.Core.Contracts;
+using CarDealerWebProject.Core.Contracts.Services;
 using CarDealerWebProject.Core.Extensions;
 using CarDealerWebProject.Core.Factories;
 using CarDealerWebProject.Core.Models.Vehicle;

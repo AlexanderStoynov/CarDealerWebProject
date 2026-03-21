@@ -1,5 +1,5 @@
 ﻿using CarDealerWebProject.Core.Constants;
-using CarDealerWebProject.Core.Contracts;
+using CarDealerWebProject.Core.Contracts.Services;
 using CarDealerWebProject.Core.Models.Admin;
 using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
