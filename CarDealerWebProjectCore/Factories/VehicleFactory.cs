@@ -1,5 +1,4 @@
 ﻿using CarDealerWebProject.Core.Models.Vehicle.FormModels;
-using CarDealerWebProject.Infrastructure.Data.Enums;
 using CarDealerWebProject.Infrastructure.Data.Models;
 using static CarDealerWebProject.Core.Constants.VehicleConstants;
 
@@ -24,18 +23,19 @@ namespace CarDealerWebProject.Core.Factories
                 VehicleType = model.VehicleType,
             };
 
-            switch (if model.VehicleType)
+            switch (model)
             {
-                case VehicleTypes.Car:
-                    vehicle.CarBodyType = model.CarBodyType;
+                case CarFormModel car:
+                    vehicle.CarBodyType = car.CarBodyType;
                     break;
 
-                case VehicleTypes.Motorcycle:
-                    vehicle.CarBodyType = model.MotorcycleBodyType;
+                case MotorcycleFormModel motorcycle:
+                    vehicle.MotorcycleBodyType = motorcycle.MotorcycleBodyType;
                     break;
 
-                => throw new ArgumentException(UnsupportedVehicleError);
-            }
+                default:
+                    throw new ArgumentException(UnsupportedVehicleError);
+            } 
 
             return vehicle;
         }
