@@ -7,8 +7,6 @@
 	string postAction = Model switch
 	{
 		CarFormModel => "AddCar",
-		HybridCarFormModel => "AddHybridCar",
-		ElectricCarFormModel => "AddElectricCar",
 		MotorcycleFormModel => "AddMotorcycle",
 		_ => throw new Exception("Unknown vehicle type.")
 	};

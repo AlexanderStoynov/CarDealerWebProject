@@ -1,6 +1,6 @@
 ﻿namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
 {
-    public class VehicleQueryServiceModel
+    public class VehiclePreviewQueryServiceModel
     {
         public int TotalVehicleCount { get; set; }
 

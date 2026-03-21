@@ -19,7 +19,7 @@ namespace CarDealerWebProject.Core.Services
             this.repository = repository;
         }
 
-        public async Task<VehicleQueryServiceModel> AllVehiclesAsync(VehicleSorting sorting = VehicleSorting.NewlyAdded, int currentPage = 1, int vehiclePerPage = 1)
+        public async Task<VehiclePreviewQueryServiceModel> AllVehiclesAsync(VehicleSorting sorting = VehicleSorting.NewlyAdded, int currentPage = 1, int vehiclePerPage = 1)
         {
             var vehiclesToShow = repository.AllReadOnly<Vehicle>();
 
@@ -41,34 +41,33 @@ namespace CarDealerWebProject.Core.Services
                     Model = v.Model,
                     Price = v.Price,
                     HorsePower = v.Motors.Sum(m => m.MotorHorsePower),
-                    VehicleImages = v.VehicleImages
-                                       .Take(1)
-                                       .ToList()
+                    FirstVehicleImage = v.VehicleImages.FirstOrDefault() ?? ""
                 })
                 .ToListAsync();
 
             int totalVehicles = await vehiclesToShow.CountAsync();
 
-            return new VehicleQueryServiceModel()
+            return new VehiclePreviewQueryServiceModel()
             {
                 Vehicles = vehicles,
                 TotalVehicleCount = totalVehicles
             };
         }
 
-        public async Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync()
+        public async Task<IEnumerable<VehiclePreviewServiceModel>> LastSixVehiclesAsync()
         {
             return await repository
                 .AllReadOnly<Vehicle>()
                 .OrderByDescending(v => v.Id)
                 .Take(6)
-                .Select(v => new VehicleIndexServiceModel()
+                .Select(v => new VehiclePreviewServiceModel()
                 {
                     Id = v.Id,
-                    VehicleImage = v.VehicleImages[0],
                     Make = v.Make,
                     Model = v.Model,
-                    HorsePower = v.Motors.Sum(m => m.MotorHorsePower)
+                    Price = v.Price,
+                    HorsePower = v.Motors.Sum(m => m.MotorHorsePower),
+                    FirstVehicleImage = v.VehicleImages.FirstOrDefault() ?? ""
                 }).ToListAsync();
         }
 
@@ -122,7 +121,7 @@ namespace CarDealerWebProject.Core.Services
                     ManufacturingDate = v.ManufacturingDate,
                     Transmission = v.Transmission,
                     Description = v.Description,
-                    VehicleImages = v.VehicleImages,
+                    VehicleImage = v.VehicleImages,
                 })
                 .FirstAsync();
         }
@@ -138,9 +137,7 @@ namespace CarDealerWebProject.Core.Services
                     Model = v.Model,
                     Price = v.Price,
                     HorsePower = v.Motors.Sum(m => m.MotorHorsePower),
-                    VehicleImages = v.VehicleImages
-                                       .Take(1)
-                                       .ToList()
+                    FirstVehicleImage = v.VehicleImages.FirstOrDefault() ?? ""
                 })
                 .FirstAsync();
         }

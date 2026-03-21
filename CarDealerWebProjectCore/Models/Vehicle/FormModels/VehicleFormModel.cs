@@ -31,7 +31,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Manufacturing date")]
-        public DateTime ManufacturingDate { get; set; }
+        public DateOnly ManufacturingDate { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
         [Column(TypeName = "decimal(18,2)")]
@@ -58,6 +58,6 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         public List<string> VehicleImages { get; set; } = new List<string>();
 
         [Required(ErrorMessage = "Select vehicle type")]
-        public VehicleTypes SelectedType { get; set; }
+        public VehicleTypes VehicleType { get; set; }
     }
 }

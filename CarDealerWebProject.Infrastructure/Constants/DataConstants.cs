@@ -24,15 +24,12 @@
         public const int BatteryCapacityMax = 1000;
         public const int BatteryCapacityMin = 1;
 
-        
-        public const int CategoryMaxLength = 35;
-        public const int CategoryMinLength = 2;
-
         //User
         public const int UserNameMaxLength = 200;
         public const int UserNameMinLength = 4;
 
+        //public const int CategoryMaxLength = 35;
+        //public const int CategoryMinLength = 2;
 
-        
     }
 }

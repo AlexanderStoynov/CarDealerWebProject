@@ -34,6 +34,6 @@ namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
 
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Image URL")]
-        public List<string> VehicleImages { get; set; } = new List<string>();
+        public string FirstVehicleImage { get; set; } = string.Empty;
     }
 }

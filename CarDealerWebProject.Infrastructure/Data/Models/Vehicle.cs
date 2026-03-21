@@ -32,7 +32,7 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         public Transmission Transmission { get; set; }
 
         [Comment("Vehicle manufacturing date")]
-        public DateTime ManufacturingDate { get; set; }
+        public DateOnly ManufacturingDate { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         [Range(typeof(decimal), VehiclePriceMin, VehiclePriceMax, ConvertValueInInvariantCulture = true)]
@@ -46,17 +46,16 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         [Comment("Vehicle motor")]
         public ICollection<Motor> Motors { get; set; } = new List<Motor>();
 
-        [Required]
-        [Comment("Vehicle images")]
-        public required List<string> VehicleImages { get; set; } = new List<string>();
-
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Comment("Vehicle description")]
         public required string Description { get; set; } = string.Empty;
 
         [Required]
+        [Comment("Vehicle images")]
+        public required List<string> VehicleImages { get; set; } = new List<string>();
+
         [Comment("If vehicle is sold")]
-        public required bool IsSold { get; set; } = false;
+        public bool IsSold { get; set; } = false;
 
         [Required]
         [Comment("Type of vehicle")]

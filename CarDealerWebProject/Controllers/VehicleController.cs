@@ -33,6 +33,8 @@ namespace CarDealerWebProject.Controllers
             return View();
         }
 
+        //
+
         [Authorize(Roles = "Admin, Seller")]
         [HttpGet]
         public async Task<IActionResult> AddVehicle(VehicleTypes type)
@@ -44,7 +46,7 @@ namespace CarDealerWebProject.Controllers
                 _ => throw new ArgumentException("Unsupported vehicle type")
             };
 
-            model.SelectedType = type;
+            model.VehicleType = type;
 
             return await Task.FromResult(View(model));
         }
@@ -53,7 +55,7 @@ namespace CarDealerWebProject.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCar(CarFormModel vehicleModel)
         {
-            if ((ValidateVehicleType(vehicleModel.SelectedType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
+            if ((ValidateVehicleType(vehicleModel.VehicleType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
 
             if (!ModelState.IsValid)
                 return View(vehicleModel);
@@ -70,14 +72,14 @@ namespace CarDealerWebProject.Controllers
             }
             int newVehicleId = await vehicleService.CreateVehicleAsync(newVehicle);
 
-            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = vehicleModel.GetInformation() });
+            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = vehicleModel.GetInformation()});
         }
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
         public async Task<IActionResult> AddMotorcycle(MotorcycleFormModel vehicleModel)
         {
-            if ((ValidateVehicleType(vehicleModel.SelectedType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
+            if ((ValidateVehicleType(vehicleModel.VehicleType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
 
             if (!ModelState.IsValid)
                 return View(vehicleModel);

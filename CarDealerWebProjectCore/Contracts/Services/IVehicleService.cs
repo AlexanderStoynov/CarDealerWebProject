@@ -12,7 +12,7 @@ namespace CarDealerWebProject.Core.Contracts.Services
 
         Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync();
 
-        Task<VehicleQueryServiceModel> AllVehiclesAsync(
+        Task<VehiclePreviewQueryServiceModel> AllVehiclesAsync(
             VehicleSorting sorting = VehicleSorting.NewlyAdded,
             int currentPage = 1,
             int vehiclePerPage = 1);
