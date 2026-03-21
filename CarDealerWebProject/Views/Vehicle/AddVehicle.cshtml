@@ -6,7 +6,7 @@
 @{
 	string postAction = Model switch
 	{
-		PetrolCarFormModel => "AddPetrolCar",
+		CarFormModel => "AddCar",
 		HybridCarFormModel => "AddHybridCar",
 		ElectricCarFormModel => "AddElectricCar",
 		MotorcycleFormModel => "AddMotorcycle",
@@ -67,7 +67,7 @@
 				<span asp-validation-for="Mileage" class="small text-danger"></span>
 			</div>
 
-			@if (Model is PetrolCarFormModel petrolCar)
+			@if (Model is CarFormModel petrolCar)
 			{
 				<partial name="VehicleFormPartialViews/_PetrolCarFormPartial" model="petrolCar" />
 			}

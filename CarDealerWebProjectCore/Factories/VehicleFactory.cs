@@ -9,7 +9,7 @@ namespace CarDealerWebProject.Core.Factories
         public static Vehicle Create(VehicleFormModel model) =>
             model switch
             {
-                PetrolCarFormModel petrolCar => new PetrolCar(ToCommon(petrolCar), petrolCar.CarBodyType, petrolCar.EngineCapacity),
+                CarFormModel petrolCar => new PetrolCar(ToCommon(petrolCar), petrolCar.CarBodyType, petrolCar.EngineCapacity),
                 HybridCarFormModel hybridCar => new HybridCar(ToCommon(hybridCar), hybridCar.CarBodyType, hybridCar.EngineCapacity, hybridCar.BatteryCapacity),
                 ElectricCarFormModel electricCar => new ElectricCar(ToCommon(electricCar), electricCar.CarBodyType, electricCar.BatteryCapacity),
                 MotorcycleFormModel motorcycle => new Motorcycle(ToCommon(motorcycle), motorcycle.MotorcycleBodyType, motorcycle.EngineCapacity),

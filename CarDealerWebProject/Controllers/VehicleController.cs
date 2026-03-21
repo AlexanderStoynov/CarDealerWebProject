@@ -39,9 +39,7 @@ namespace CarDealerWebProject.Controllers
         {
             VehicleFormModel model = type switch
             {
-                VehicleTypes.PetrolCar => new PetrolCarFormModel(),
-                VehicleTypes.HybridCar => new HybridCarFormModel(),
-                VehicleTypes.ElectricCar => new ElectricCarFormModel(),
+                VehicleTypes.Car => new CarFormModel(),
                 VehicleTypes.Motorcycle => new MotorcycleFormModel(),
                 _ => throw new ArgumentException("Unsupported vehicle type")
             };
@@ -53,55 +51,7 @@ namespace CarDealerWebProject.Controllers
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
-        public async Task<IActionResult> AddPetrolCar(PetrolCarFormModel vehicleModel)
-        {
-            if ((ValidateVehicleType(vehicleModel.SelectedType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
-
-            if (!ModelState.IsValid)
-                return View(vehicleModel);
-
-            Vehicle newVehicle;
-            try
-            {
-                newVehicle = VehicleFactory.Create(vehicleModel);
-            }
-            catch (ArgumentException exception)
-            {
-                ModelState.AddModelError("", exception.Message);
-                return View(vehicleModel);
-            }
-            int newVehicleId = await vehicleService.CreateVehicleAsync(newVehicle);
-
-            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = vehicleModel.GetInformation() });
-        }
-
-        [Authorize(Roles = "Admin, Seller")]
-        [HttpPost]
-        public async Task<IActionResult> AddHybridCar(HybridCarFormModel vehicleModel)
-        {
-            if ((ValidateVehicleType(vehicleModel.SelectedType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
-
-            if (!ModelState.IsValid)
-                return View(vehicleModel);
-
-            Vehicle newVehicle;
-            try
-            {
-                newVehicle = VehicleFactory.Create(vehicleModel);
-            }
-            catch (ArgumentException exception)
-            {
-                ModelState.AddModelError("", exception.Message);
-                return View(vehicleModel);
-            }
-            int newVehicleId = await vehicleService.CreateVehicleAsync(newVehicle);
-
-            return RedirectToAction(nameof(VehicleDetails), new { id = newVehicleId, information = vehicleModel.GetInformation() });
-        }
-
-        [Authorize(Roles = "Admin, Seller")]
-        [HttpPost]
-        public async Task<IActionResult> AddElectricCar(ElectricCarFormModel vehicleModel)
+        public async Task<IActionResult> AddCar(CarFormModel vehicleModel)
         {
             if ((ValidateVehicleType(vehicleModel.SelectedType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
 
@@ -183,7 +133,7 @@ namespace CarDealerWebProject.Controllers
                 model.Vehicles = vehicles.Vehicles;
 
                 var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(1));
+                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(2));
 
                 memoryCache.Set(cacheKey, model, cacheOptions);
             }
@@ -251,7 +201,7 @@ namespace CarDealerWebProject.Controllers
 
             TempData[MessageConstants.UserMessageSuccess] = VehicleEditedSuccessfullyMessage;
 
-            return RedirectToAction(nameof(VehicleDetails), new { id, information = vehicleModel.GetInformation() });
+            return RedirectToAction(nameof(VehicleDetails), new { id, information = vehicleModel.GetInformation()});
         }
 
         [Authorize(Roles = "Admin, Seller")]

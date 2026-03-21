@@ -3,10 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 {
-    public class MotorcycleFormModel : VehicleFormModel 
+    public class CarFormModel : VehicleFormModel
     {
+
         [Required]
         [Display(Name = "Body type")]
-        public MotorcycleBodyType MotorcycleBodyType { get; set; }
+        public CarBodyType CarBodyType { get; set; }
     }
 }
