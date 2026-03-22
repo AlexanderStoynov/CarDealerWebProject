@@ -1,11 +1,4 @@
-﻿using CarDealerWebProject.Core.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarDealerWebProject.Core.Models.Vehicle
+﻿namespace CarDealerWebProject.Core.Models.Vehicle
 {
     public class VehicleDetailsViewModel 
     {

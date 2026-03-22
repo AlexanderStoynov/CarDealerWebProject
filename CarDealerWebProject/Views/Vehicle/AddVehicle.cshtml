@@ -42,18 +42,7 @@
 				<input asp-for="ManufacturingDate" class="form-control" placeholder="01.2000">
 				<span asp-validation-for="ManufacturingDate" class="small text-danger"></span>
 			</div>
-			<div class="form-group">
-				<label asp-for="MotorHorsePower"></label>
-				<input asp-for="MotorHorsePower" class="form-control" placeholder="100">
-				<span asp-validation-for="MotorHorsePower" class="small text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label for="Fuel" class="form-label">Fuel</label>
-				<select asp-for="Fuel" class="form-select" asp-items="Html.GetEnumSelectList<FuelType>()">
-					<option value="">Select fuel type</option>
-				</select>
-				<span asp-validation-for="Fuel" class="small text-danger"></span>
-			</div>
+			
 			<div class="form-group">
 				<label asp-for="Price"></label>
 				<input asp-for="Price" class="form-control" placeholder="In euros">
@@ -65,17 +54,9 @@
 				<span asp-validation-for="Mileage" class="small text-danger"></span>
 			</div>
 
-			@if (Model is CarFormModel petrolCar)
+			@if (Model is CarFormModel car)
 			{
-				<partial name="VehicleFormPartialViews/_PetrolCarFormPartial" model="petrolCar" />
-			}
-			else if (Model is HybridCarFormModel hybridCar)
-			{
-				<partial name="VehicleFormPartialViews/_HybridCarFormPartial" model="hybridCar" />
-			}
-			else if (Model is ElectricCarFormModel electricCar)
-			{
-				<partial name="VehicleFormPartialViews/_ElectricCarFormPartial" model="electricCar" />
+				<partial name="VehicleFormPartialViews/_CarFormPartial" model="car" />
 			}
 			else if (Model is MotorcycleFormModel motorcycle)
 			{

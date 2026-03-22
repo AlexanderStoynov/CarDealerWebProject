@@ -61,24 +61,15 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "Vehicle model"),
                     Color = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false, comment: "Vehicle color"),
                     Transmission = table.Column<int>(type: "int", nullable: false, comment: "Vehicle transmission"),
-                    ManufacturingDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Vehicle manufacturing date"),
-                    MotorHorsePower = table.Column<int>(type: "int", nullable: false, comment: "Motor horse power"),
-                    Fuel = table.Column<int>(type: "int", nullable: false, comment: "Vehicle fuel type"),
+                    ManufacturingDate = table.Column<DateOnly>(type: "date", nullable: false, comment: "Vehicle manufacturing date"),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Vehicle price"),
-                    Milage = table.Column<int>(type: "int", nullable: false, comment: "Vehicle milage"),
-                    VehicleImages = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Vehicle images"),
+                    Mileage = table.Column<int>(type: "int", nullable: false, comment: "Vehicle mileage"),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false, comment: "Vehicle description"),
+                    VehicleImages = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Vehicle images"),
                     IsSold = table.Column<bool>(type: "bit", nullable: false, comment: "If vehicle is sold"),
-                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
-                    ElectricCar_CarBodyType = table.Column<int>(type: "int", nullable: true, comment: "Car body type"),
-                    ElectricCar_BatteryCapacity = table.Column<int>(type: "int", nullable: true, comment: "Battery capacity"),
-                    HybridCar_CarBodyType = table.Column<int>(type: "int", nullable: true, comment: "Car body type"),
-                    BatteryCapacity = table.Column<int>(type: "int", nullable: true, comment: "Battery capacity"),
-                    HybridCar_EngineCapacity = table.Column<int>(type: "int", nullable: true, comment: "Engine capacity"),
-                    MotorcycleBodyType = table.Column<int>(type: "int", nullable: true, comment: "Motorcycle body type"),
-                    Motorcycle_EngineCapacity = table.Column<int>(type: "int", nullable: true, comment: "Engine capacity"),
+                    VehicleType = table.Column<int>(type: "int", nullable: false, comment: "Type of vehicle"),
                     CarBodyType = table.Column<int>(type: "int", nullable: true, comment: "Car body type"),
-                    EngineCapacity = table.Column<int>(type: "int", nullable: true, comment: "Engine capacity")
+                    MotorcycleBodyType = table.Column<int>(type: "int", nullable: true, comment: "Motorcycle body type")
                 },
                 constraints: table =>
                 {
@@ -192,6 +183,29 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Motors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "Motor identifier")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Fuel = table.Column<int>(type: "int", nullable: false, comment: "Vehicle fuel type"),
+                    MotorHorsePower = table.Column<int>(type: "int", nullable: false, comment: "Motor horse power"),
+                    EngineCapacityCC = table.Column<int>(type: "int", nullable: true, comment: "Engine capacity"),
+                    BatteryCapacity = table.Column<int>(type: "int", nullable: true, comment: "Battery capacity"),
+                    VehicleId = table.Column<int>(type: "int", nullable: false, comment: "Vehicle identifier")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Motors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Motors_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -230,6 +244,11 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Motors_VehicleId",
+                table: "Motors",
+                column: "VehicleId");
         }
 
         /// <inheritdoc />
@@ -251,13 +270,16 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Vehicles");
+                name: "Motors");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Vehicles");
         }
     }
 }

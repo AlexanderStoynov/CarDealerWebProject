@@ -5,8 +5,8 @@ using static CarDealerWebProject.Core.Constants.VehicleConstants;
 namespace CarDealerWebProject.Core.Factories
 {
     public static class VehicleFactory
-    { 
-         public static Vehicle Create<T>(T model) where T : VehicleFormModel
+    {
+        public static Vehicle Create<T>(T model) where T : VehicleFormModel
         {
             var vehicle = new Vehicle
             {
@@ -35,8 +35,7 @@ namespace CarDealerWebProject.Core.Factories
 
                 default:
                     throw new ArgumentException(UnsupportedVehicleError);
-            } 
-
+            }
             return vehicle;
         }
     }

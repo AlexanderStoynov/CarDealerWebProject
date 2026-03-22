@@ -8,6 +8,8 @@ namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
 {
     public class VehiclePreviewServiceModel : IVehicleModel
     {
+        [Required(ErrorMessage = RequiredMessage)]
+        [Display(Name = "Vehicle ID")]
         public int Id { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]

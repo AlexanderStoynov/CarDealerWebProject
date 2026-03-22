@@ -1,4 +1,5 @@
-﻿@model VehicleDetailsServiceModel
+﻿@using CarDealerWebProject.Core.Models.Vehicle.SeviceModels
+@model VehicleDetailsServiceModel
 @{
     ViewData["Title"] = "Vehicle Details";
 }
@@ -19,9 +20,6 @@
                 <b>@String.Format("{0:f2}", Model.Price) Euro</b>
             </p>
             <p>Manufacturing Date: <b>@Model.ManufacturingDate.Month.ToString("MMM") @Model.ManufacturingDate.Year</b></p>
-            <p>Motor Type: <b>@Model.Fuel</b></p>
-            <p>Transmission: <b>@Model.Transmission</b></p>
-            <p>Power: <b>@Model.MotorHorsePower hp</b></p>
             <p>Mileage: <b>@Model.Mileage km</b></p>
             <p>@Model.Description</p>
             <div class="form-inline">

@@ -1,0 +1,17 @@
+﻿@using CarDealerWebProject.Infrastructure.Data.Enums
+@model CarDealerWebProject.Core.Models.Vehicle.FormModels.MotorFormModel
+
+
+<div class="form-group">
+	<label for="Fuel" class="form-label">Fuel</label>
+	<select asp-for="Fuel" class="form-select" asp-items="Html.GetEnumSelectList<FuelType>()">
+		<option value="">Select fuel type</option>
+	</select>
+	<span asp-validation-for="Fuel" class="small text-danger"></span>
+</div>
+<div class="form-group">
+	<label asp-for="MotorHorsePower"></label>
+	<input asp-for="MotorHorsePower" class="form-control" placeholder="200">
+	<span asp-validation-for="MotorHorsePower" class="small text-danger"></span>
+</div>
+

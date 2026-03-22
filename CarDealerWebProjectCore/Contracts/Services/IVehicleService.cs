@@ -1,5 +1,4 @@
-﻿using CarDealerWebProject.Core.Models.Vehicle;
-using CarDealerWebProject.Core.Models.Vehicle.FormModels;
+﻿using CarDealerWebProject.Core.Models.Vehicle.FormModels;
 using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
 using CarDealerWebProject.Infrastructure.Data.Enums;
 using CarDealerWebProject.Infrastructure.Data.Models;
@@ -10,7 +9,7 @@ namespace CarDealerWebProject.Core.Contracts.Services
     {
         Task<int> CreateVehicleAsync(Vehicle vehicle);
 
-        Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync();
+        Task<IEnumerable<VehiclePreviewServiceModel>> LastSixVehiclesAsync();
 
         Task<VehiclePreviewQueryServiceModel> AllVehiclesAsync(
             VehicleSorting sorting = VehicleSorting.NewlyAdded,
@@ -19,7 +18,8 @@ namespace CarDealerWebProject.Core.Contracts.Services
 
         Task<bool> VehicleExistsByIdAsync(int id);
 
-        Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id);
+        Task<TVehicle> VehicleDetailsByIdAsync<TVehicle>(int id) 
+            where TVehicle : VehicleDetailsServiceModel, new();
 
         Task<VehiclePreviewServiceModel> VehiclePreviewByIdAsync(int id);
 

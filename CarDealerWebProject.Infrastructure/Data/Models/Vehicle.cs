@@ -43,7 +43,7 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         [Comment("Vehicle mileage")]
         public int Mileage { get; set; }
 
-        [Comment("Vehicle motor")]
+        [Comment("Vehicle motors")]
         public ICollection<Motor> Motors { get; set; } = new List<Motor>();
 
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]

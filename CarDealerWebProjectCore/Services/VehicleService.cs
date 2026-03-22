@@ -1,5 +1,4 @@
 ﻿using CarDealerWebProject.Core.Contracts.Services;
-using CarDealerWebProject.Core.Models.Vehicle;
 using CarDealerWebProject.Core.Models.Vehicle.FormModels;
 using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
 using CarDealerWebProject.Infrastructure.Data.Common;
@@ -107,23 +106,32 @@ namespace CarDealerWebProject.Core.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id)
+        public async Task<TVehicle> VehicleDetailsByIdAsync<TVehicle>(int id)
+            where TVehicle : VehicleDetailsServiceModel, new()
         {
-            return await repository.AllReadOnly<Vehicle>()
+            var vehicle = await repository.AllReadOnly<Vehicle>()
+                .Include(v => v.Motors)
                 .Where(v => v.Id == id)
-                .Select(v => new VehicleDetailsServiceModel()
-                {
-                    Id = v.Id,
-                    Make = v.Make,
-                    Model = v.Model,
-                    Color = v.Color,
-                    Price = v.Price,
-                    ManufacturingDate = v.ManufacturingDate,
-                    Transmission = v.Transmission,
-                    Description = v.Description,
-                    VehicleImage = v.VehicleImages,
-                })
                 .FirstAsync();
+
+            var model = new TVehicle
+            {
+
+                Id = vehicle.Id,
+                Make = vehicle.Make,
+                Model = vehicle.Model,
+                Color = vehicle.Color,
+                Transmission = vehicle.Transmission,
+                ManufacturingDate = vehicle.ManufacturingDate,
+                Price = vehicle.Price,
+                Mileage = vehicle.Mileage,
+                Motors = vehicle.Motors.ToList(),
+                Description = vehicle.Description,
+                VehicleImages = vehicle.VehicleImages,
+                IsSold = vehicle.IsSold,
+            };
+
+            return model;
         }
 
         public async Task<VehiclePreviewServiceModel> VehiclePreviewByIdAsync(int id)

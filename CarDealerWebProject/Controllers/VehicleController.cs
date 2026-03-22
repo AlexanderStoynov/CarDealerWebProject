@@ -33,8 +33,6 @@ namespace CarDealerWebProject.Controllers
             return View();
         }
 
-        //
-
         [Authorize(Roles = "Admin, Seller")]
         [HttpGet]
         public async Task<IActionResult> AddVehicle(VehicleTypes type)
@@ -148,6 +146,7 @@ namespace CarDealerWebProject.Controllers
             return View(model);
         }
 
+        ////////////////////////////////////////////////////////////////////
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> VehicleDetails(int id, string information)
@@ -158,7 +157,7 @@ namespace CarDealerWebProject.Controllers
                 return RedirectToAction(nameof(AllVehicles));
             }
 
-            var model = await vehicleService.VehicleDetailsByIdAsync(id);
+            var model = await vehicleService.VehicleDetailsByIdAsync<VehicleDetailsServiceModel>(id);
 
             if (information != model.GetInformation())
             {
@@ -224,7 +223,9 @@ namespace CarDealerWebProject.Controllers
                 Id = id,
                 Make = vehicle.Make,
                 Model = vehicle.Model,
-                VehicleImages = vehicle.VehicleImages
+                Price = vehicle.Price,
+                HorsePower = vehicle.HorsePower,
+                FirstVehicleImage = vehicle.FirstVehicleImage
             };
 
             return View(model);
