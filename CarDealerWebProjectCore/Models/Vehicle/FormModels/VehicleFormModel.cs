@@ -47,7 +47,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Motors")]
-        public List<Motor> Motors { get; set; } = new List<Motor>();
+        public List<MotorFormModel> Motors { get; set; } = new List<MotorFormModel>();
 
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Display(Name = "Description")]
