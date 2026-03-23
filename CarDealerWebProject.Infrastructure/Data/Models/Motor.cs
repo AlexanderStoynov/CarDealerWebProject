@@ -25,7 +25,7 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
 
         [Range(BatteryCapacityMin, BatteryCapacityMax)]
         [Comment("Battery capacity")]
-        public int? BatteryCapacity { get; set; }
+        public int? BatteryCapacitykWh { get; set; }
 
         [Comment("Vehicle identifier")]
         public int VehicleId { get; set; }

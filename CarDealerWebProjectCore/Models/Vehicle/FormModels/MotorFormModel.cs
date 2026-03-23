@@ -24,7 +24,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 
         [Range(BatteryCapacityMin, BatteryCapacityMax)]
         [Comment("Battery capacity")]
-        public int? BatteryCapacity { get; set; }
+        public int? BatteryCapacitykWh { get; set; }
 
     }
 }

@@ -63,6 +63,16 @@
 				<partial name="VehicleFormPartialViews/_MotorcycleFormPartial" model="motorcycle" />
 			}
 
+			<div id="motors-container">
+				
+			</div>
+
+			<div id="motor-template" style="display:none">
+				@await Html.PartialAsync("_MotorFormPartial", new MotorFormModel())
+			</div>
+
+			<button type="button" id="add-motor" class="btn btn-primary mt-2">Add Motor</button>
+
 			<div class="form-group">
 				<label asp-for="Description"></label>
 				<textarea asp-for="Description" rows="4" class="form-control" placeholder="Extras are:"></textarea>

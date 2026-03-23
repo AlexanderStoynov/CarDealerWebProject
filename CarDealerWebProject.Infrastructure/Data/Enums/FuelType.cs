@@ -6,6 +6,5 @@
         Diesel = 1,
         Electric = 2,
         Gas = 3,
-
     }
 }

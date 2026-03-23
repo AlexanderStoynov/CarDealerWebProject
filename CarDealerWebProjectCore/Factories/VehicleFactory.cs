@@ -17,11 +17,21 @@ namespace CarDealerWebProject.Core.Factories
                 ManufacturingDate = model.ManufacturingDate,
                 Price = model.Price,
                 Mileage = model.Mileage,
-                Motors = model.Motors,
+                Motors = new List<Motor>(),
                 Description = model.Description,
                 VehicleImages = model.VehicleImages,
                 VehicleType = model.VehicleType,
             };
+
+            vehicle.Motors = model.Motors.Select(m => new Motor 
+            {
+                Fuel = m.Fuel,
+                MotorHorsePower = m.MotorHorsePower,
+                EngineCapacityCC = m.EngineCapacityCC,
+                BatteryCapacitykWh = m.BatteryCapacitykWh,
+                Vehicle = vehicle,
+                
+            }).ToList();
 
             switch (model)
             {

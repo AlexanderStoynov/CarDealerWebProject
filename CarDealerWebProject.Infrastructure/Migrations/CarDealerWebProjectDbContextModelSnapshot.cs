@@ -59,7 +59,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BatteryCapacity")
+                    b.Property<int?>("BatteryCapacitykWh")
                         .HasColumnType("int")
                         .HasComment("Battery capacity");
 
