@@ -46,6 +46,7 @@ namespace CarDealerWebProject.Core.Factories
                 default:
                     throw new ArgumentException(UnsupportedVehicleError);
             }
+
             return vehicle;
         }
     }

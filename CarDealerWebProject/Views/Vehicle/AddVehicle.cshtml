@@ -13,79 +13,84 @@
 }
 
 <div class="row">
-	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+	<div class="col-12">
 		<form method="post" asp-action="@postAction" asp-controller="Vehicle">
-			<div class="form-group">
-				<label asp-for="Make"></label>
-				<input asp-for="Make" class="form-control" placeholder="Tesla">
-				<span asp-validation-for="Make" class="small text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Model"></label>
-				<input asp-for="Model" class="form-control" placeholder="Model 3">
-				<span asp-validation-for="Model" class="small text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Color"></label>
-				<input asp-for="Color" class="form-control" placeholder="Black">
-				<span asp-validation-for="Color" class="small text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label for="Transmission" class="form-label">Transmission</label>
-				<select asp-for="Transmission" class="form-select" asp-items="Html.GetEnumSelectList<Transmission>()">
-					<option value="">Select transmission</option>
-				</select>
-				<span asp-validation-for="Transmission" class="small text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="ManufacturingDate"></label>
-				<input asp-for="ManufacturingDate" class="form-control" placeholder="01.2000">
-				<span asp-validation-for="ManufacturingDate" class="small text-danger"></span>
-			</div>
-			
-			<div class="form-group">
-				<label asp-for="Price"></label>
-				<input asp-for="Price" class="form-control" placeholder="In euros">
-				<span asp-validation-for="Price" class="small text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Mileage"></label>
-				<input asp-for="Mileage" class="form-control" placeholder="In km/h">
-				<span asp-validation-for="Mileage" class="small text-danger"></span>
-			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label asp-for="Make"></label>
+						<input asp-for="Make" class="form-control" placeholder="Tesla">
+						<span asp-validation-for="Make" class="small text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Model"></label>
+						<input asp-for="Model" class="form-control" placeholder="Model 3">
+						<span asp-validation-for="Model" class="small text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Color"></label>
+						<input asp-for="Color" class="form-control" placeholder="Black">
+						<span asp-validation-for="Color" class="small text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label for="Transmission" class="form-label">Transmission</label>
+						<select asp-for="Transmission" class="form-select" asp-items="Html.GetEnumSelectList<Transmission>()">
+							<option value="">Select transmission</option>
+						</select>
+						<span asp-validation-for="Transmission" class="small text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="ManufacturingDate"></label>
+						<input asp-for="ManufacturingDate" class="form-control" placeholder="01.2000">
+						<span asp-validation-for="ManufacturingDate" class="small text-danger"></span>
+					</div>
 
-			@if (Model is CarFormModel car)
-			{
-				<partial name="VehicleFormPartialViews/_CarFormPartial" model="car" />
-			}
-			else if (Model is MotorcycleFormModel motorcycle)
-			{
-				<partial name="VehicleFormPartialViews/_MotorcycleFormPartial" model="motorcycle" />
-			}
+					<div class="form-group">
+						<label asp-for="Price"></label>
+						<input asp-for="Price" class="form-control" placeholder="In euros">
+						<span asp-validation-for="Price" class="small text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Mileage"></label>
+						<input asp-for="Mileage" class="form-control" placeholder="In km/h">
+						<span asp-validation-for="Mileage" class="small text-danger"></span>
+					</div>
 
-			<div id="motors-container">
-				
-			</div>
+					@if (Model is CarFormModel car)
+					{
+						<partial name="VehicleFormPartialViews/_CarFormPartial" model="car" />
+					}
+					else if (Model is MotorcycleFormModel motorcycle)
+					{
+						<partial name="VehicleFormPartialViews/_MotorcycleFormPartial" model="motorcycle" />
+					}
 
-			<div id="motor-template" style="display:none">
-				@await Html.PartialAsync("_MotorFormPartial", new MotorFormModel())
-			</div>
+					<div class="form-group">
+						<label asp-for="Description"></label>
+						<textarea asp-for="Description" rows="4" class="form-control" placeholder="Extras are:"></textarea>
+						<span asp-validation-for="Description" class="small text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="VehicleImages"></label>
+						<input asp-for="VehicleImages" class="form-control" placeholder="Your fine URL here">
+						<span asp-validation-for="VehicleImages" class="small text-danger"></span>
+					</div>
+				</div>
 
-			<button type="button" id="add-motor" class="btn btn-primary mt-2">Add Motor</button>
+				<div class="col-lg-6">
+					<div id="motors-container">
+					</div>
 
-			<div class="form-group">
-				<label asp-for="Description"></label>
-				<textarea asp-for="Description" rows="4" class="form-control" placeholder="Extras are:"></textarea>
-				<span asp-validation-for="Description" class="small text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="VehicleImages"></label>
-				<input asp-for="VehicleImages" class="form-control" placeholder="Your fine URL here">
-				<span asp-validation-for="VehicleImages" class="small text-danger"></span>
-			</div>
+					<div id="motor-template" style="display:none">
+						@await Html.PartialAsync("VehicleFormPartialViews/_MotorFormPartial", new MotorFormModel())
+					</div>
 
-			<div class="text-center">
-				<input class="btn btn-primary mt-3" type="submit" value="Save" />
+					<button type="button" id="add-motor" class="btn btn-primary mt-2">Add Motor</button>
+				</div>
+
+				<div class="text-center">
+					<input class="btn btn-primary mt-3" type="submit" value="Save" />
+				</div>
 			</div>
 		</form>
 	</div>
@@ -93,4 +98,5 @@
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
+	<script src="~/js/vehicle-motors.js" asp-append-version="true"></script>
 }

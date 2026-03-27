@@ -1,4 +1,5 @@
 ﻿@using CarDealerWebProject.Core.Models.Vehicle.SeviceModels
+@using CarDealerWebProject.Infrastructure.Data.Enums
 @model VehicleDetailsServiceModel
 @{
     ViewData["Title"] = "Vehicle Details";
@@ -7,32 +8,54 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-<div class="container" style="display:inline">
+<div class="container mt-4">
     <div class="row">
         <div class="col-4">
-            <img class="card-img-top" style="width: 20rem;"
-                 src="@Model.VehicleImages[0]" alt="Vehicle Image">
-        </div>
-        <div class="card col-8 border-0">
-            <p style="font-size:25px;"><u>@Model.Make @Model.Model - @Model.Color</u></p>
-            <p style="font-size:25px;">
-                Price:
-                <b>@String.Format("{0:f2}", Model.Price) Euro</b>
-            </p>
-            <p>Manufacturing Date: <b>@Model.ManufacturingDate.Month.ToString("MMM") @Model.ManufacturingDate.Year</b></p>
-            <p>Mileage: <b>@Model.Mileage km</b></p>
-            <p>@Model.Description</p>
-            <div class="form-inline">
-                @if (this.User.Identity!.IsAuthenticated &&
-                (User.IsInRole("Admin") || User.IsInRole("Seller")))
-                {
-                    <a class="btn btn-warning" asp-controller="Vehicle" asp-action="EditVehicle"
-                       asp-route-id="@Model.Id">Edit</a>
-                    <a class="ml-2 btn btn-danger" asp-controller="Vehicle" asp-action="DeleteVehicle"
-                       asp-route-id="@Model.Id">Delete</a>
-                }
+            <div class="card mb-3">
+                <div class="card-body">
+                    @if(Model.VehicleImages.Any())
+                    {
+                        foreach(var image in Model.VehicleImages)
+                        {
+                            <img src="@image" class="img-fluid mb-2"/>
+                        }
+                    }
+
+                    else
+                    {
+                        if(Model.VehicleType == VehicleTypes.Car)
+                        {
+                            <img src="D:\VS Projects\CarDealerWebProject\CarDealerWebProject\wwwroot\images\default-car-image.jpg" class="img-fluid mb-2" />
+                        }
+
+                        else if(Model.VehicleType == VehicleTypes.Motorcycle)
+                        {
+                            <img src="D:\VS Projects\CarDealerWebProject\CarDealerWebProject\wwwroot\images\default-motorcycle-image.jpg" class="img-fluid mb-2" />
+                        }
+                    }
+                </div>
             </div>
         </div>
     </div>
 </div>
-
+<div class="card col-8 border-0">
+    <p style="font-size:30px;"><u>@Model.Make @Model.Model - @Model.Color</u></p>
+    <p style="font-size:30px;">
+        Price:
+        <b>@String.Format("{0:f2}", Model.Price) Euro</b>
+    </p>
+    <p style="font-size:20px;">Transmission:<b>@Model.Transmission</b>
+    <p style="font-size:20px;">Manufacturing Date: <b>@Model.ManufacturingDate.Month.ToString().@Model.ManufacturingDate.Year</b></p>
+    <p style="font-size:20px;">Mileage: <b>@Model.Mileage km</b></p>
+    <p style="font-size:20px;">@Model.Description</p>
+    <div class="form-inline">
+        @if (this.User.Identity!.IsAuthenticated &&
+                (User.IsInRole("Admin") || User.IsInRole("Seller")))
+        {
+            <a class="btn btn-warning" asp-controller="Vehicle" asp-action="EditVehicle"
+               asp-route-id="@Model.Id">Edit</a>
+            <a class="ml-2 btn btn-danger" asp-controller="Vehicle" asp-action="DeleteVehicle"
+               asp-route-id="@Model.Id">Delete</a>
+        }
+    </div>
+</div>

@@ -192,7 +192,7 @@ namespace CarDealerWebProject.Infrastructure.Migrations
                     Fuel = table.Column<int>(type: "int", nullable: false, comment: "Vehicle fuel type"),
                     MotorHorsePower = table.Column<int>(type: "int", nullable: false, comment: "Motor horse power"),
                     EngineCapacityCC = table.Column<int>(type: "int", nullable: true, comment: "Engine capacity"),
-                    BatteryCapacity = table.Column<int>(type: "int", nullable: true, comment: "Battery capacity"),
+                    BatteryCapacitykWh = table.Column<int>(type: "int", nullable: true, comment: "Battery capacity"),
                     VehicleId = table.Column<int>(type: "int", nullable: false, comment: "Vehicle identifier")
                 },
                 constraints: table =>

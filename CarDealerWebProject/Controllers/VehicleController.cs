@@ -56,7 +56,7 @@ namespace CarDealerWebProject.Controllers
             if ((ValidateVehicleType(vehicleModel.VehicleType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
 
             if (!ModelState.IsValid)
-                return View(vehicleModel);
+                return View("AddVehicle", vehicleModel);
 
             Vehicle newVehicle;
             try
@@ -66,7 +66,7 @@ namespace CarDealerWebProject.Controllers
             catch (ArgumentException exception)
             {
                 ModelState.AddModelError("", exception.Message);
-                return View(vehicleModel);
+                return View("AddVehicle",vehicleModel);
             }
             int newVehicleId = await vehicleService.CreateVehicleAsync(newVehicle);
 
@@ -80,7 +80,7 @@ namespace CarDealerWebProject.Controllers
             if ((ValidateVehicleType(vehicleModel.VehicleType, vehicleModel) as ViewResult) is ViewResult vr) return vr;
 
             if (!ModelState.IsValid)
-                return View(vehicleModel);
+                return View("AddVehicle",vehicleModel);
 
             Vehicle newVehicle;
             try
@@ -90,7 +90,7 @@ namespace CarDealerWebProject.Controllers
             catch (ArgumentException exception)
             {
                 ModelState.AddModelError("", exception.Message);
-                return View(vehicleModel);
+                return View("AddVehicle", vehicleModel);
             }
 
             int newVehicleId = await vehicleService.CreateVehicleAsync(newVehicle);
@@ -157,7 +157,7 @@ namespace CarDealerWebProject.Controllers
                 return RedirectToAction(nameof(AllVehicles));
             }
 
-            var model = await vehicleService.VehicleDetailsByIdAsync<VehicleDetailsServiceModel>(id);
+            var model = await vehicleService.VehicleDetailsByIdAsync(id);
 
             if (information != model.GetInformation())
             {

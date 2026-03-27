@@ -9,12 +9,11 @@
         </select>
         <span asp-validation-for="Fuel" class="small text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group horsepower-field" style="display:none">
         <label asp-for="MotorHorsePower"></label>
         <input asp-for="MotorHorsePower" class="form-control" placeholder="100">
         <span asp-validation-for="MotorHorsePower" class="small text-danger"></span>
     </div>
-
     <div class="form-group engine-field" style="display:none">
         <label asp-for="EngineCapacityCC"></label>
         <input asp-for="EngineCapacityCC" class="form-control" placeholder="2000">
@@ -25,29 +24,12 @@
         <input asp-for="BatteryCapacitykWh" class="form-control" placeholder="100">
         <span asp-validation-for="BatteryCapacitykWh" class="small text-danger"></span>
     </div>
+
+    <button type="button" class="btn btn-danger btn-sm remove-motor mt-2">
+        Remove Motor
+    </button>
 </div>
 
-<script>
-    document.addEventListener('change', function(e) {
-        if (e.target.matches('.fuel-select')) {
-            const motorBlock = e.target.closest('.motor-block');
-            const fuel = e.target.value;
-            const engineField = motorBlock.querySelector('.engine-field');
-            const batteryField = motorBlock.querySelector('.battery-field');
-
-            if (fuel === 'Electric') {
-                engineField.style.display = 'none';
-                batteryField.style.display = 'block';
-            } else if (fuel) {
-                engineField.style.display = 'block';
-                batteryField.style.display = 'none';
-            } else {
-                engineField.style.display = 'none';
-                batteryField.style.display = 'none';
-            }
-        }
-    });
-</script>
 
 
 

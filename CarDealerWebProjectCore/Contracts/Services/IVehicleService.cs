@@ -18,8 +18,7 @@ namespace CarDealerWebProject.Core.Contracts.Services
 
         Task<bool> VehicleExistsByIdAsync(int id);
 
-        Task<TVehicle> VehicleDetailsByIdAsync<TVehicle>(int id) 
-            where TVehicle : VehicleDetailsServiceModel, new();
+        Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id);
 
         Task<VehiclePreviewServiceModel> VehiclePreviewByIdAsync(int id);
 

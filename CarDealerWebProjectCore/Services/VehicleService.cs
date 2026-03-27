@@ -106,15 +106,14 @@ namespace CarDealerWebProject.Core.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<TVehicle> VehicleDetailsByIdAsync<TVehicle>(int id)
-            where TVehicle : VehicleDetailsServiceModel, new()
+        public async Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id)
         {
             var vehicle = await repository.AllReadOnly<Vehicle>()
                 .Include(v => v.Motors)
                 .Where(v => v.Id == id)
                 .FirstAsync();
 
-            var model = new TVehicle
+            var baseModel = new VehicleDetailsServiceModel
             {
 
                 Id = vehicle.Id,
@@ -125,10 +124,32 @@ namespace CarDealerWebProject.Core.Services
                 ManufacturingDate = vehicle.ManufacturingDate,
                 Price = vehicle.Price,
                 Mileage = vehicle.Mileage,
-                Motors = vehicle.Motors.ToList(),
+                Motors = vehicle.Motors.Select(m => new MotorDetailsServiceModel
+                {
+                   Id = m.Id,
+                   Fuel = m.Fuel,
+                   MotorHorsePower = m.MotorHorsePower,
+                   EngineCapacityCC = m.EngineCapacityCC,
+                   BatteryCapacitykWh = m.BatteryCapacitykWh,
+                   VehicleId = vehicle.Id,
+                }).ToList(),
                 Description = vehicle.Description,
                 VehicleImages = vehicle.VehicleImages,
                 IsSold = vehicle.IsSold,
+                VehicleType = vehicle.VehicleType,
+            };
+
+            VehicleDetailsServiceModel model = vehicle.VehicleType switch
+            {
+                VehicleTypes.Car => new CarDetailsServiceModel(baseModel)
+                {
+                    CarBodyType = vehicle.CarBodyType ?? default
+                },
+                VehicleTypes.Motorcycle => new MotorcycleDetailsServiceModel(baseModel)
+                {
+                    MotorcycleBodyType = vehicle.MotorcycleBodyType ?? default
+                },
+                _ => throw new ArgumentException(UnsupportedVehicleError)
             };
 
             return model;
@@ -186,5 +207,6 @@ namespace CarDealerWebProject.Core.Services
             await repository.DeleteAsync<Vehicle>(id);
             await repository.SaveChangesAsync();
         }
+
     }
 }

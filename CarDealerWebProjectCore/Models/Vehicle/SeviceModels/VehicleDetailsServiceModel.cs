@@ -1,6 +1,7 @@
 ﻿using CarDealerWebProject.Core.Contracts.Models;
 using CarDealerWebProject.Infrastructure.Data.Enums;
 using CarDealerWebProject.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -52,7 +53,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
 
         [Required(ErrorMessage = RequiredMessage)]
         [DisplayName("Vehicle motors")]
-        public List<Motor> Motors { get; set; } = new List<Motor>();
+        public List<MotorDetailsServiceModel> Motors { get; set; } = new List<MotorDetailsServiceModel>();
 
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Display(Name = "Description")]
@@ -66,5 +67,8 @@ namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
         [Display(Name = "If vehicle is sold")]
         public bool IsSold { get; set; } = false;
 
+        [Required]
+        [Comment("Type of vehicle")]
+        public VehicleTypes VehicleType { get; set; }
     }
 }
