@@ -20,42 +20,80 @@
                             <img src="@image" class="img-fluid mb-2"/>
                         }
                     }
-
                     else
                     {
                         if(Model.VehicleType == VehicleTypes.Car)
                         {
-                            <img src="D:\VS Projects\CarDealerWebProject\CarDealerWebProject\wwwroot\images\default-car-image.jpg" class="img-fluid mb-2" />
+                            <img src="~/images/default-car-image.jpg" class="img-fluid mb-2" />
                         }
 
                         else if(Model.VehicleType == VehicleTypes.Motorcycle)
                         {
-                            <img src="D:\VS Projects\CarDealerWebProject\CarDealerWebProject\wwwroot\images\default-motorcycle-image.jpg" class="img-fluid mb-2" />
+                            <img src="~/images/default-motorcycle-image.jpg" class="img-fluid mb-2" />
                         }
                     }
                 </div>
             </div>
         </div>
+        <div class="col-4">
+            <div class="card border-0">
+                <div class="card-body">
+                    <p style="font-size:30px;"><u>@Model.Make @Model.Model - @Model.Color</u></p>
+                    <p style="font-size:30px;">
+                        Price:
+                        <b>@String.Format("{0:f2}", Model.Price) Euro</b>
+                    </p>
+                    <p style="font-size:20px;">Transmission:<b>@Model.Transmission</b>
+                    <p style="font-size:20px;">Manufacturing Date: <b>@Model.ManufacturingDate.ToString("MM/yyyy")</b></p>
+                    <p style="font-size:20px;">Mileage: <b>@Model.Mileage km</b></p>
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <p style="font-size:20px;">@Model.Description</p>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center gap-2 mt-3">
+                        @if (this.User.Identity!.IsAuthenticated &&
+                                                (User.IsInRole("Admin") || User.IsInRole("Seller")))
+                        {
+                            <a class="btn btn-warning" asp-controller="Vehicle" asp-action="EditVehicle"
+                               asp-route-id="@Model.Id">Edit</a>
+                            <a class="btn btn-danger" asp-controller="Vehicle" asp-action="DeleteVehicle"
+                               asp-route-id="@Model.Id">Delete</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            @if(Model.Motors.Any())
+            {
+                foreach (var motor in Model.Motors)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p style="font-size:20px;"><b>Fuel: </b>@motor.Fuel</p>
+                            <p style="font-size:20px;"><b>HorsePower: ></b>@motor.Fuel</p>
+                            @if(motor.EngineCapacityCC.HasValue)
+                            {
+                                <p style="font-size:20px;"><b>Engine Capacity: ></b>@motor.EngineCapacityCC</p>
+                            }
+                            @if(motor.BatteryCapacitykWh.HasValue)
+                            {
+                                <p style="font-size:20px;"><b>Battery Capacity: ></b>@motor.BatteryCapacitykWh</p>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                 <div class="card mb-3">
+                    <div class="card-body text-center">
+                        <p>No motors available for this vehicle.</p>
+                    </div>
+                 </div>
+            }
+        </div>
     </div>
 </div>
-<div class="card col-8 border-0">
-    <p style="font-size:30px;"><u>@Model.Make @Model.Model - @Model.Color</u></p>
-    <p style="font-size:30px;">
-        Price:
-        <b>@String.Format("{0:f2}", Model.Price) Euro</b>
-    </p>
-    <p style="font-size:20px;">Transmission:<b>@Model.Transmission</b>
-    <p style="font-size:20px;">Manufacturing Date: <b>@Model.ManufacturingDate.Month.ToString().@Model.ManufacturingDate.Year</b></p>
-    <p style="font-size:20px;">Mileage: <b>@Model.Mileage km</b></p>
-    <p style="font-size:20px;">@Model.Description</p>
-    <div class="form-inline">
-        @if (this.User.Identity!.IsAuthenticated &&
-                (User.IsInRole("Admin") || User.IsInRole("Seller")))
-        {
-            <a class="btn btn-warning" asp-controller="Vehicle" asp-action="EditVehicle"
-               asp-route-id="@Model.Id">Edit</a>
-            <a class="ml-2 btn btn-danger" asp-controller="Vehicle" asp-action="DeleteVehicle"
-               asp-route-id="@Model.Id">Delete</a>
-        }
-    </div>
-</div>
+    

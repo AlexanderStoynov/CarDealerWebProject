@@ -1,6 +1,5 @@
 ﻿using CarDealerWebProject.Core.Contracts.Models;
 using CarDealerWebProject.Infrastructure.Data.Enums;
-using CarDealerWebProject.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

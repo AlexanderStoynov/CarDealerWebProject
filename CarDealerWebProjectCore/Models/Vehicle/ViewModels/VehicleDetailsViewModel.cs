@@ -1,5 +1,4 @@
 ﻿using CarDealerWebProject.Infrastructure.Data.Enums;
-using CarDealerWebProject.Infrastructure.Data.Models;
 
 namespace CarDealerWebProject.Core.Models.Vehicle.ViewModels
 {
@@ -19,7 +18,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle.ViewModels
 
         public int Mileage { get; set; }
 
-        public List<Motor> Motors { get; set; } = new List<Motor>();
+        public List<MotorDetailsViewModel> Motors { get; set; } = new List<MotorDetailsViewModel>();
 
         public string Description { get; set; } = string.Empty;
 

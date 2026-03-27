@@ -146,7 +146,6 @@ namespace CarDealerWebProject.Controllers
             return View(model);
         }
 
-        ////////////////////////////////////////////////////////////////////
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> VehicleDetails(int id, string information)
@@ -167,7 +166,7 @@ namespace CarDealerWebProject.Controllers
             return View(model);
         }
 
-
+        ////////////////////////////////////////////////////////////////////
         [Authorize(Roles = "Admin, Seller")]
         [HttpGet]
         public async Task<IActionResult> EditVehicle(int id)
