@@ -10,16 +10,18 @@
 <form asp-action="DeleteVehicle">
     <div class="row">
         <div class="col-md-4">
-            <img class="card-img-top" src="@Model.FirstVehicleImage" alt="Vehicle Image">
+           
         </div>
         <div class="col-md-8">
-            <div class="form-group">
-                <label asp-for="Make" class="control-label"></label>
-                <input asp-for="Make" class="form-control" disabled="disabled" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Model" class="control-label"></label>
-                <input asp-for="Model" class="form-control" disabled="disabled" />
+            <div class="card border-0">
+                <div class="card-body">
+                    <p style="font-size:30px;"><u>@Model.Make @Model.Model</u></p>
+                    <p style="font-size:30px;">Total horse power: <b>@Model.HorsePower</b>
+                    <p style="font-size:30px;">
+                        Price:
+                        <b>@String.Format("{0:f2}", Model.Price) Euro</b>
+                    </p>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Delete" class="btn btn-primary" />
@@ -28,3 +30,27 @@
     </div>
 </form>
 
+@* <div class="col-4">
+    
+</div> *@
+
+<div class="card-body">
+    @if (!string.IsNullOrEmpty(Model.FirstVehicleImage))
+    {
+       
+         <img src="@Model.FirstVehicleImage" class="img-fluid mb-2" />
+        
+    }
+    else
+    {
+        if (Model.VehicleType == VehicleTypes.Car)
+        {
+            <img src="~/images/default-car-image.jpg" class="img-fluid mb-2" />
+        }
+
+        else if (Model.VehicleType == VehicleTypes.Motorcycle)
+        {
+            <img src="~/images/default-motorcycle-image.jpg" class="img-fluid mb-2" />
+        }
+    }
+</div>

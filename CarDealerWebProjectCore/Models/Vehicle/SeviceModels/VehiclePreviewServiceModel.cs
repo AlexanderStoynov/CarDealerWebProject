@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
-using static CarDealerWebProject.Core.Constants.MessageConstants;
+﻿using CarDealerWebProject.Core.Contracts.Models;
+using CarDealerWebProject.Infrastructure.Data.Enums;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CarDealerWebProject.Core.Contracts.Models;
+using static CarDealerWebProject.Core.Constants.MessageConstants;
+using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
 {
@@ -37,5 +39,9 @@ namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Image URL")]
         public string FirstVehicleImage { get; set; } = string.Empty;
+
+        [Required]
+        [Comment("Type of vehicle")]
+        public VehicleTypes VehicleType { get; set; }
     }
 }
