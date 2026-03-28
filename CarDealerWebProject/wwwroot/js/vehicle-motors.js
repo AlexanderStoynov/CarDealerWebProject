@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const removeButton = block.querySelector('.remove-motor');
 
         function updateFieldsVisibility() {
-            const fuelField = fuelSelect.value;
+            const fuelField = fuelSelect.value ? fuelSelect.value : '';
             const horsepowerField = block.querySelector('.horsepower-field');
             const engineField = block.querySelector('.engine-field');
             const batteryField = block.querySelector('.battery-field');
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         nextIndex = allMotorBlocks.length;
     }
 
-    if (addMotorButtonn && motorBlockTemplate && motorsContainer) {
+    if (addMotorButton && motorBlockTemplate && motorsContainer) {
         addMotorButton.addEventListener('click', function () {
 
             let html = motorBlockTemplate.innerHTML;
