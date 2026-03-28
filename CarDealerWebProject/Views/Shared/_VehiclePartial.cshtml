@@ -1,8 +1,9 @@
-﻿@model VehicleServiceModel
+﻿@using CarDealerWebProject.Core.Models.Vehicle.SeviceModels
+@model VehiclePreviewServiceModel
 
 <div class="col-md-4">
     <div class="card mb-3">
-        <img class="card-img-top" src="@Model.VehicleImages[0]" alt="Vehicle Image">
+        <img class="card-img-top" src="@Model.FirstVehicleImage" alt="Vehicle Image">
         <div class="card-body text-center">
             <h4>@Model.Make @Model.Model</h4>
             <h6>Price: <b>@String.Format("{0:f2}", Model.Price) EUR</b></h6>

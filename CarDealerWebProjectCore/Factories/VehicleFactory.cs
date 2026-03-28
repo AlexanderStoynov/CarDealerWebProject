@@ -6,28 +6,48 @@ namespace CarDealerWebProject.Core.Factories
 {
     public static class VehicleFactory
     {
-        public static Vehicle Create(VehicleFormModel model) =>
-            model switch
+        public static Vehicle Create<T>(T model) where T : VehicleFormModel
+        {
+            var vehicle = new Vehicle
             {
-                PetrolCarFormModel petrolCar => new PetrolCar(ToCommon(petrolCar), petrolCar.CarBodyType, petrolCar.EngineCapacity),
-                HybridCarFormModel hybridCar => new HybridCar(ToCommon(hybridCar), hybridCar.CarBodyType, hybridCar.EngineCapacity, hybridCar.BatteryCapacity),
-                ElectricCarFormModel electricCar => new ElectricCar(ToCommon(electricCar), electricCar.CarBodyType, electricCar.BatteryCapacity),
-                MotorcycleFormModel motorcycle => new Motorcycle(ToCommon(motorcycle), motorcycle.MotorcycleBodyType, motorcycle.EngineCapacity),
-                _ => throw new ArgumentException(UnsupportedVehicleError)
+                Make = model.Make,
+                Model = model.Model,
+                Color = model.Color,
+                Transmission = model.Transmission,
+                ManufacturingDate = model.ManufacturingDate,
+                Price = model.Price,
+                Mileage = model.Mileage,
+                Motors = new List<Motor>(),
+                Description = model.Description,
+                VehicleImages = model.VehicleImages,
+                VehicleType = model.VehicleType,
             };
-        private static VehicleCommon ToCommon(VehicleFormModel s) =>
-            new(
-                s.Make,
-                s.Model,
-                s.Color,
-                s.Description,
-                s.Transmission,
-                s.ManufacturingDate,
-                s.MotorHorsePower,
-                s.Fuel,
-                s.Price,
-                s.Milage,
-                s.VehicleImages
-            );   
+
+            vehicle.Motors = model.Motors.Select(m => new Motor 
+            {
+                Fuel = m.Fuel,
+                MotorHorsePower = m.MotorHorsePower,
+                EngineCapacityCC = m.EngineCapacityCC,
+                BatteryCapacitykWh = m.BatteryCapacitykWh,
+                Vehicle = vehicle,
+                
+            }).ToList();
+
+            switch (model)
+            {
+                case CarFormModel car:
+                    vehicle.CarBodyType = car.CarBodyType;
+                    break;
+
+                case MotorcycleFormModel motorcycle:
+                    vehicle.MotorcycleBodyType = motorcycle.MotorcycleBodyType;
+                    break;
+
+                default:
+                    throw new ArgumentException(UnsupportedVehicleError);
+            }
+
+            return vehicle;
+        }
     }
 }

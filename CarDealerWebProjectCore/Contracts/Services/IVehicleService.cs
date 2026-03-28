@@ -1,17 +1,17 @@
-﻿using CarDealerWebProject.Core.Models.Vehicle;
-using CarDealerWebProject.Core.Models.Vehicle.FormModels;
+﻿using CarDealerWebProject.Core.Models.Vehicle.FormModels;
+using CarDealerWebProject.Core.Models.Vehicle.SeviceModels;
 using CarDealerWebProject.Infrastructure.Data.Enums;
 using CarDealerWebProject.Infrastructure.Data.Models;
 
-namespace CarDealerWebProject.Core.Contracts
+namespace CarDealerWebProject.Core.Contracts.Services
 {
     public interface IVehicleService
     {
         Task<int> CreateVehicleAsync(Vehicle vehicle);
 
-        Task<IEnumerable<VehicleIndexServiceModel>> LastSixVehiclesAsync();
+        Task<IEnumerable<VehiclePreviewServiceModel>> LastSixVehiclesAsync();
 
-        Task<VehicleQueryServiceModel> AllVehiclesAsync(
+        Task<VehiclePreviewQueryServiceModel> AllVehiclesAsync(
             VehicleSorting sorting = VehicleSorting.NewlyAdded,
             int currentPage = 1,
             int vehiclePerPage = 1);
@@ -20,11 +20,11 @@ namespace CarDealerWebProject.Core.Contracts
 
         Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id);
 
-        Task<VehicleServiceModel> VehiclePreviewByIdAsync(int id);
+        Task<VehiclePreviewServiceModel> VehiclePreviewByIdAsync(int id);
 
         Task EditVehicleAsync(int id, VehicleFormModel model);
 
-        Task<VehicleFormModel?> GetVehicleFormModelByIdAsync(int id);
+        Task<VehicleFormModel> GetVehicleFormModelByIdAsync(int id);
 
         Task DeleteVehicleAsync(int id);
     }

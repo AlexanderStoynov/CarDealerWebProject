@@ -1,24 +1,29 @@
 ﻿using CarDealerWebProject.Core.Contracts.Models;
 using CarDealerWebProject.Infrastructure.Data.Enums;
-using CarDealerWebProject.Infrastructure.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static CarDealerWebProject.Core.Constants.MessageConstants;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
-namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
+namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
 {
-    public  class VehicleFormModel : IVehicleModel
+    public class VehicleDetailsServiceModel : IVehicleModel
     {
+        [Required(ErrorMessage = RequiredMessage)]
+        [Display(Name = "Vehicle ID")]
+        public int Id { get; set; }
+
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(VehicleMakeMaxLength, MinimumLength = VehicleMakeMinLength, ErrorMessage = LengthMessage)]
         [Display(Name = "Make")]
-        public  string Make { get; set; } = string.Empty;
+        public string Make { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(VehicleModelMaxLength, MinimumLength = VehicleModelMinLength, ErrorMessage = LengthMessage)]
         [Display(Name = "Model")]
-        public  string Model { get; set; } = string.Empty;
+        public string Model { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(VehicleColorMaxLength, MinimumLength = VehicleColorMinLength)]
@@ -35,7 +40,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 
         [Required(ErrorMessage = RequiredMessage)]
         [Column(TypeName = "decimal(18,2)")]
-        [Range(typeof(decimal), VehiclePriceMin, VehiclePriceMax, ConvertValueInInvariantCulture = true, 
+        [Range(typeof(decimal), VehiclePriceMin, VehiclePriceMax, ConvertValueInInvariantCulture = true,
             ErrorMessage = "The vehicle price must be a positive number and between {1} and {2} euro")]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
@@ -46,18 +51,23 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
         public int Mileage { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Display(Name = "Motors")]
-        public List<MotorFormModel> Motors { get; set; } = new List<MotorFormModel>();
+        [DisplayName("Vehicle motors")]
+        public List<MotorDetailsServiceModel> Motors { get; set; } = new List<MotorDetailsServiceModel>();
 
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Display(Name = "Description")]
-        public string Description { get; set; } = string.Empty; 
+        public string Description { get; set; } = null!;
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Display(Name = "Images")]
+        [Display(Name = "Vehicle Images")]
         public List<string> VehicleImages { get; set; } = new List<string>();
 
-        [Required(ErrorMessage = "Select vehicle type")]
+        [Required(ErrorMessage = RequiredMessage)]
+        [Display(Name = "If vehicle is sold")]
+        public bool IsSold { get; set; } = false;
+
+        [Required]
+        [Comment("Type of vehicle")]
         public VehicleTypes VehicleType { get; set; }
     }
 }

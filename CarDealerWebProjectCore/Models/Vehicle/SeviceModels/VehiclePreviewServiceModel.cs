@@ -1,13 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
-using static CarDealerWebProject.Core.Constants.MessageConstants;
+﻿using CarDealerWebProject.Core.Contracts.Models;
+using CarDealerWebProject.Infrastructure.Data.Enums;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CarDealerWebProject.Core.Contracts;
+using static CarDealerWebProject.Core.Constants.MessageConstants;
+using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
-namespace CarDealerWebProject.Core.Models.Vehicle
+namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
 {
-    public class VehicleServiceModel : IVehicleModel
+    public class VehiclePreviewServiceModel : IVehicleModel
     {
+        [Required(ErrorMessage = RequiredMessage)]
+        [Display(Name = "Vehicle ID")]
         public int Id { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
@@ -28,14 +32,16 @@ namespace CarDealerWebProject.Core.Models.Vehicle
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(VehicleMotorHorsePowerMin, VehicleMotorHorsePowerMax)]
+        [Range(MotorHorsePowerMin, MotorHorsePowerMax)]
         [Display(Name = "Horse Power")]
-        public int MotorHorsePower { get; set; }
+        public int HorsePower { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
         [Display(Name = "Image URL")]
-        public List<string> VehicleImages { get; set; } = new List<string>();
+        public string FirstVehicleImage { get; set; } = string.Empty;
 
-        
+        [Required]
+        [Comment("Type of vehicle")]
+        public VehicleTypes VehicleType { get; set; }
     }
 }

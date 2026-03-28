@@ -1,6 +1,6 @@
 ﻿using CarDealerWebProject.Core.Models.Admin;
 
-namespace CarDealerWebProject.Core.Contracts
+namespace CarDealerWebProject.Core.Contracts.Services
 {
     public interface ISellerService
     {

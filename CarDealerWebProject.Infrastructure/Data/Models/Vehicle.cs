@@ -2,32 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 using static CarDealerWebProject.Infrastructure.Constants.DataConstants;
 
 namespace CarDealerWebProject.Infrastructure.Data.Models
 {
     [Comment("Vehicle parameters")]
-    public abstract class Vehicle
+    public class Vehicle
     {
-        protected Vehicle() { }
-
-        [SetsRequiredMembers]
-        protected Vehicle(VehicleCommon common)
-        {
-            Make = common.Make;
-            Model = common.Model;
-            Color = common.Color;
-            Description = common.Description;
-            Transmission = common.Transmission;
-            ManufacturingDate = common.ManufacturingDate;
-            MotorHorsePower = common.MotorHorsePower;
-            Fuel = common.Fuel;
-            Price = common.Price;
-            Milage = common.Milage;
-            VehicleImages = common.VehicleImages;
-        }
-
         [Key]
         [Comment("Vehicle identifier")]
         public int Id { get; set; }
@@ -51,41 +32,43 @@ namespace CarDealerWebProject.Infrastructure.Data.Models
         public Transmission Transmission { get; set; }
 
         [Comment("Vehicle manufacturing date")]
-        public DateTime ManufacturingDate { get; set; }
-
-        [Range(VehicleMotorHorsePowerMin, VehicleMotorHorsePowerMax)]
-        [Comment("Motor horse power")]
-        public int MotorHorsePower { get; set; }
-
-        [Required]
-        [Comment("Vehicle fuel type")]
-        public FuelType Fuel { get; set; }
+        public DateOnly ManufacturingDate { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         [Range(typeof(decimal), VehiclePriceMin, VehiclePriceMax, ConvertValueInInvariantCulture = true)]
         [Comment("Vehicle price")]
         public decimal Price { get; set; }
 
-        [Range(VehicleMilageMin, VehicleMilageMax)]
-        [Comment("Vehicle milage")]
-        public int Milage { get; set; }
+        [Range(VehicleMileageMin, VehicleMileageMax)]
+        [Comment("Vehicle mileage")]
+        public int Mileage { get; set; }
 
-        [Required]
-        [Comment("Vehicle images")]
-        public List<string> VehicleImages { get; set; } = new List<string>();
+        [Comment("Vehicle motors")]
+        public ICollection<Motor> Motors { get; set; } = new List<Motor>();
 
         [StringLength(VehicleDescriptionMaxLength, MinimumLength = VehicleDescriptionMinLength)]
         [Comment("Vehicle description")]
         public required string Description { get; set; } = string.Empty;
 
         [Required]
+        [Comment("Vehicle images")]
+        public required List<string> VehicleImages { get; set; } = new List<string>();
+
         [Comment("If vehicle is sold")]
         public bool IsSold { get; set; } = false;
+
+        [Required]
+        [Comment("Type of vehicle")]
+        public VehicleTypes VehicleType { get; set; }
+
+        //Non common properties
+
+        [Comment("Car body type")]
+        public CarBodyType? CarBodyType { get; set; } = null;
+
+        [Comment("Motorcycle body type")]
+        public MotorcycleBodyType? MotorcycleBodyType { get; set; }
     }
-
-
-    //[Comment("Date vehicle is listed")]
-    //public DateTime DateListed { get; set; }
 
     //    SellerName = "John Doe",
     //    SellerPhone = "+359 123 456 789

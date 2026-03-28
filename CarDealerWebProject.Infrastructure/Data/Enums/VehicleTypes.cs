@@ -2,9 +2,7 @@
 {
     public enum VehicleTypes
     {
-        PetrolCar = 0,
-        HybridCar = 1,
-        ElectricCar = 2,
-        Motorcycle = 3
+        Car = 0,
+        Motorcycle = 1
     }
 }
