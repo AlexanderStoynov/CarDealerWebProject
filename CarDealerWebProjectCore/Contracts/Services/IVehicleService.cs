@@ -24,7 +24,7 @@ namespace CarDealerWebProject.Core.Contracts.Services
 
         Task EditVehicleAsync(int id, VehicleFormModel model);
 
-        Task<VehicleFormModel?> GetVehicleFormModelByIdAsync(int id);
+        Task<VehicleFormModel> GetVehicleFormModelByIdAsync(int id);
 
         Task DeleteVehicleAsync(int id);
     }

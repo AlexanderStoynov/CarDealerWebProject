@@ -32,7 +32,7 @@ namespace CarDealerWebProject.Core.Models.Vehicle.SeviceModels
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(MotorHorsePowerMax, MotorHorsePowerMin)]
+        [Range(MotorHorsePowerMin, MotorHorsePowerMax)]
         [Display(Name = "Horse Power")]
         public int HorsePower { get; set; }
 

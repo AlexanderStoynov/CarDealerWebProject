@@ -9,6 +9,9 @@ namespace CarDealerWebProject.Core.Models.Vehicle.FormModels
 {
     public class MotorFormModel : IMotorModel
     {
+        [Comment("Motor identifier")]
+        public int Id { get; set; }
+
         [Required(ErrorMessage = RequiredMessage)]
         [Comment("Vehicle fuel type")]
         public FuelType Fuel { get; set; }

@@ -1,4 +1,5 @@
 ﻿@using CarDealerWebProject.Core.Models.Vehicle.SeviceModels
+@using CarDealerWebProject.Infrastructure.Data.Enums
 @model VehiclePreviewServiceModel
 @{
     ViewData["Title"] = "Delete Vehicle";
@@ -10,9 +11,30 @@
 <form asp-action="DeleteVehicle">
     <div class="row">
         <div class="col-md-4">
-           
+            <div class="card mb-3">
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(Model.FirstVehicleImage))
+                    {
+
+                        <img src="@Model.FirstVehicleImage" class="img-fluid mb-2" />
+
+                    }
+                    else
+                    {
+                        if (Model.VehicleType == VehicleTypes.Car)
+                        {
+                            <img src="~/images/default-car-image.jpg" class="img-fluid mb-2" />
+                        }
+
+                        else if (Model.VehicleType == VehicleTypes.Motorcycle)
+                        {
+                            <img src="~/images/default-motorcycle-image.jpg" class="img-fluid mb-2" />
+                        }
+                    }
+                </div>
+            </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="card border-0">
                 <div class="card-body">
                     <p style="font-size:30px;"><u>@Model.Make @Model.Model</u></p>
@@ -23,34 +45,11 @@
                     </p>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Delete" class="btn btn-primary" />
+            <div class="d-flex justify-content-center gap-2 mt-3">
+                <input type="submit" value="Delete" class="btn btn-danger" />
             </div>
         </div>
     </div>
 </form>
 
-@* <div class="col-4">
-    
-</div> *@
 
-<div class="card-body">
-    @if (!string.IsNullOrEmpty(Model.FirstVehicleImage))
-    {
-       
-         <img src="@Model.FirstVehicleImage" class="img-fluid mb-2" />
-        
-    }
-    else
-    {
-        if (Model.VehicleType == VehicleTypes.Car)
-        {
-            <img src="~/images/default-car-image.jpg" class="img-fluid mb-2" />
-        }
-
-        else if (Model.VehicleType == VehicleTypes.Motorcycle)
-        {
-            <img src="~/images/default-motorcycle-image.jpg" class="img-fluid mb-2" />
-        }
-    }
-</div>

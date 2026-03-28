@@ -88,24 +88,6 @@ namespace CarDealerWebProject.Core.Services
                 .AnyAsync(v => v.Id == id);
         }
 
-        public async Task<VehicleFormModel?> GetVehicleFormModelByIdAsync(int id)
-        {
-            return await repository.AllReadOnly<Vehicle>()
-                .Where(v => v.Id == id)
-                .Select(v => new VehicleFormModel()
-                {
-                    Make = v.Make,
-                    Model = v.Model,
-                    Color = v.Color,
-                    Price = v.Price,
-                    ManufacturingDate = v.ManufacturingDate,
-                    Transmission = v.Transmission,
-                    Description = v.Description,
-                    VehicleImages = v.VehicleImages,
-                })
-                .FirstOrDefaultAsync();
-        }
-
         public async Task<VehicleDetailsServiceModel> VehicleDetailsByIdAsync(int id)
         {
             var vehicle = await repository.AllReadOnly<Vehicle>()
@@ -166,9 +148,38 @@ namespace CarDealerWebProject.Core.Services
                     Model = v.Model,
                     Price = v.Price,
                     HorsePower = v.Motors.Sum(m => m.MotorHorsePower),
+                    VehicleType = v.VehicleType,
                     FirstVehicleImage = v.VehicleImages.FirstOrDefault() ?? ""
                 })
                 .FirstAsync();
+        }
+
+        public async Task<VehicleFormModel> GetVehicleFormModelByIdAsync(int id)
+        {
+            return (await repository.AllReadOnly<Vehicle>()
+                .Where(v => v.Id == id)
+                .Select(v => new VehicleFormModel()
+                {
+                    Make = v.Make,
+                    Model = v.Model,
+                    Color = v.Color,
+                    Transmission = v.Transmission,
+                    ManufacturingDate = v.ManufacturingDate,
+                    Price = v.Price,
+                    Mileage = v.Mileage,
+                    Motors = v.Motors.Select(m => new MotorFormModel
+                    {
+                        Id = m.Id,
+                        Fuel = m.Fuel,
+                        MotorHorsePower = m.MotorHorsePower,
+                        EngineCapacityCC = m.EngineCapacityCC,
+                        BatteryCapacitykWh = m.BatteryCapacitykWh
+                    }).ToList(),
+                    Description = v.Description,
+                    VehicleImages = v.VehicleImages,
+                    VehicleType = v.VehicleType,
+                })
+                .FirstOrDefaultAsync())!;
         }
 
         public async Task EditVehicleAsync(int vehicleId, VehicleFormModel model)

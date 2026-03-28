@@ -166,7 +166,6 @@ namespace CarDealerWebProject.Controllers
             return View(model);
         }
 
-        ////////////////////////////////////////////////////////////////////
         [Authorize(Roles = "Admin, Seller")]
         [HttpGet]
         public async Task<IActionResult> EditVehicle(int id)
@@ -181,6 +180,7 @@ namespace CarDealerWebProject.Controllers
 
             return View(model);
         }
+        ////////////////////////////////////////////////////////////////////
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]
@@ -224,6 +224,7 @@ namespace CarDealerWebProject.Controllers
                 Model = vehicle.Model,
                 Price = vehicle.Price,
                 HorsePower = vehicle.HorsePower,
+                VehicleType = vehicle.VehicleType,
                 FirstVehicleImage = vehicle.FirstVehicleImage
             };
 

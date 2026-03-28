@@ -1,13 +1,21 @@
 ﻿@using CarDealerWebProject.Infrastructure.Data.Enums
 @model CarDealerWebProject.Core.Models.Vehicle.FormModels.MotorFormModel
 
+@{
+    var motorIndex = ViewData["MotorIndex"];
+    int? index = motorIndex as int?;
+	string prefix = index.HasValue && index.Value >= 0 ? $"Motors[{index.Value}]" : "Motors[__index__]";
+    
+	ViewData.TemplateInfo.HtmlFieldPrefix = prefix;
+}
 <div class="motor-block border p-2 mb-2">
+    <input asp-for="Id" type="hidden"/>
+
     <div class="form-group">
-        <label for="Fuel" class="form-label">Fuel</label>
+       <label asp-for="Fuel" class="form-label">Fuel</label>
         <select asp-for="Fuel" class="form-select fuel-select" asp-items="Html.GetEnumSelectList<FuelType>()">
-            <option value="">Select fuel type</option>
+			<option value="">Select fuel type</option>
         </select>
-        <span asp-validation-for="Fuel" class="small text-danger"></span>
     </div>
     <div class="form-group horsepower-field" style="display:none">
         <label asp-for="MotorHorsePower"></label>

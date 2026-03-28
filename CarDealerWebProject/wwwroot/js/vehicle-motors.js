@@ -1,54 +1,86 @@
 ﻿
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
 
-    const addMotorButon = document.getElementById('add-motor');
+    const addMotorButton = document.getElementById('add-motor');
     const motorsContainer = document.getElementById('motors-container');
-    const template = document.getElementById('motor-template');
+    const motorBlockTemplate = document.getElementById('motor-template');
 
-    if (addMotorButon) {
-        addMotorButon.addEventListener('click', () => {
-            const clone = template.firstElementChild.cloneNode(true);
-            clone.style.display = 'block';
+    let nextIndex = motorsContainer ? motorsContainer.querySelectorAll('.motor-block').length : 0;
 
-            const fuelSelect = clone.querySelector('.fuel-select');
-            if (fuelSelect) {
-                fuelSelect.value = '';
+    function wireUpMotorBlock(block) {
+        const fuelSelect = block.querySelector('.fuel-select');
+        const removeButton = block.querySelector('.remove-motor');
+
+        function updateFieldsVisibility() {
+            const fuelField = fuelSelect.value;
+            const horsepowerField = block.querySelector('.horsepower-field');
+            const engineField = block.querySelector('.engine-field');
+            const batteryField = block.querySelector('.battery-field');
+
+            if (fuelField === 'Petrol' || fuelField === 'Diesel') {
+                horsepowerField.style.display = '';
+                engineField.style.display = '';
+                batteryField.style.display = 'none';
+            } else if (fuelField === 'Electric') {
+                horsepowerField.style.display = '';
+                engineField.style.display = 'none';
+                batteryField.style.display = '';
+            } else {
+                horsepowerField.style.display = 'none';
+                engineField.style.display = 'none';
+                batteryField.style.display = 'none';
             }
+        }
 
-            motorsContainer.appendChild(clone);
+        if (fuelSelect) {
+            fuelSelect.addEventListener('change', updateFieldsVisibility);
+            updateFieldsVisibility();
+        }
+
+        if (removeButton) {
+            removeButton.addEventListener('click', function () {
+                block.remove();
+                reindexMotorBlocks();
+            });
+        }
+    }
+
+    function reindexMotorBlocks() {
+        const allMotorBlocks = motorsContainer.querySelectorAll('.motor-block');
+        allMotorBlocks.forEach((block, index) => {
+            const inputs = block.querySelectorAll('input, select, textarea, label, span, [data-valmsg-for]');
+            inputs.forEach(element => {
+                ['name', 'id', 'for', 'data-valmsg-for', 'data-valmsg-replace'].forEach(attribute => {
+                    if (!element.hasAttribute(attribute)) return;
+                    const value = element.getAttribute(attribute);
+                    if (!value) return;
+                    const newValue = value.replace(/Motors\[\d+\]/g, `Motors[${index}]`);
+                    if (newValue !== value) element.setAttribute(attribute, newValue);
+                });
+            });
+        });
+
+        nextIndex = allMotorBlocks.length;
+    }
+
+    if (addMotorButtonn && motorBlockTemplate && motorsContainer) {
+        addMotorButton.addEventListener('click', function () {
+
+            let html = motorBlockTemplate.innerHTML;
+            html = html.replace(/__index__/g, nextIndex.toString());
+
+            const tempContainer = document.createElement('div');
+            tempContainer.innerHTML = html;
+            const newBlock = tempContainer.firstElementChild;
+            motorsContainer.appendChild(newBlock);
+
+            wireUpMotorBlock(newBlock);
+
+            nextIndex++;
         });
     }
 
-    document.addEventListener('change', function (e) {
-        if (e.target.classList.contains('fuel-select')) {
-
-            const motorBlock = e.target.closest('.motor-block');
-            const fuel = e.target.value;
-
-            const horsepowerField = motorBlock.querySelector('.horsepower-field');
-            const engineField = motorBlock.querySelector('.engine-field');
-            const batteryField = motorBlock.querySelector('.battery-field');
-
-            horsepowerField.style.display = 'none';
-            engineField.style.display = 'none';
-            batteryField.style.display = 'none';
-
-            if (!fuel) return;
-
-            horsepowerField.style.display = 'block';
-
-            if (fuel === '2')/*Electric*/ {
-                batteryField.style.display = 'block';
-            } else {
-                engineField.style.display = 'block'; 
-            } 
-        }
-    });
-
-    document.addEventListener('click', function (e) {
-        if (e.target.classList.contains('remove-motor')) {
-            e.target.closest('.motor-block').remove();
-        }
-    });
-
+    if (motorsContainer) {
+        motorsContainer.querySelectorAll('.motor-block').forEach(block => wireUpMotorBlock(block));
+    }
 });
