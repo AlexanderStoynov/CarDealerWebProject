@@ -1,5 +1,4 @@
-﻿
-document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
 
     const addMotorButton = document.getElementById('add-motor');
     const motorsContainer = document.getElementById('motors-container');
@@ -7,21 +6,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let nextIndex = motorsContainer ? motorsContainer.querySelectorAll('.motor-block').length : 0;
 
+    const fuelMap = {
+        '0': 'Petrol',
+        '1': 'Diesel',
+        '2': 'Electric',
+        '3': 'Gas'
+    };
+
     function wireUpMotorBlock(block) {
         const fuelSelect = block.querySelector('.fuel-select');
         const removeButton = block.querySelector('.remove-motor');
 
         function updateFieldsVisibility() {
-            const fuelField = fuelSelect.value ? fuelSelect.value : '';
+            const fuelValue = fuelSelect ? (fuelSelect.value ?? '') : '';
+            const fuelText = (fuelSelect && fuelSelect.options && fuelSelect.selectedIndex >= 0)
+                ? (fuelSelect.options[fuelSelect.selectedIndex].text || '')
+                : '';
+
+            const normalizedFuel = fuelMap[fuelValue] ?? fuelValue ?? fuelText;
+
             const horsepowerField = block.querySelector('.horsepower-field');
             const engineField = block.querySelector('.engine-field');
             const batteryField = block.querySelector('.battery-field');
 
-            if (fuelField === 'Petrol' || fuelField === 'Diesel') {
+            if (!horsepowerField || !engineField || !batteryField) return;
+
+            if (normalizedFuel === 'Petrol' || normalizedFuel === 'Diesel') {
                 horsepowerField.style.display = '';
                 engineField.style.display = '';
                 batteryField.style.display = 'none';
-            } else if (fuelField === 'Electric') {
+            } else if (normalizedFuel === 'Electric') {
                 horsepowerField.style.display = '';
                 engineField.style.display = 'none';
                 batteryField.style.display = '';
@@ -46,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function reindexMotorBlocks() {
+        if (!motorsContainer) return;
         const allMotorBlocks = motorsContainer.querySelectorAll('.motor-block');
         allMotorBlocks.forEach((block, index) => {
             const inputs = block.querySelectorAll('input, select, textarea, label, span, [data-valmsg-for]');
