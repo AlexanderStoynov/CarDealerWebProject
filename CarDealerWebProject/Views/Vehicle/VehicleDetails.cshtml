@@ -73,14 +73,14 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <p style="font-size:20px;"><b>Fuel: </b>@motor.Fuel</p>
-                            <p style="font-size:20px;"><b>HorsePower: ></b>@motor.Fuel</p>
+                            <p style="font-size:20px;"><b>HorsePower: </b>@motor.MotorHorsePower</p>
                             @if(motor.EngineCapacityCC.HasValue)
                             {
-                                <p style="font-size:20px;"><b>Engine Capacity: ></b>@motor.EngineCapacityCC</p>
+                                <p style="font-size:20px;"><b>Engine Capacity: </b>@motor.EngineCapacityCC</p>
                             }
                             @if(motor.BatteryCapacitykWh.HasValue)
                             {
-                                <p style="font-size:20px;"><b>Battery Capacity: ></b>@motor.BatteryCapacitykWh</p>
+                                <p style="font-size:20px;"><b>Battery Capacity: </b>@motor.BatteryCapacitykWh</p>
                             }
                         </div>
                     </div>
