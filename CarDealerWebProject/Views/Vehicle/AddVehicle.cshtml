@@ -89,7 +89,7 @@
 						var templateVd = new ViewDataDictionary(ViewData) { ["MotorIndex"] = -1 };
 					}
 					<div id="motor-template" style="display:none">
-						@Html.PartialAsync("VehicleFormPartialViews/_MotorFormPartial", new MotorFormModel(), templateVd)
+						@await Html.PartialAsync("VehicleFormPartialViews/_MotorFormPartial", new MotorFormModel(), templateVd)
 					</div>
 					<button type="button" id="add-motor" class="btn btn-primary mt-2">Add Motor</button>
 				</div>
