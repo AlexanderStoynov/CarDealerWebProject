@@ -7,8 +7,9 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
-<partial name="VehicleFormPartialViews/ _VehicleFormPartial" model="@Model" />
+ <partial name="VehicleFormPartialViews/_VehicleFormPartial" model="@Model" />
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/vehicle-motors.js" asp-append-version="true"></script>
 }

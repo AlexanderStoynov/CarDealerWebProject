@@ -13,7 +13,7 @@
         <div class="col-4">
             <div class="card mb-3">
                 <div class="card-body">
-                    @if(Model.VehicleImages.Any())
+                    @if (!string.IsNullOrEmpty(Model.VehicleImages.FirstOrDefault()))
                     {
                         foreach(var image in Model.VehicleImages)
                         {
