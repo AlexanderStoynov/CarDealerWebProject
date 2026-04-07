@@ -180,7 +180,6 @@ namespace CarDealerWebProject.Controllers
 
             return View(model);
         }
-        ////////////////////////////////////////////////////////////////////
 
         [Authorize(Roles = "Admin, Seller")]
         [HttpPost]

@@ -213,20 +213,21 @@ namespace CarDealerWebProject.Core.Services
                             existingMotor.EngineCapacityCC = motorModel.EngineCapacityCC;
                             existingMotor.BatteryCapacitykWh = motorModel.BatteryCapacitykWh;
                         }
+                    }
 
-                        else
+                    else if (motorModel.Id == 0)
+                    {
+                        var newMotor = new Motor
                         {
-                            var newMotor = new Motor
-                            {
-                                Fuel = motorModel.Fuel,
-                                MotorHorsePower = motorModel.MotorHorsePower,
-                                EngineCapacityCC = motorModel.EngineCapacityCC,
-                                BatteryCapacitykWh = motorModel.BatteryCapacitykWh,
-                                Vehicle = vehicle
-                            };
+                            Fuel = motorModel.Fuel,
+                            MotorHorsePower = motorModel.MotorHorsePower,
+                            EngineCapacityCC = motorModel.EngineCapacityCC,
+                            BatteryCapacitykWh = motorModel.BatteryCapacitykWh,
+                            VehicleId = vehicleId,
+                            Vehicle = vehicle
+                        };
 
-                            vehicle.Motors.Add(newMotor);
-                        }
+                        vehicle.Motors.Add(newMotor);
                     }
                 }
 
