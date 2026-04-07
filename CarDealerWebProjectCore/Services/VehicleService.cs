@@ -184,18 +184,52 @@ namespace CarDealerWebProject.Core.Services
 
         public async Task EditVehicleAsync(int vehicleId, VehicleFormModel model)
         {
-            var vehicle = await repository.GetByIdAsync<Vehicle>(vehicleId);
-
+            var vehicle = await repository.All<Vehicle>()
+                .Include(v => v.Motors)
+                .FirstOrDefaultAsync(v => v.Id == vehicleId);
+                
             if (vehicle != null)
             {
                 vehicle.Make = model.Make;
                 vehicle.Model = model.Model;
                 vehicle.Color = model.Color;
-                vehicle.Price = model.Price;
-                vehicle.ManufacturingDate = model.ManufacturingDate;
                 vehicle.Transmission = model.Transmission;
+                vehicle.ManufacturingDate = model.ManufacturingDate;
+                vehicle.Price = model.Price;
+                vehicle.Mileage = model.Mileage;
                 vehicle.Description = model.Description;
                 vehicle.VehicleImages = model.VehicleImages;
+
+                foreach(var motorModel in model.Motors)
+                {
+                   if(motorModel.Id != 0)
+                    {
+                        var existingMotor = vehicle.Motors.FirstOrDefault(m => m.Id == motorModel.Id);
+                        
+                        if(existingMotor != null)
+                        {
+                            existingMotor.Fuel = motorModel.Fuel;
+                            existingMotor.MotorHorsePower = motorModel.MotorHorsePower;
+                            existingMotor.EngineCapacityCC = motorModel.EngineCapacityCC;
+                            existingMotor.BatteryCapacitykWh = motorModel.BatteryCapacitykWh;
+                        }
+                    }
+
+                    else if (motorModel.Id == 0)
+                    {
+                        var newMotor = new Motor
+                        {
+                            Fuel = motorModel.Fuel,
+                            MotorHorsePower = motorModel.MotorHorsePower,
+                            EngineCapacityCC = motorModel.EngineCapacityCC,
+                            BatteryCapacitykWh = motorModel.BatteryCapacitykWh,
+                            VehicleId = vehicleId,
+                            Vehicle = vehicle
+                        };
+
+                        vehicle.Motors.Add(newMotor);
+                    }
+                }
 
                 await repository.SaveChangesAsync();
             }

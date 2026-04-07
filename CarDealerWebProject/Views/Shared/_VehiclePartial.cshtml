@@ -1,9 +1,29 @@
 ﻿@using CarDealerWebProject.Core.Models.Vehicle.SeviceModels
+@using CarDealerWebProject.Infrastructure.Data.Enums
 @model VehiclePreviewServiceModel
 
 <div class="col-md-4">
     <div class="card mb-3">
-        <img class="card-img-top" src="@Model.FirstVehicleImage" alt="Vehicle Image">
+        <div class="card-body">
+            @if (!string.IsNullOrEmpty(Model.FirstVehicleImage))
+            {
+
+                <img src="@Model.FirstVehicleImage" class="img-fluid mb-2" />
+
+            }
+            else
+            {
+                if (Model.VehicleType == VehicleTypes.Car)
+                {
+                    <img src="~/images/defaultImages/default-car-image.jpg" class="img-fluid mb-2" />
+                }
+
+                else if (Model.VehicleType == VehicleTypes.Motorcycle)
+                {
+                    <img src="~/images/defaultImages/default-motorcycle-image.jpg" class="img-fluid mb-2" />
+                }
+            }
+        </div>
         <div class="card-body text-center">
             <h4>@Model.Make @Model.Model</h4>
             <h6>Price: <b>@String.Format("{0:f2}", Model.Price) EUR</b></h6>
